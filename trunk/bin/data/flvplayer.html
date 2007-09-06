@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>flvplayer</title>
+<script src="mplayer.js"></script>
+<script>
+function ltv_onLoad()
+{
+	try{
+		external.PostPlayerMessage(LTV_WM_Notify, LTV_PluginInitComplete, S_OK); 
+	}
+	catch(e){}
+}
+
+var vLoadedURL = ""; 
+function ltv_loadMedia(url){
+	if (url.indexOf(".flv") == -1)
+		return 0; 	//Other file extensions sometimes cause Flash to overload and die.
+		
+	vLoadedURL = url; 
+	ltv_setvar("loadMedia",url);
+}
+
+function ltv_play(){
+	ltv_setvar("action","play");
+}
+
+function ltv_pause(){
+	ltv_setvar("action","pause");
+}
+
+function ltv_setVolume(volume){
+	ltv_setvar("setVolume",volume);
+}
+
+function ltv_setPosition(position){
+	ltv_setvar("setPosition",position);
+}
+
+function ltv_getVolume()
+{
+	return ltv_getvar("getVolume");
+}
+
+
+function ltv_getState(){
+	return ltv_getvar("getState");
+}
+
+function ltv_getPosition(){
+	return ltv_getvar("getPosition");
+}
+
+
+function ltv_getDuration(){
+	return ltv_getvar("getDuration");
+}
+
+function ltv_getDuration(){
+	return ltv_getvar("getDuration"); 
+}
+
+function ltv_onClipComplete(){
+try{
+	external.PostPlayerMessage(LTV_WM_Notify, LTV_PluginPlaybackFinished, S_OK); 
+	} catch(e){}
+}
+
+//Util Functions
+function ltv_setvar(variable,value){
+	try{
+	window.document.flvplayer.SetVariable(variable,value);	
+	} catch(e){}
+}
+
+function ltv_getvar(variable){
+	try{
+	return window.document.flvplayer.GetVariable(variable);	
+	} catch(e){}
+}
+
+</script>
+</head>
+<body scroll="no" bgcolor="#000000" style="margin:0px;" onload="ltv_onLoad()">
+<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="100%" height="100%" id="flvplayer" align="middle">
+<param name="allowScriptAccess" value="sameDomain" />
+<param name="movie" value="flvplayer.swf" /><param name="quality" value="high" /><param name="bgcolor" value="#000000" /><embed src="flvplayer.swf" quality="high" bgcolor="#000000" width="100%" height="100%" name="flvplayer" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+</object>
+</body>
+</html>

@@ -1,0 +1,81 @@
+
+How to build LibTorrent under Visual Studio 2005.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. First of all, you need the boost library installed.
+Download boost from www.boost.org and follow the included instructions on how
+to build it (you need to build boost in order to create the library files which
+are used by libtorrent).
+
+Let's say that you have the boost include/library files under 
+C:\SDK\Boost
+
+2. Open Visual Studio 2005 and go to Tools->Options->Projects and Solutions, 
+select Include Files in the "Show Directories for" combo and add the boost include
+path there (eg. C:\SDK\Boost\include).
+
+3. Now select Library Files in the "Show Directories for" combo and add the boost library
+path there (eg: C:\SDK\Boost\Lib).
+
+3. Get asio. You can get it form http://asio.sourceforge.net/. 
+You don't need to build it, just copy the asio folder
+into libtorrent's include directory. Here's how it should look like:
+C:\libtorrent\include\asio
+
+Now you are ready to build libtorrent.
+
+4. Open the LibTorrent2005 project file and hit F7 to build it.
+
+5. If the build has gone well, you will find the .lib file in the Debug or Release
+folders. The debug version of the libtorrent library is called LibTorrentD.lib and the 
+release version is LibTorrent.lib
+
+
+How to use LibTorrent in your app 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. First of all, open the Examples (client_test) project, build it and study it.
+It demos all of the basic functionality of the libtorrent library.
+
+2. To include libtorrent in your app, do the following:
+add the libtorrent include path to your projects's additional include directories (in the C/C++\General section).
+You must add both libtorrent\include and libtorrent\include\libtorrent direcotries.
+
+3. Add the the libtorrent.lib library to your porject's additional dependencies (in the Linker\Input section).
+Alternatively, you may want to link from the precompiled file. Here is a sample stdafx.h file:
+
+//stdafx.h
+
+#pragma once
+
+#ifndef STRICT
+#define STRICT
+#endif
+
+#define _WINVER 0x0500
+#define _WIN32_WINDOWS 0x0500
+#define _WIN32_WINNT 0x0500
+#define WIN32_LEAN_AND_MEAN
+
+
+#ifdef _DEBUG
+	#pragma comment(lib, "TorrentLibD.lib")
+#else
+	#pragma comment(lib, "TorrentLib.lib")
+#endif
+
+#include <asio/detail/socket_types.hpp>
+#include <windows.h>
+...
+
+
+Note that <asio/detail/socket_types.hpp> must be included before any other windows include file, otherwise you'll get
+collisions with winsock.
+
+
+4. Now you're ready to use LibTorrent ! 
+
+
+###
+ 
+Readme by Florin Braghis (florin@libertv.tv)

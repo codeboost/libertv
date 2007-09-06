@@ -1,0 +1,14 @@
+How are files downloaded?
+
+We have the interface IDownloader, which has the following functions:
+
+AddDownload(const tchar* pszURL, const tchar* pszFileName, const tchar* pszMethod).
+
+If Method == "http"
+pszURL points to the HTTP url
+pszFileName points to the output filename
+
+if Method == "torrent"
+pszURL points to the torrent filename
+pszFileName points to the output directory
+

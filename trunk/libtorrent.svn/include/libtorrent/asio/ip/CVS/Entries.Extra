@@ -1,0 +1,17 @@
+D/detail////
+/address.hpp////
+/address_v4.hpp////
+/address_v6.hpp////
+/basic_endpoint.hpp////
+/basic_resolver.hpp////
+/basic_resolver_entry.hpp////
+/basic_resolver_iterator.hpp////
+/basic_resolver_query.hpp////
+/host_name.hpp////
+/multicast.hpp////
+/resolver_query_base.hpp////
+/resolver_service.hpp////
+/tcp.hpp////
+/udp.hpp////
+/unicast.hpp////
+/v6_only.hpp////

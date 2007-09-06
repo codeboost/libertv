@@ -1,0 +1,43 @@
+Compiling LiberTV Player
+
+1. Install the tools
+Microsoft Visual Studio 2005 (2003 compiler can also be used, but we are moving away from it)
+Boost libraries installed: http://www.boost.org/
+
+2. Configure Visual Studio:
+Make sure the proper include/library files are configured:
+Tools->Options->Projects and Solutions->VC++ Directories
+
+Include files:
+SDK 2005 include
+DirectX 9 SDK include 
+DirectX 9 Base Classes include
+Boost include
+
+Library files:
+SDK 2005 lib
+DX9 Lib
+Boost lib
+
+3. Get the following projects from Source Control (Get Latest Version - recursive):
+
+bin
+common
+LiberTV
+libtorrent-0.11
+
+***
+bin 			binary output directory. It also contains the 'data' folder with all the html and images.
+common 		shared headers. contains the 'lib' folder where all library files are placed
+LiberTV 		LiberTV Player project
+libtorrent-0.11	Libtorrent
+
+
+4. Build LibTorrent
+Open TorrentLib2005.sln and Build->Rebuild All. You should get /common/lib/TorrentLib115d.lib or /common/lib/TorrentLib115.lib
+Warnings can be ignored.
+
+5. Build LiberTV Player
+Open the project LiberTV and choose Build->Rebuild All. You should get /bin/libertv.exe
+
+

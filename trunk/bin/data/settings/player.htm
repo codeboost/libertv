@@ -1,0 +1,87 @@
+<html>
+<head>
+<script language="JavaScript" src="settings.js"></script>
+<script>var lSectionID = 2;</script>
+<link rel="stylesheet" href="settings.css" type="text/css" />
+</head>
+
+<body scroll="no" onload="OnLoad(lSectionID)" onunload="OnUnload(lSectionID)">
+<table cellpadding="0" cellspacing="0" width="592">
+<tr>
+	<td height="76" align="right" valign="middle" colspan="4"><div style="padding-right:20px;"><img src="../images/settings/id_page.gif"/></div></td>
+</tr>
+<tr>
+	<td width="98"><a onfocus="this.blur()" href="settings.htm"><img src="../images/settings/tab_general_0_1.gif" width="98" height="30" border="0" /></a></td>
+	<td width="97"><a onfocus="this.blur()" href="network.htm"><img src="../images/settings/tab_network_0_1.gif" width="97" height="30" border="0"/></a></td>
+	<td width="97"><img src="../images/settings/tab_player_1.gif" height="30" border="0" /></td>
+	<td width="100%"><a onfocus="this.blur()" href="codecs.htm"><img src="../images/settings/tab_codecs_0_1.gif" height="30" border="0" /></a></td>
+</tr>
+<tr>
+	<td colspan="4">
+		<table cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<td height="304" class="sett_bg" valign="top">
+					<form name="Player">
+						<table id="dataTable">
+						<tr><td colspan="2" class="cat_text">Player Options</td></tr>
+						<tr>
+							<td style="padding-bottom:5px; padding-right:10px;"><span id="checkspan" onClick="check_uncheck('SavePosition')" title="Remembers last position of each video and resumes playback from where you stopped watching.">Resume videos from last position</span></td>
+							<td><input type="checkbox" id="SavePosition"></td>
+						</tr>
+						<tr>
+							<td><span id="checkspan" onClick="check_uncheck('EscToggle')" title="Allow ESC key to toggle player between fullscreen and restored mode.">ESC key toggles fullscreen</span></td>
+							<td><input type="checkbox" id="EscToggle"></td>
+						</tr>
+						<tr>
+							<td style="padding-bottom:5px; padding-right:10px;"><span id="checkspan" onClick="check_uncheck('ConfirmRemove')" title="Show confirmation when removing a video">Confirm video removal</span></td>
+							<td><input type="checkbox" id="ConfirmRemove"></td>
+						</tr>
+						<tr>
+							<td style="padding-bottom:5px; padding-right:10px;"><span title="Seconds to wait before hiding mouse when watching video">Hide cursor in</span></td>
+							<td><input type="text" id="HideCursor" size="2" maxlength="2" title="0 = never"> seconds</td>
+						</tr>
+						<tr><td colspan="2" class="cat_text">Subtitles</td></tr>
+						<tr>
+							<td style="padding-bottom:5px; padding-right:10px;"><span id='checkspan' onClick="check_uncheck('autoSubs')" title="Download subtitles automaticlaly">Show subtitles automatically</span></td>
+							<td><input type="checkbox" id="autoSubs"></td>
+						</tr>
+						<tr>
+							<td style="padding-bottom:5px; padding-right:10px;"><span title="Load default subtitle">Default subtitle language</span></td>
+							<td><select name="subLanguage">
+								<option value="">None</option>
+								<option value="RO">Romana</option>
+								<option value="EN">English</option>
+								<option value="*">Any</option>
+							</select>
+							</td>
+						</tr>
+						</table>
+						</form>
+
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4" height="40">
+			<div style="float:right; padding-right:10px;"><input type="image" src="../images/settings/cancel_btn.gif" onClick="OnCancel()" id="CancelBtn" value="Cancel" style="padding:0;"></div>
+			<div style="float:right; padding-right:10px;"><input type="image" src="../images/settings/save_btn.gif" onClick="OnSave()" id="SaveBtn" value=" Save " style="padding:0;"></div>
+		</td>
+	</tr>
+</table>
+</body>
+</html>
+
+<script>
+function getDefSubLang(str)
+{
+	return Player.subLanguage.value; 
+}
+
+function setDefSubLang(strLang)
+{
+	Player.subLanguage.value = strLang; 
+}
+
+</script>

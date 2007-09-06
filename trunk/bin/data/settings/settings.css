@@ -1,0 +1,133 @@
+/*////////////// CSS OLD ///////////////*/
+.body 
+{
+  font-family: Arial;
+  font-size: 12px; line-height: 120%;
+  padding: 0; margin: 0; overflow:auto;
+  width:450px;
+  height:400px;
+  background-color: white; 
+}
+
+  
+#tabs 
+{ 
+   width: 100%; 
+   margin:4px 0 0 0; padding: 0; 
+   font-size: 11px;
+}     
+
+#tabs div.inactive1 
+{
+   height: 4px;
+   background: url(ul.gif) no-repeat top left;
+}
+#tabs div.inactive2 
+{
+   height: 4px;
+   background: url(ur.gif) no-repeat top right;
+   padding: 0 4px;
+}
+#tabs div.active1 
+{
+   height: 4px;
+   background: url(ul.gif) no-repeat top left;
+}
+#tabs div.active2 
+{
+   height: 4px;
+   background: url(ur.gif) no-repeat top right;
+   padding: 1px 6px;
+}
+#tabs div.tabText 
+{
+	padding: 0px 1em 2px; font-weight:bold;
+}
+#tabs td.inactiveTab 
+{   
+   cursor: pointer;
+   text-align:center;
+   background-color:#E5ECF9;
+   vertical-align:top;
+}
+#tabs td.activeTab 
+{
+   text-align:center;
+   vertical-align:top;
+   background-color:#3366CC;
+   color: #FFFFFF;   
+}
+
+#tabs td.inactiveTab a
+{
+   text-decoration:none;
+   color: #000000;
+}
+
+.header
+{
+	width:320px;
+	border-bottom: 1px solid black;
+}
+.buttons
+{
+float:right;
+vertical-align:bottom;
+padding-right:10px;
+position:absolute;
+bottom:10px;
+right:10px;
+}
+
+#checkspan
+{
+	cursor: pointer; 
+}
+
+#dataTable{
+	font-size: 11px;
+}
+/*////////////// CSS NEW ///////////////*/
+body {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color:#FFFFFF;
+	background-color:#2e2c2a;
+	margin:0;
+}
+form {
+	padding-left:10px;
+}
+input {
+
+	border:none;
+}
+.sett_bg {
+	background-image:url(../images/settings/bg_interface.gif);
+	background-repeat:repeat-x;
+	border-bottom:solid;
+	border-width:3px;
+	border-color:#3e3d3b;
+}
+.temp_text {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color:#FFFFFF;
+	padding-right:10px;
+}
+.cat_text {
+	font-family:Gill Sans MT, Arial, Helvetica, sans-serif;
+	font-size:15px;
+	font-weight:bold;
+	padding-top:10px;
+	padding-bottom:5px;
+	color:#e8bc82;
+}
+a {
+	text-decoration:none;
+	color:#00CCFF;
+}
+a:hover {
+	text-decoration:none;
+	color:#CCCCCC;
+}

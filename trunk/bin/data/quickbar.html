@@ -1,0 +1,214 @@
+<html>
+<head>
+<link href="css/quickbar.css" rel="stylesheet" type="text/css">
+</head>
+
+<body scroll="no" class="qb_main_bg" onload = "onBodyLoaded()">
+	<div class="qb_top">
+		<div style="float:left; margin-top:-1px;"><img src="images/quickbar/win_title.gif" align="middle" border="0" alt=""/></div>
+		<div class="qb_top_bt"><img src="images/quickbar/close.gif" align="middle" border="0" alt="Close"/></div>
+	</div>
+	<div class="qb_tools">
+		<div style="float:left; cursor:pointer;"><img onClick="addComment()" 		title="Add a comment" src="images/quickbar/bt_comments_0.jpg" onMouseOver="this.src='images/quickbar/bt_comments_1.jpg'" onMouseOut="this.src='images/quickbar/bt_comments_0.jpg'" onfocus="blur()"/></div>
+		<div style="float:left; cursor:pointer;"><img onClick="toggleFullscreen()" 	title="Toggle fullscreen" src="images/quickbar/bt_resize_0.jpg" onMouseOver="this.src='images/quickbar/bt_resize_1.jpg'" onMouseOut="this.src='images/quickbar/bt_resize_0.jpg'" onfocus="blur()"/></div>
+		<div style="float:left; cursor:pointer;"><img onClick="videoOptions()" 		title="Video options" src="images/quickbar/bt_options_0.jpg" onMouseOver="this.src='images/quickbar/bt_options_1.jpg'" onMouseOut="this.src='images/quickbar/bt_options_0.jpg'" onfocus="blur()"/></div>			
+		<div style="float:left; cursor:pointer;"><img onClick="videoInfo()" 		title="Video info" src="images/quickbar/bt_videoinfo_0.jpg" onMouseOver="this.src='images/quickbar/bt_videoinfo_1.jpg'" onMouseOut="this.src='images/quickbar/bt_videoinfo_0.jpg'" onfocus="blur()"/></div>
+		<div style="float:left; cursor:pointer;"><img onClick="showSubs()" 			title="Toggle subtitles" src="images/quickbar/bt_subs_0.jpg" onMouseOver="this.src='images/quickbar/bt_subs_1.jpg'" onMouseOut="this.src='images/quickbar/bt_subs_0.jpg'" onfocus="blur()"/></div>
+	</div>
+	<div id="videoName" class="qb_show"></div>
+	<div id="clipsDiv" class="qb_clips" style="overflow: scroll;overflow-x: hidden;display: none">
+		<div id="rowSource" class="qb_episode" onClick="onRowClick(this)" onMouseOver="onRowMouseOver(this)" onMouseOut="onRowMouseOut(this)"><div id="clipName" style="margin-left:15px; cursor: arrow;"></div></div>
+	</div>
+</body>
+</html>
+
+<script src="js/config.js"></script>
+<script language="JavaScript">
+window.onresize = onResize;
+document.ondragstart = new Function("return false");
+document.onselectstart = new Function ("return false");
+
+var g_RefreshTimer = 0; 
+var g_currentVideo = new Array; 
+var g_Clips = new Array; 	//Array[Array]
+var g_LastVideoID = 0; 
+var g_rowSource = null;
+
+//constants
+var c_videoID = 0; 
+var c_videoName = 1; 
+var c_videoDuration = 2; 
+var c_videoIsActive = 3;
+var c_episodeID = 4; 
+
+//clips 
+var c_clipID = 0; 
+var c_clipName = 1; 
+var c_clipDuration = 2; 
+var c_clipIsActive = 3; 
+
+function getCloseBtnWidth()
+{
+	return 14; 
+}
+
+function getCaptionHeight()
+{
+	return 23; 	//magic
+}
+
+function onResize()
+{
+	var curHeight = document.documentElement.offsetHeight;
+	var clipsDiv = document.getElementById("clipsDiv"); 
+	var videoName = document.getElementById("videoName"); 
+	if (videoName && clipsDiv)
+	{
+	    var newHeight = curHeight - videoName.offsetTop - videoName.offsetHeight; 
+		clipsDiv.style.height = newHeight > 0 ? newHeight : 0;
+	}
+}
+function onBodyLoaded()
+{
+	g_rowSource = document.all.rowSource.cloneNode(true)
+	refresh();
+}
+
+function updateView()
+{
+	var clipsDiv = document.all.clipsDiv; 
+
+	if (g_currentVideo[c_videoID] * 1 > 0){
+		if (g_LastVideoID != g_currentVideo[c_videoID])
+		{
+			clipsDiv.innerHTML = "";
+			clipsDiv.style.display = "block";
+			for (var k = 0; k < g_Clips.length; k++)
+			{
+				var newDiv = g_rowSource.cloneNode(true); 
+				
+				var clipName = g_Clips[k][c_clipName];
+				if (clipName == "")
+					clipName = "Part " + k; 
+				
+				clipName = clipName.replace(/%44/g, ",");
+		    	newDiv.all["clipName"].innerText = clipName;
+				newDiv.clipId = g_Clips[k][c_clipID];
+				newDiv.isActive = g_Clips[k][c_clipIsActive];
+		    	//newDiv.all["clipDuration"].innerText = g_Clips[k][c_clipDuration];
+	
+				if (newDiv.isActive == 1)
+					newDiv.style.backgroundColor="#311403";
+				
+				clipsDiv.appendChild(newDiv);
+			}
+		}
+		document.all.videoName.innerText = g_currentVideo[c_videoName];
+	}
+	else
+	{
+		document.all.videoName.innerText = "Video not loaded";
+		clipsDiv.style.display = "none";
+	}
+	
+}
+
+function onActivated()
+{
+	//refresh(); 
+}
+
+function onDeactivated()
+{
+	clearTimeout(g_RefreshTimer);
+}
+
+function refresh()
+{
+	try{
+		var strVideoInfo = external.GetCurrentVideoInfo(0); 
+		//format:
+		//0: videoID, videoName, duration, isActive
+		//1: clipID,  clipName,  duration, isActive
+		var tmparr = strVideoInfo.split(";");
+		if (tmparr.length > 0)
+		{
+			g_Clips.length = 0; 
+			g_currentVideo = tmparr[0].split(",");
+
+
+			//copy all elements from 1 .. n
+			for (var k = 1; k < tmparr.length; k++)	{
+				g_Clips.push(tmparr[k].split(","));
+			}
+
+			updateView(); 
+		}
+	}
+	catch (e){ }
+	
+	//g_RefreshTimer = setTimeout("refresh()", 1000); 
+}
+
+function onRowClick(tr)
+{
+	try{
+		external.PlayNextClipEx(tr.clipId * 1);
+	}
+	catch(e){}
+}
+
+function onRowMouseOver(dv)
+{
+	if (!dv.isActive)
+		dv.style.backgroundColor = "#FFFFFF";
+}
+
+function onRowMouseOut(dv)
+{
+	if (!dv.isActive)
+		dv.style.backgroundColor = "#422504";
+}
+
+function closeQuickBar()
+{
+	try{
+		external._SendMessage("QuickBar", 1, 0, 0); 
+	} catch(e){}
+}
+
+function addComment()
+{
+	ShowEpisodeDetails(g_currentVideo[c_episodeID]);
+}
+
+function toggleFullscreen()
+{
+	try{
+	external.RestoreFullScreen();
+	} catch(e){}
+}
+
+function videoOptions()
+{
+	try{
+	external.ShowVideoOptions(g_currentVideo[c_videoID]);
+	} catch(e){}
+}
+
+function showSubs()
+{
+	try{
+		external.ToggleSubtitles(g_currentVideo[c_videoID]);
+	}
+	catch(e){}
+}
+
+function videoInfo()
+{
+	ShowEpisodeDetails(g_currentVideo[c_episodeID]);
+}
+
+</script>
+</body>
+</html>

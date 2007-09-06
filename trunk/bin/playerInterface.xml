@@ -1,0 +1,84 @@
+<ltv_interface>
+<!--
+LiberTV Interface Defintion File. 
+-->
+<control id="toolbar" left="0" right="1" top="0" height="50">
+		<control type="button" id="btnBack" left="10" top="8" width="31" height="31">
+			<img name="normal" src="data\\interface\\toolbar\\rewind_bt.bmp" />
+			<img name="hover"  src="data\\interface\\toolbar\\rewind_bt.bmp" />
+			<img name="click"  src="data\\interface\\toolbar\\rewind_bt_p.bmp" />
+			<img name="disabled" src="data\\interface\\toolbar\\rewind_bt.bmp" />
+		</control>
+	
+		<control type="button" id="btnPlay" left="51" top="8" width="31" height="31">
+			<img name="normal" src="data\\interface\\toolbar\\play_bt.bmp" />
+			<img name="hover"  src="data\\interface\\toolbar\\play_bt.bmp" />
+			<img name="click"  src="data\\interface\\toolbar\\play_bt_p.bmp" />
+			<img name="disabled" src="data\\interface\\toolbar\\play_bt.bmp" />
+			<img name="alt_normal" src="data\\interface\\toolbar\\play_bt.bmp" />
+			<img name="alt_hover"  src="data\\interface\\toolbar\\play_bt.bmp" />
+			<img name="alt_click"  src="data\\interface\\toolbar\\play_bt_p.bmp" />
+			<img name="alt_disabled" src="data\\interface\\toolbar\\play_bt.bmp" />
+		</control>
+		
+		<control type="button" id="btnFwd" left="92" top="8" width="31" height="31">
+				<img name="normal" src="data\\interface\\toolbar\\forward_bt.bmp" />
+				<img name="hover"  src="data\\interface\\toolbar\\forward_bt.bmp" />
+				<img name="click"  src="data\\interface\\toolbar\\forward_bt_p.bmp" />
+				<img name="disabled" src="data\\interface\\toolbar\\forward_bt.bmp" />
+		</control>
+		
+		<control type="button" id="btnStop" left="133" top="8" width="31" height="31">
+				<img name="normal" src="data\\interface\\toolbar\\stop_bt.bmp" />
+				<img name="hover"  src="data\\interface\\toolbar\\stop_bt.bmp" />
+				<img name="click"  src="data\\interface\\toolbar\\stop_bt_p.bmp" />			
+				<img name="disabled" src="data\\interface\\toolbar\\stop_bt.bmp" />
+		</control>
+
+	<control type="frame" id="volumeFrame" left="-180" right="10" top="8">
+		<img name="left" src="data\\interface\\toolbar\\epnamebox_left1.bmp" />
+		<img name="fill" src="data\\interface\\toolbar\\epnamebox_multiply.bmp" />
+		<img name="right" src="data\\interface\\toolbar\\epnamebox_right1.bmp" />
+		
+		<img type="static" top="8" left="10" src="data\\interface\\toolbar\\volume_icon.png" />		
+		<control type="hslider" id="volumeBarSlider" top="10" left="28" right="10" height="11">
+			<img name="bgFill" src="data\\interface\\toolbar\\slider_bg_fill.bmp" />
+			<img name="availFill" src="data\\interface\\toolbar\\slider_avail_fill.bmp" />
+			<img name="playedFill" src= "data\\interface\\toolbar\\slider_played_fill.bmp" />
+			<img name="thumb" src="data\\interface\\toolbar\\slider_thumb.gif" />
+		</control>		
+	</control>
+	
+	<control type="frame" id="nameFrame" left="174" right="190" top="8" height="31">
+		<img name="left" src="data\\interface\\toolbar\\epnamebox_left1.bmp" />
+		<img name="fill" src="data\\interface\\toolbar\\epnamebox_multiply.bmp" />
+		<img name="right" src="data\\interface\\toolbar\\epnamebox_right1.bmp" />
+		<text name="videoName" 
+			  text="Sunshine Episode 1" 
+			  color="#ff6600"
+			  valign="middle"
+			  left="3" top="0" height="31" width="150" />
+		<text name="videoTime" 
+			  text="00:0/00:00:00" 
+			  color="green"
+			  align="right"
+			  valign="middle"
+			  font="Arial"
+			  font-size="7"
+			  left="-150" right="2" top="0" height="31" />
+	</control>
+	
+	<control type="hslider" id="seekBarSlider" top="50" left="0" right="1" height="11">
+		<img name="bgFill" src="data\\interface\\toolbar\\slider_bg_fill.bmp" />
+		<img name="availFill" src="data\\interface\\toolbar\\slider_avail_fill.bmp" />
+		<img name="playedFill" src= "data\\interface\\toolbar\\slider_played_fill.bmp" />
+		<img name="thumb" src="data\\interface\\toolbar\\slider_thumb.gif" />
+	</control>
+	
+
+	
+</control>
+
+
+
+</ltv_interface>

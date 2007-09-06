@@ -1,0 +1,144 @@
+<html>
+<head>
+<style>
+body {
+	background-color:#2e2c2a;
+	margin:0;
+}
+.content {
+	background-image:url(images/video_options/page_bg.gif);
+	background-repeat:repeat-x;
+	border-bottom:solid;
+	border-bottom-width:3px;
+	border-color:#3e3d3b;
+}
+.text_headings {
+	font-family:Gill Sans MT, Arial, Helvetica, sans-serif;
+	font-size:15px;
+	font-weight:bold;
+	padding-bottom:10px;
+	color:#e8bc82;
+}
+option {
+	border:none;
+	width:100px;
+}
+#subText{
+	display: none;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-size: 9px;
+	color: #ff6600
+}
+</style>
+</head>
+
+<body scroll="no">
+<table cellpadding="0" cellspacing="0" width="100%">
+	<tr>
+		<td height="47" width="100%">&nbsp;</td>
+		<td height="47" width="161"><img src="images/video_options/id_page.gif" width="161"/></td>
+	</tr>
+	<tr>
+		<td height="85" width="100%" colspan="2" class="content" valign="middle" style="padding-left:10px;">
+			<div class="text_headings">Subtitle Language:</div>
+			<select name="" id="subSelect" disabled onChange="selectSubtitle()">
+			<option value="">None</option>
+			</select><span id="subText">&nbsp;&nbsp;Checking...</span>
+		</td>
+	</tr>
+	<tr>
+		<td height="43" width="100%" colspan="2">
+			<div style="float:right; padding-right:10px;display: none;"><input type="image" src="images/settings/save_btn.gif" onClick="OnSave()" id="SaveBtn" style="padding:0;" value=" Save "></div>
+		</td>
+	</td>
+	</tr>
+</table>
+</body>
+
+<script src="js/config.js"></script>
+<script language="JavaScript">
+
+document.ondragstart=new Function("return false")
+document.onselectstart=new Function ("return false")
+
+var gVideoID = null; 
+var xmlhttp = null;
+function selectSubtitle()
+{
+	try{
+		external.SelectSubtitle(subSelect.value, gVideoID);
+	}
+	catch(e){}
+}
+
+function addSubLanguage(subLang)
+{
+	for (var k = 0; k < subSelect.options.length; k++)
+	{
+		if (subSelect.options[k].value == subLang)
+			return;
+	}
+	subSelect.options.add(new Option(subLang, subLang));
+}
+
+function selectActiveLanguage(subLang)
+{
+	subSelect.value = subLang;
+}
+
+function xmlhttpChange()
+{
+	var bOk = false;
+	if (xmlhttp.readyState==4)
+	{
+		if (xmlhttp.status && xmlhttp.status==200)
+		{
+			var aList = new Array;
+			if (xmlhttp.responseText.length > 0 && xmlhttp.responseText.charAt(0) == '[')
+			{
+				aList = eval(xmlhttp.responseText);
+
+				//remove all current items
+				//for (var i = 0; i <= subSelect.options.length; i++)
+					//subSelect.options.remove(0);
+	
+				if (aList.length > 0)
+				{
+					bOk = true;
+					//subSelect.options.add(new Option('None',''));
+					for (var k = 0; k < aList.length; k++)
+						addSubLanguage(aList[k]);
+				}
+			}
+		}
+
+		subText.style.display = "none";
+		if (bOk)
+			subSelect.disabled = false; 		
+	}
+}
+
+function refreshSubtitles(subURL, videoID)
+{
+	gVideoID = videoID; 
+	xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	if(xmlhttp) {
+		subText.style.display = "inline";
+		url = subURL + "?videoID=" + gVideoID + "&sid=" + Math.random();
+		xmlhttp.onreadystatechange = xmlhttpChange;
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send("");
+	}
+}
+
+function OnSave()
+{
+}
+
+
+
+//refreshSubtitles();
+
+</script>
+</html>

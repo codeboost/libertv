@@ -1,0 +1,396 @@
+body {
+	font-family: Arial;
+	background-color:#3e3838;
+	margin:0 0 0 0;
+}
+
+#collection_div {
+	float: left;	
+	overflow : scroll;
+	overflow-x: hidden;  	
+}
+
+#channels_div {
+	float: left;
+	background-color:#2c2929;	
+	padding-top:10px;
+	width: 225px;
+	overflow: hidden;
+}
+
+#splitter_div {
+	float: left;
+	width: 5px;
+	background: #3e3838;
+	cursor: w-resize;
+}
+#scroller_div
+{
+	float: left;
+	width: 10px;
+	background: #2c2929;		
+	text-align: center;
+	padding-top: 50px;
+}
+
+#scrollBarTotal
+{
+	background: #3e3838;		
+	width: 6px;
+	height: 100px;
+}
+
+#scrollBarThumb
+{
+	background: black;
+	width: 6px;
+	height: 20px;
+	position: relative;
+	top: 0px;	
+}
+/*///////////////////////////////// LABELS ///////////////////////// */
+
+.labsel_main {
+	width:100%;
+	background-color:#3e3838;
+}
+.labsel_left {
+	background:url(../rssfeeds/selection/left_margin.gif) no-repeat top left;
+	padding:7px 0 8px 20px;
+	font-size:14px;
+	font-weight:bold;
+	color:#dedddd;
+}
+.labsel_curves {
+	background:url(../rssfeeds/selection/the_curves.gif) no-repeat top right;
+	padding:13px 0 14px 0;
+}
+.label_unsel {
+	font-size:14px;
+	font-weight:bold;
+	color:#757373;
+	padding:0 0 2px 5px;
+	border-bottom:1px solid #353232;
+	width:90%;
+	margin-top:4px;
+}
+
+/* XXXXXXXXXXXXXXXXXXXXXXXXXXX EPISODE TEMPLATE XXXXXXXXXXXXXXXXXXXXXXXXXXXX */
+.eptem_main {
+	width:100%;
+	height:100px;
+	background:url(../rssfeeds/episode/box/bg.gif) repeat-x top;
+}
+.eptem_left {
+	width:100%;
+	height:100px;
+	background:url(../rssfeeds/episode/box/lm.gif) no-repeat top left;
+}
+.eptem_right {
+	width:100%;
+	height:100px;
+	background:url(../rssfeeds/episode/box/rm.gif) no-repeat top right;
+}
+.eptem_details {
+	width:100%;
+	border-bottom:1px solid #4e4949;
+}
+.eptem_photo_border {
+	background:url(../rssfeeds/episode/photo_border.gif) no-repeat top left;
+	padding:0 0 7px 0;
+	width:111px;
+}
+.eptem_title {
+	font-size:15px;
+	font-weight:bold;
+	width:100%;
+	height: 16px; 
+	overflow: hidden;
+	color:#feae03;
+}
+
+.eptem_title a {
+	color:#feae03;
+}
+.eptem_title a:hover {
+	color:#f7be46;
+}
+.eptem_description {
+	width:100%;
+	height:27px;
+	font-size:10px;
+	font-weight:bold;
+	overflow:hidden;
+	margin-bottom:5px;
+	color:#dedddd;
+}
+.eptem_description a {
+	color:#dedddd;
+}
+.eptem_secdetails {
+	color:#908d8d;
+	font-size:10px;
+	font-weight:bold;
+}
+.eptem_secdetails .details_text {
+	padding-left:4px;
+}
+.eptem_sec_spacing {
+	padding:13px 17px 0 0;
+}
+
+/*/////////////////////////////////// CHANNEL GUIDE CONYROL BAR ////////////////////////// */
+.cgcontrols_main {
+	width:100%;
+	background-color:#2c2929;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+.cgcontrols_left {
+	background:url(../rssfeeds/box/left_margin.gif) no-repeat top left;
+	width:100%;
+}
+.cgcontrols_right {
+	background:url(../rssfeeds/box/right_margin.gif) no-repeat top right;
+	width:100%;
+	height:47px;
+}
+.cgpageselect {
+	font-size:11px;
+	color:#FFF;
+	background:#2c2929;
+	border:1px solid #3f3c3c;
+	padding:1px;
+}
+.show_title {
+	font-size:19px;
+	font-weight:bolder;
+	color:#FFFFFF;
+}
+.show_title div {
+	width:100%;
+	height:21px;
+	overflow:hidden;
+}
+.show_description {
+	font-size:12px;
+	color:#757373;
+	line-height:15px;
+	margin-bottom:15px;
+}
+
+.cgpageselect {
+	font-size:11px;
+	color:#FFF;
+	background:#2c2929;
+	border:1px solid #3f3c3c;
+	padding:1px;
+}
+
+
+.top_main_div {
+	width:100%;
+	height:54px;
+	background:url(../rssfeeds/topdiv_bg.gif) repeat-x top left;
+	background-color:#2c2929;
+	border-bottom:1px solid #504d4d;
+}
+
+.settings_panel {
+	display:none; 
+	margin-bottom:15px;
+}
+.settings_box {
+	background-color:#3e3838;
+	border:1px solid #565151;
+}
+/*/////////////////////////////////////////////////////////////////////////////////////// */
+
+.status_div
+{
+	font-size: 11px;
+	color: #5d4527;	
+	cursor: pointer;
+	width: 84px;
+	text-align: center;
+}
+
+.status_div:hover
+{
+	text-decoration: underline;	
+}
+
+.ep_bottom_border, .ep_all_border{
+	border-bottom:1px dashed #a1a198;
+}
+.ep_all_border {
+	border-top:1px dashed #a1a198;	
+}
+
+.ep_details_title {
+	float:left;
+	font-size:14px;
+	font-weight:bold;
+	color:#422504;
+	margin-bottom:4px;
+}	
+.ep_details_text {
+	clear:both;
+	font-size:10px;
+	font-weight:bold;
+	color:#6e573c;
+	height:25px;
+	overflow:hidden;
+}
+.ep_sec_details {
+	font-size:10px;
+	color:#908d8d;
+	padding:3px 0 0 0;
+}
+.ep_delimit_dot {
+	padding:6px;
+}
+
+.feed_item_nosel, .feed_item_sel {
+	padding:7px 0 7px 0;
+	font-size:11px;
+	cursor: pointer;
+}
+
+.feed_item_sel {
+	background-image:url(../rssfeeds/lbl_sel_bg.gif);
+	background-repeat:no-repeat;
+	background-color:#3e3838;
+	border-bottom: none;
+	font-size:14px;
+	font-weight:bold;
+	color:#dedddd;
+}
+.feed_item_nosel {
+	border-bottom:1px solid #353232;
+	font-size:14px;
+	font-weight:bold;
+	color:#757373;
+}
+
+.item_img {
+	padding:0 10px 0 10px;
+}
+
+.label_nosel {
+	background-color: #2c2929;
+	color: #CCC;
+	cursor: pointer;
+}
+.label_sel {
+	background-color: #3e3838;
+	color: #000;
+	cursor: pointer;
+}
+
+.channelDesc {
+	color: #CCC;
+	font-size: 12px;		
+}
+
+.feed_title {
+	font-family:Arial;
+	font-size:20px;
+	font-weight:bold;
+	color:#46412e;
+	text-align:left;
+	height:25px;
+	overflow:hidden;
+}
+.feed_description {
+	font-family:Arial;
+	font-size:12px;
+	color:#514f48;
+}
+.feed_link a {
+	font-size:12px;
+	color:#878580;
+}
+.feed_link a:hover {
+	font-size:12px;
+	color:#878580;
+	text-decoration:none;
+}
+
+#channelsContainer {
+	height: 500px;
+	overflow: hidden;
+	z-index: 1;
+	position: relative;
+}
+
+#channelsScroller {
+	position: relative;	
+	top: 0px;
+	z-index: 0;
+}
+
+.channelScroll {
+	text-align: center;
+	line-height: 5px;	
+	cursor: pointer;
+}
+
+.newsItemChannel {
+	display: none;
+	cursor: pointer;
+	font-size:10px;
+	font-weight:bold;
+	text-decoration: none;
+	color:#5d4527;
+	padding-left:10px;
+}
+.rev_box_bg {
+	background-image:url(../rssfeeds/grad_bg.gif);
+	background-repeat:repeat-x;
+	padding:10px 10px 0 4px;
+}
+.rev_ep_border {
+	background-image:url(../rssfeeds/img_border.gif);
+	background-repeat:no-repeat;
+	width:110px;
+	height:85px;
+}
+.rev_longline {
+	margin-top:7px;
+	padding-top:8px;
+	border-top:1px solid #d0cbbc;
+}
+.rev_ep_photo {
+	margin:5px 0 0 5px;
+}
+.settings_option {
+	font-size:11px;
+	color:#FFF;
+}
+.settings_option_channel_name{
+	background-color:#3e3838;
+	font-size:11px;
+	color:#feae03;
+	border:none;
+}
+.settings_option_max_downloads {
+	width:20px;
+	background-color:#3e3838;
+	color:#feae03;
+	font-size:11px;
+	text-align:center;
+	border:0;
+}
+
+.settingsRightSide {
+	clear:both; 
+	background-color: none;
+	backround-image: url(../rssfeeds/settings_right_corner.gif);
+	background-position: right;
+	background-repeat: no-repeat;	
+}
+.page_select {
+	background-color:#e9e9dc;
+	font-size:11px;
+}

@@ -1,0 +1,144 @@
+// Liber2Player.idl : IDL source for Liber2Player
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (Liber2Player.tlb) and marshalling code.
+
+#include "olectl.h"
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(C3BEC939-81EA-4731-9404-67ECBD71D2D7),
+	dual,
+	nonextensible,
+	helpstring("IFHtmlEventHandler Interface"),
+	pointer_default(unique)
+]
+interface IFHtmlEventHandler : IDispatch{
+    [id(1), helpstring("method SetHandler")] HRESULT SetHandler([in] LONG pThis, [in] LONG pMember);
+    [id(0), helpstring("method CallHandler")] HRESULT CallHandler(void);
+};
+[
+	object,
+	uuid(1570ABD8-E8B4-4635-AC09-0A5AFD9F590C),
+	dual,
+	nonextensible,
+	helpstring("IFHtmlEventDispatcher Interface"),
+	pointer_default(unique)
+]
+interface IFHtmlEventDispatcher : IDispatch{
+	[id(3), helpstring("method DownloadMTT")] HRESULT DownloadMTT(BSTR Address);
+	[id(4), helpstring("method MF_SetActiveSection")] HRESULT MF_SetActiveSection(LONG lSection);
+	[id(7), helpstring("method PlayVideo")] HRESULT PlayVideo(VARIANT varVideoID);
+	[id(8), helpstring("method OnToolbarCommand")] HRESULT OnToolbarCommand(LONG idiControl, LONG wParam, LONG lParam);
+	[id(9), helpstring("method RemoveVideo")] HRESULT RemoveVideo(VARIANT varVideoID, [out,retval] LONG* plResult);
+	[id(10), helpstring("method OnButtonClicked")] HRESULT OnButtonClicked([in] LONG dialogID, LONG buttonID);
+	[id(11), helpstring("method Conf_OnLoad")] HRESULT Conf_OnLoad(LONG lPageID);
+	[id(12), helpstring("method Conf_OnUnload")] HRESULT Conf_OnUnload(LONG lSectionID);
+	[id(13), helpstring("method Conf_OnCancel")] HRESULT Conf_OnCancel(LONG lSectionID);
+	[id(14), helpstring("method OnSave")] HRESULT Conf_OnSave(void);
+	[id(15), helpstring("method ControlBar_SetVolume")] HRESULT ControlBar_SetVolume(LONG lVolume);
+	[id(16), helpstring("method ControlBar_PlayButton")] HRESULT ControlBar_PlayButton(LONG lPlaying);
+	[id(17), helpstring("method OutputDebugString")] HRESULT OutputDebugString(VARIANT vStr);
+	[id(18), helpstring("method Seekbar_SetPosition")] HRESULT Seekbar_SetPosition(LONGLONG lPosition);
+	[id(19), helpstring("method PauseDownload")] HRESULT PauseResume(VARIANT videoID);
+	[id(20), helpstring("method DebugPrintPeerList")] HRESULT DebugPrintPeerList(VARIANT videoID);
+	[id(21), helpstring("method RestoreFullScreen")] HRESULT RestoreFullScreen(void);
+	[id(22), helpstring("method PauseCurrentVideo")] HRESULT PauseCurrentVideo(void);
+	[id(23), helpstring("method ReannounceAll")] HRESULT ReannounceAll(void);
+	[id(24), helpstring("method ReannounceVideo")] HRESULT ReannounceVideo(VARIANT videoID);
+	[id(25), helpstring("method BrowseForFolder")] HRESULT BrowseForFolder(VARIANT vtFolder, [out,retval] BSTR* vtOutFolder);
+	[id(26), helpstring("method OnAdComplete")] HRESULT OnAdComplete(void);
+    [id(30), helpstring("method OpenSettings")] HRESULT OpenSettings(void);
+    [id(31), helpstring("method Search")] HRESULT Search(BSTR searchString, LONG flag);
+	[id(32), helpstring("method SelectSubtitle")] HRESULT SelectSubtitle(BSTR subLang, ULONG videoID);
+	[id(33), helpstring("method GetPlayingVideoID")] HRESULT GetPlayingVideoID([out,retval] ULONG* videoID);
+	[id(34), helpstring("method GetVideoInfo")] HRESULT GetVideoInfo(ULONG videoID, IDispatch* pDispScript, IDispatch* pDispOut);
+	[id(35), helpstring("method GetPlayerVersion")] HRESULT GetPlayerVersion([out,retval] BSTR* version);
+	[id(36), helpstring("method AddEpisodeComment")] HRESULT AddEpisodeComment(ULONG videoID, ULONG episodeID);
+	[id(37), helpstring("method EpisodeDetails")] HRESULT EpisodeDetails(ULONG ulEpisodeID);
+	[id(38), helpstring("method GetSearchString")] HRESULT GetSearchString([out,retval] BSTR* bstrSearchStr);
+	[id(39), helpstring("method PlayNextClip")] HRESULT PlayNextClip(void);
+	[id(40), helpstring("method PlayNextClipEx")] HRESULT PlayNextClipEx(LONG lClip);
+	[id(41), helpstring("method ShowVideoOptions")] HRESULT ShowVideoOptions(ULONG videoID);
+	[id(42), helpstring("method ToggleSubtitles")] HRESULT ToggleSubtitles(ULONG videoID);
+	[id(43), helpstring("method ToggleInfobar")] HRESULT ToggleInfobar(void);
+	[id(44), helpstring("method VideoDetails")] HRESULT VideoDetails(ULONG videoID);
+	[id(45), helpstring("method PauseVideo")] HRESULT PauseVideo(void);
+	[id(46), helpstring("method NavigateGuide")] HRESULT NavigateGuide(BSTR bstrURL, ULONG ulFlags);
+	[id(48), helpstring("method PlayPrevClip")] HRESULT PlayPrevClip(void);
+	[id(49), helpstring("method SetLabel")] HRESULT SetLabel(VARIANT videoID, BSTR bstrLabel);
+	[id(50), helpstring("method AddGlobalLabel")] HRESULT AddGlobalLabel(BSTR bstrLabel);
+	[id(51), helpstring("method RemoveGlobalLabel")] HRESULT RemoveGlobalLabel(BSTR bstrLabel);
+	[id(52), helpstring("method GetGlobalLabels")] HRESULT GetGlobalLabels(IDispatch* pLabelsArray);
+	[id(54), helpstring("method ShowContextMenu")] HRESULT ShowContextMenu(VARIANT wParam, VARIANT lParam, [out,retval] VARIANT* ppRes);
+	[id(55), helpstring("method ShowAddLabelDlg")] HRESULT ShowAddLabelDlg([in] BSTR bstrLabel, [out,retval] BSTR* bstrRetVal);
+	[id(57), helpstring("method PostPlayerMessage")] HRESULT PostPlayerMessage(ULONG uMsg, ULONG wParam, ULONG lParam);
+	[id(58), helpstring("method AddLabel")] HRESULT AddLabel(VARIANT varVideoID, BSTR bstrNewLabel);
+	[id(59), helpstring("method RemoveLabel")] HRESULT RemoveLabel(VARIANT varVideoID, BSTR bstrLabel);
+	[id(60), helpstring("method GetDownloadStatus")] HRESULT GetDownloadStatus(IDispatch* pDispScript, IDispatch* pArray, IDispatch* pOptions);
+	[id(62), helpstring("method _SendMessage")] HRESULT _SendMessage(BSTR bstrWndName, ULONG ulMessage, ULONG wParam, ULONG lParam); 
+	[id(63), helpstring("method GetSessionStatus")] HRESULT GetSessionStatus(IDispatch* pDisp);
+	[id(64), helpstring("method GetPeerInfo")] HRESULT GetPeerInfo(VARIANT varVideoID, IDispatch* pScript, IDispatch* pPeerInfo);
+	[id(65), helpstring("method SetMainFrameFocus")] HRESULT SetMainFrameFocus(void);
+	[id(66), helpstring("method SetEngineSetting")] HRESULT SetEngineSetting(BSTR bstrName, BSTR bstrValue);
+	[id(68), helpstring("method IsClientConnectible")] HRESULT IsClientConnectible([out,retval] VARIANT_BOOL* bConnectible);
+	[id(69), helpstring("method OpenSiteURL")] HRESULT OpenSiteURL(BSTR bstrURL);
+	[id(70), helpstring("method SetServer")] HRESULT SetServer(BSTR bstrURL, BSTR bstrGuideURL, BSTR bstrLang, BSTR bstrExtra);
+	[id(71), helpstring("method RSSGetChannels")] HRESULT RSSGetChannels(IDispatch* pDispScript, BSTR bstrFilter, IDispatch* pChannels);
+	[id(72), helpstring("method RSSGetItems")] HRESULT RSSGetItems(IDispatch* pScript, IDispatch* pArray, IDispatch* pDispOptions);
+	[id(73), helpstring("method RSSDeleteChannel")] HRESULT RSSDeleteChannel(VARIANT vtChannelID);
+	[id(74), helpstring("method RSSDownloadItem")] HRESULT RSSDownloadItem(UINT uiItemGuid);
+	[id(75), helpstring("method RSSAddFeed")] HRESULT RSSAddFeed(IDispatch* pDisp, [out, retval] ULONG* pulResult);
+	[id(76), helpstring("method RSSRefreshChannel")] HRESULT RSSRefreshChannel(VARIANT vtChannelID);
+	[id(77), helpstring("method RSSAddFeedEx")] HRESULT RSSAddFeedEx(BSTR bstrURL, BSTR bstrName, BSTR bstrOptions, [out,retval] ULONG* ulChannelID);
+	[id(78), helpstring("method GetCollectionCounts")] HRESULT GetCollectionCounts([out,retval] BSTR* bstrCounts);
+	[id(79), helpstring("method GetDownloadStatusArray")] HRESULT GetDownloadStatusArray(IDispatch* pScript, IDispatch* pArray, BSTR bstrNameFilter, BSTR bstrLabel, BSTR bstrSort, BSTR bstrSortDir, ULONG dwFlags);
+	[id(80), helpstring("method ExecCmd")] HRESULT ExecCmd(BSTR bstrCmd, VARIANT vtParam1, VARIANT vtParam2, [out, retval] BSTR* bstrRes);
+};
+[
+	object,
+	uuid(2B8B1C74-E326-498A-8D7A-FBE4EFBFED7D),
+	dual,
+	nonextensible,
+	helpstring("IFDocHostUIHandler Interface"),
+	pointer_default(unique)
+]
+interface IFDocHostUIHandler : IDispatch{
+	[id(1), helpstring("method RSSDownloadItem")] HRESULT RSSDownloadItem(BSTR bstrItemGuid);
+};
+[
+	uuid(96D08D83-7748-4FF8-8F24-AD4A922548BA),
+	version(1.0),
+	helpstring("Liber2Player 1.0 Type Library")
+]
+library Liber2PlayerLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(09486136-6CB5-4389-816F-30FDD55C3585),
+		helpstring("FHtmlEventHandler Class")
+	]
+	coclass FHtmlEventHandler
+	{
+		[default] interface IFHtmlEventHandler;
+	};
+	[
+		uuid(1F2ECC0C-55B7-4CD0-833F-FB85855F0C7F),
+		helpstring("FHtmlEventDispatcher Class")
+	]
+	coclass FHtmlEventDispatcher
+	{
+		[default] interface IFHtmlEventDispatcher;
+	};
+	[
+		uuid(6082A7C5-EC78-44FC-961C-2DABA9F85A9E),
+		helpstring("FDocHostUIHandler Class")
+	]
+	coclass FDocHostUIHandler
+	{
+		[default] interface IFDocHostUIHandler;
+	};
+};

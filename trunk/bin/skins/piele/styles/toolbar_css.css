@@ -1,0 +1,80 @@
+/* CSS Document */
+body {
+	margin:0 0 0 0;
+}
+.bar_bg {
+	background-image:url(../toolbar/green_bg.gif);
+}
+a
+{
+	text-decoration:none;
+	-moz-outline: none;
+	outline:none;
+}
+input {
+	font-family:Geneva, Arial, Helvetica, sans-serif;
+	font-size:9px;
+	color:#333333;
+	border:solid;
+	border-color:#ffffff;
+	border-width:1px;
+	width:100%;
+	height:16px;
+	padding-top:2px
+	margin-top:2px;
+}
+#searchDiv {
+	width:191px;
+	height:24px;
+	margin-right: 20px;
+	background-image:url(../images/toolbar/margini_albe.gif);
+	background-repeat:repeat-x;
+}
+#chenar_lupa {
+	float: left;
+	height:24px;
+}
+#form{
+	float: left;
+	height:24px;
+/* width: 100%;*/
+	height: 24px;
+	vertical-align:inherit;
+}
+#bt_serci {
+	width:24px;
+}
+
+#BT_CHANNEL{
+	height: 76px;
+	width: 139px;
+	text-indent: 10000px;
+	overflow: hidden;
+	display: block;
+}
+ 
+#BT_CHANNEL:hover{
+	background-position: bottom left;
+}
+#BT_COLLECTION{
+	height: 76px;
+	width: 138px;
+	text-indent: 10000px;
+	overflow: hidden;
+	display: block;
+}
+ 
+#BT_COLLECTION:hover{
+	background-position: bottom left;
+}
+#BT_PLAYER{
+	height: 76px;
+	width: 137px;
+	text-indent: 10000px;
+	overflow: hidden;
+	display: block;
+}
+ 
+#BT_PLAYER:hover{
+	background-position: bottom left;
+}

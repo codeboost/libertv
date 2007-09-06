@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+
+<html>
+	<link href="css/feeds.css" rel="stylesheet" type="text/css"/>
+<head>
+
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/rssfeeds.js"></script>
+
+</head>
+
+<body scroll="no" onLoad="onLoad()">
+<div id="bodyDiv"  onmouseup="globalMouseUp()" onmousemove="globalMouseMove()">
+
+	<div class="top_main_div" id="topDiv">
+		<table cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<td>
+					<div style="width:225px;" id="leftHeader" height="54">
+						<div id="channelsHeader">
+							<div style="padding: 10px 10px 10px 10px;" id="search_div">
+								<table cellspacing="0" cellpadding="0">
+									<tr>
+										<td>
+											<div><img src="rssfeeds/add_feed.gif" title="Add a new feed" onClick="addFeed()" style="cursor: pointer;  padding-left:10px;"></div>
+											<div><img src="rssfeeds/filter_bt_0.gif"  id="btAutoFilter" title="Show only auto download channels" onClick="filterAutoChannels()" style="cursor:pointer; padding-left:10px;"></div>
+										</td>										
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</td>
+				<td width="100%" height="54">
+					<table cellpadding="0" cellspacing="0" width="100%" id="channelInfoTable">
+						<tr>
+							<td><img src="rssfeeds/delimiter.gif"></td>
+							<td style="padding:0 7px 0 20px;"><img src="rssfeeds/toggle_options_0.gif" id="btnToggleSettings" title="Options" onClick="toggleSettings()"></td>
+							<td class="show_title" width="100%"><div id="channelTitle" style="word-wrap: break-word; height: 24px; overflow: hidden; width: 200px"></div></td>
+							<td><img style="padding:0 10px 0 0;" src="rssfeeds/auto_download_text.gif" id="imgAutoDownloadText" title="Downloads new items automatically"></td>
+							<td><img style="cursor: pointer; padding:0 10px 0 0;" id="imgAutoDownload" src="rssfeeds/download_off.gif" onClick="channelSetAutoDownload()" title="Automatically download new episodes"></td>
+							<td><img style="cursor: pointer; padding:0 10px 0 0;" id="imgChannelRefresh" onClick="refreshCurrentChannel()" src="rssfeeds/bt_refresh.gif" title="Refresh Channel"></td>
+							<td><img style="cursor: pointer; padding:0 10px 0 0;" id="imgInfoButton" onClick="viewChannelInfo()" src="rssfeeds/info.gif" title="Channel Details"></td>
+							<td><img style="cursor: pointer; padding:0 10px 0 0;" src="rssfeeds/mark_viewed.gif" onClick="markAllAsViewed()" title="Mark all as viewed"></td>							
+							<td style="padding-right:15px;">
+								<table cellspacing="0" cellpadding="0">
+									<tr>
+										<td><img src="rssfeeds/search/left_margin.gif" alt=""></td>
+										<td width="150" style="background-color:white;"><input type="text" id="item_filter" size="20" onKeyUp="itemsFilterChange()" style="border: 0" onMouseDown="onSearchMouseDown()"></td>
+										<td><img src="rssfeeds/search/right_margin.gif" alt="" ></td>
+									</tr>
+								</table>
+							</td>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div id="scroller_div"><div id="scrollBarTotal" onmousedown="setScroll()"><div id="scrollBarThumb" onmousedown="beginScroll()"></div></div></div>
+	
+	<div id="channels_div">	
+		<!--	
+		<div id="channelScrollUp" class="channelScroll" title="Scroll Up" onMouseMove="onScrollMove('up')" onMouseOver="onScrollEnter('up')" onMouseOut="onScrollLeave()">
+			<table cellpadding="0" cellspacing="0" width="90%">
+				<tr>
+					<td><img src="rssfeeds/scroll/scroll_up_0.gif"></td>
+					<td width="100%" style="background-image: url(rssfeeds/scroll/scroll_up_1.gif); background-repeat: repeat-x"><img src="rssfeeds/scroll/scroll_up_2.gif"></td>
+					<td><img src="rssfeeds/scroll/scroll_up_3.gif"></td>
+				</tr>
+			</table>
+		</div>
+		-->
+		<div style="padding-left:10px;">
+			<table cellspacing="0" cellpadding="0">
+				<tr>
+					<td><img src="rssfeeds/search/labels_lm.gif"></td>
+					<td><input type="text" size="23" onselectstart="onSearchSelect()" onMouseDown="onSearchMouseDown()" onKeyUp="searchStringChange()" id="search_box" style="border:none; background-color:#3e3838; padding:8px 0 7px 0; color:#757373;"></td>
+					<td><img src="rssfeeds/search/labels_rm.gif"></td>
+				</tr>
+			</table>
+		</div>
+		<div id="channelsContainer" onMouseOver="setChannelScroll(true)" onMouseOut="setChannelScroll(false)" onselectstart="window.event.returnValue=false;false;">
+			<div id="channelsScroller" >
+				<table cellpadding="0" cellspacing="0" id="channelTable" width="100%" >
+					<tr id="channelDesc" class="channelDesc">
+						<td width="21" height="31" id="lblLeft" ></td>
+						<td id="feedItem"></td>
+						<td id="ctrls" class="label_nosel" ></td>
+						<td width="10" style="background-repeat: no-repeat" id="lblRight"></td>
+					</tr>
+					<tr id="channelAll" class="label_nosel"  onclick="changeChannel(this);" channelID="1">
+						<td width="21" height="31" id="lblLeft"></td>
+						<td class="feed_item_nosel" id="feedItem"><img src="rssfeeds/tab_star.gif" alt="" class="item_img" id="rssIcon"><span id="channelName" style="color: #5995c3; font-weight: bold">ALL ITEMS</span></td>
+						<td id="ctrls" class="label_nosel" ></td>
+						<td width="10" style="background-repeat: no-repeat" id="lblRight"></td>
+					</tr>
+					<tr id="channelNew" class="label_nosel"  onclick="changeChannel(this);" channelID="0">
+						<td width="21" height="31" id="lblLeft"></td>
+						<td class="feed_item_nosel" id="feedItem"><img src="rssfeeds/tab_star.gif" alt="" class="item_img" id="rssIcon"><span id="channelName" style=" font-weight: bold">NEW ITEMS</span></td>
+						<td id="ctrls" class="label_nosel" ></td>
+						<td width="10" style="background-repeat: no-repeat" id="lblRight"></td>
+					</tr>					
+					<tr id="channelDummy">
+						<td width="21" height="31" id="lblLeft" ></td>
+						<td id="feedItem"></td>
+						<td id="ctrls" class="label_nosel" ></td>
+						<td width="10" style="background-repeat: no-repeat;" id="lblRight"></td>
+					</tr>
+					<tr id="channelRow" class="label_nosel" style="display: none;" onClick="changeChannel(this);">
+						<td nowrap width="21" height="31" id="lblLeft" ></td>
+						<td class="feed_item_nosel" id="feedItem" >
+							<table cellspacing="0" cellpadding="0">
+								<tr>
+									<td><img src="rssfeeds/rss_icon.gif" alt="" class="item_img" id="rssIcon"></td>
+									<td><div style="overflow: hidden; height: 16px; width: 100px;" id="channelName"></div>
+								</tr>
+							</table>
+						</td>
+						<td nowrap id="ctrls" class="label_nosel"><img src="rssfeeds/bt_delete_lbl.gif" style="cursor: pointer; display: none" id="del" onclick='deleteChannel(this.parentNode.parentNode)'></td>
+						<td nowrap width="10" style="background-repeat: no-repeat" id="lblRight"></td>
+					</tr>
+				</table>				
+			</div>
+		</div>
+		<!--
+		<div id="channelScrollDown" class="channelScroll" title="Scroll Down" onMouseMove="onScrollMove('down')" onMouseOver="onScrollEnter('down')" onMouseOut="onScrollLeave()">
+			<table cellpadding="0" cellspacing="0" width="90%">
+				<tr>
+					<td><img src="rssfeeds/scroll/scroll_down_0.gif"></td>
+					<td width="100%" style="background-image: url(rssfeeds/scroll/scroll_down_1.gif); background-repeat: repeat-x"><img src="rssfeeds/scroll/scroll_down_2.gif"></td>
+					<td><img src="rssfeeds/scroll/scroll_down_3.gif"></td>
+				</tr>
+			</table>
+		</div>
+		-->
+	</div>
+	
+	<!-- splitter div -->
+	<div id="splitter_div" onMouseDown="beginResize()"></div>
+	<!-- labels div-->
+	
+	<div id="collection_div">
+	<div id="infoText" style="display: none; text-align: center; padding-top: 40px">You are not subscribed to any feeds</div>
+	<div id="infoNoItems" style="display: none; text-align: center; padding-top: 40px; font-size: 12px; color: white;">There are no items in this feed or it has an invalid format</div>
+	
+	<!-- .... HERE GOES THE DESCRIPTION -->
+		<div id="channelContainer" style="padding-right:35px; padding-left:15px; padding-top:15px;">
+		
+		<!-- CHANNEL GUIDE CONTROL-BAR START -->
+			<table id="settingsBox"  cellpadding="0" cellspacing="0" width="100%" class="settings_panel">
+				<tr>
+					<td class="settings_box">
+						<div class="settings_option" style="padding:10px; float:left;">
+							<div>Channel name: <input type="text" onkeyup="settingsChange()" class="settings_option_channel_name" name="set_channel_name" size="50" maxlength="64"></div>
+							<div style="padding-top: 4px" >Channel url: <input type="text" onkeyup="settingsChange()" class="settings_option_channel_name" name="set_channel_url" size="50" readonly maxlength="64"></div>								
+							<div>Do not get more items automatically if <input type="text" onkeyup="settingsChange()" class="settings_option_max_downloads" name="max_downloads_per_channel" value="0" maxlength="2"> videos are waiting unwatched.</div>
+							<div>Name must contain: <input type="text" onkeyup="settingsChange()" class="settings_option_channel_name" name="filterContains" size="50" maxlength="200" title="Type a substring which must be in the episode name. Separate substrings with commas. For example: HDTV, XVID"></div>
+							<div>Name must not contain: <input type="text" onkeyup="settingsChange()" class="settings_option_channel_name" name="filterNotContains" size="50" maxlength="200" title="Type a substring which must not be in the episode name (episodes containing the substring will not be displayed)."></div>
+						</div>
+						<div style="float:right; padding:10px 10px 0 0;">
+							<div><input type="submit" id="btnSaveChanges" value="" style="background-image:url(rssfeeds/ok.gif); cursor: pointer; width:37px; height:37px; border:none;" onClick="saveChannelSettings()"></div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		<!-- CHANNEL GUIDE CONTROL-BAR END -->
+		
+		<!-- DESCRIPTION & TITLE START -->
+			<div id="channelDescription" style="clear:both;" class="show_description"></div>
+			<table cellpadding="0" cellspacing="0" id="page_selection" style="display: none">
+				<tr>
+					<td onClick="prevPage()" style="float:left; padding:0 4px 0 0;"><img src="rssfeeds/previous_page.gif" alt=""></td> 
+					<td><select class="cgpageselect" onChange="page.blur(); item_filter.focus(); changeChannel(g_Channel)" id="page"></select></td>
+					<td style="padding:0 7px 0 4px;" onClick="nextPage()"><img src="rssfeeds/next_page.gif" alt=""></td>
+				</tr>
+			</table>
+		<!-- DESCRIPTION & TITLE END -->
+
+		<div id="txtRefresh" style="display: none; text-align: center; padding-top: 40px"><img src="rssfeeds/spinner.gif"></div>
+		
+	<!-- THE EPISODE ITEM STARTS HERE. MIGHT FIND IT HARD TO READ BECAUSE OF THE STYLES INSIDE THE TAGS -->
+			<table id="itemTable" cellpadding="0" cellspacing="0" width="100%" style="margin-top:10px;">
+				<tr id="itemRow" style="display:none">
+					<td class="eptem_main">
+						<div class="eptem_left">
+							<div class="eptem_right">
+								<div class="eptem_content">
+									<table cellpadding="0" cellspacing="0">
+										<tr>
+											<td width="111" style="padding:7px 0 7px 7px;">
+												<div class="eptem_photo_border">
+													<div>
+														<img src="rssfeeds/episode_image.gif" id="itemImage" width="100" height="75" alt="" class="rev_ep_photo" onerror="errorItemImage(this)">
+														<img src="rssfeeds/new_star.gif" id="itemNewIcon" style="margin-left: 73px; margin-top: -35px; display: none">
+													</div>
+												</div>
+											</td>
+											<td valign="top" width="100%">
+												<div  style="padding:7px 7px 0 7px;">
+													<div class="eptem_details">
+														<div class="eptem_title">
+															<div id="itemName" style="float: left">&nbsp;</div>
+															<div id="itemChannelLink" style="float:left; color:#a7a495; height:15px; overflow:hidden; white-space: nowrap" class="newsItemChannel" onClick="goToChannelById(this.channelID)"></div>									
+														</div>
+														<div class="eptem_description" id="itemDescription"></div>
+													</div>
+													<div class="eptem_secdetails">
+														<table cellpadding="0" cellspacing="0" class="rev_info_box">
+															<tr>
+																<td nowrap><div class="ep_sec_details" id="itemDate"></div></td>
+																<td nowrap><div class="ep_delimit_dot"><img src="rssfeeds/delimiter_dot.gif" alt=""></div></td>
+																<td nowrap><div class="ep_sec_details" id="itemSize"></div></td>
+																<td nowrap><div class="ep_delimit_dot"><img src="rssfeeds/delimiter_dot.gif" alt=""></div></td>
+																<td nowrap><div class="ep_sec_details" id="itemType"></div></td>
+																<td width="100%" align="right" style="padding:13px 10px 0 0;"><img style="cursor: pointer; display: none" src="rssfeeds/stream_bt.gif" id="btStream" onClick="streamItem(this.itemGUID)"></td>
+																<td style="padding-top:13px;">
+																	<img style="cursor: pointer; display: none" src="rssfeeds/download_bt.gif" title="Download" id="btDownload" onClick="downloadItem(this)">
+																	<img style="cursor: pointer; display: none" src="rssfeeds/play_bt.gif" id="btPlay" onClick="playItem(this.itemVideoID)">
+																	<img style="cursor: pointer; display: none" src="rssfeeds/downloading.gif" id="btStatus" onClick="viewItem(this.itemVideoID)">
+																	<img style="cursor: pointer; display: none" src="rssfeeds/subscribe_bt.gif" id="btSubscribe" onClick="addFeedFromItem(this)">
+																	<img style="cursor: pointer; display: none" src="rssfeeds/subscribed_bt.gif" id="btGoToChannel" onClick="goToChannelById(this.channelID)">
+																</td>
+															</tr>
+														</table>
+													</div>
+												</div>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<!-- THE EPISODE ENDS HERE -->
+			
+		</div>
+	</div>
+</div>
+</body>
+
+</html>
