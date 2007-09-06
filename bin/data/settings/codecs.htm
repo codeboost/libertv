@@ -1,0 +1,88 @@
+<html>
+<head>
+<script language="JavaScript" src="settings.js"></script>
+<script>var lSectionID = 3;</script>
+<link rel="stylesheet" href="settings.css" type="text/css" />
+
+<style>
+.selectCodec{
+	width: 260px;
+}
+</style>
+</head>
+
+<body scroll="no" onload="OnLoad(lSectionID)" onunload="OnUnload(lSectionID)">
+<table cellpadding="0" cellspacing="0" width="592">
+<tr>
+	<td height="76" align="right" valign="middle" colspan="4"><div style="padding-right:20px;"><img src="../images/settings/id_page.gif"/></div></td>
+</tr>
+<tr>
+	<td width="98"><a onfocus="this.blur()" href="settings.htm"><img src="../images/settings/tab_general_0_1.gif" width="98" height="30" border="0" /></a></td>
+	<td width="97"><a onfocus="this.blur()" href="network.htm"><img src="../images/settings/tab_network_0_1.gif" width="97" height="30" border="0"/></a></td>
+	<td width="97"><a onfocus="this.blur()" href="player.htm"><img src="../images/settings/tab_player_0.gif" height="30" border="0" /></a></td>
+	<td width="100%"><img src="../images/settings/tab_codecs_1.gif" width="141" height="30" border="0" /></td>
+</tr>
+<tr>
+	<td colspan="4">
+		<table cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<td height="304" class="sett_bg" valign="top">
+					<form name="Codecs">
+						<table id="dataTable">
+						<tr><td colspan="2" class="cat_text">Video decoders</td></tr>
+						<tr>
+							<td style="padding-bottom:5px; padding-right:10px;">
+								<span id="checkspan" onClick="check_uncheck('UseQuicktime')" title="Attempts to play media using QuickTime plugin (if it's installed). Check if you are having problems with quicktime files">Use QuickTime plugin to play QuickTime content</span>
+							</td>
+							<td>
+								<input type="checkbox" id="UseQuicktime" style="background-color:none;">
+							</td>
+						</tr>
+						<tr>
+							<td style="padding-bottom:5px; padding-right:10px;">
+								<span id="checkspan" onClick="check_uncheck('UseWMP')" title="Uses Windows Media Player plugin to play WMV files.">Use Windows Media Player to play Windows Media content</span>
+							</td>
+							<td>
+								<input type="checkbox" id="UseWMP" style="background-color: none;">
+							</td>
+						</tr>
+						<tr>
+							<td style="padding-bottom:5px; padding-right:10px;">
+								<span title="Choose a rendering module. Best mod">Video renderer</span>
+							</td>
+							<td>
+								<select name="vout">
+									<option value="directx">DirectX video output</option>
+									<option value="direct3d">Direct3D video output</option>
+									<option value="opengl">OpenGL video output</option>									
+									<option value="wingdi">Windows GDI</option>			
+								</select>
+							</td>
+						</tr>
+						
+						</table>
+						</form>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4" height="40">
+			<div style="float:right; padding-right:10px;"><input type="image" src="../images/settings/cancel_btn.gif" onClick="OnCancel()" id="CancelBtn" value="Cancel" style="padding:0;"></div>
+			<div style="float:right; padding-right:10px;"><input type="image" src="../images/settings/save_btn.gif" onClick="OnSave()" id="SaveBtn" value=" Save " style="padding:0;"></div>
+		</td>
+	</tr>
+</table>
+<script>
+	function setVout(strVout)
+	{
+		Codecs.vout.value = strVout; 
+	}
+	function getVout(strVout)
+	{
+		return Codecs.vout.value; 
+	}
+</script>
+</body>
+</html>

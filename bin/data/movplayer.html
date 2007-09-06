@@ -1,0 +1,400 @@
+
+<html>
+
+<head>
+<style>
+body{
+	margin: 0 0 0 0;
+	background-color: #000000;
+	font-family: arial;
+}
+embed{
+	margin: 0 0 0 0;
+	top: 0px; left: 0px;
+	right: 0px; bottom: 0px;
+	border: 1px solid black;
+}
+
+#noQT{
+	font-size: 12px; 
+	font-weight: bold; 
+	color: #ffffff; 
+	text-align: center; 
+}
+#yesQT{
+	text-align: center;
+}
+a{
+	color: white; 
+}
+
+</style>
+<script src="mplayer.js"></script>
+<script>
+
+
+
+//API Functions
+var vLoadedURL = ""; 
+var timerID = 0;
+var oldState = "";
+var isFinished = false;
+var isPaused = false;
+var g_IsBuffering = false;
+var g_SizeCalls = 0; 
+var g_Width = 0; 
+var g_Height = 0; 
+var g_AspectRatio = 1; 
+
+function detectQT()
+{
+	try{
+		var qtObject = new ActiveXObject("QuickTimeCheckObject.QuickTimeCheck.1");
+		if (qtObject != null)
+		{
+			if (qtObject.IsQuicktimeAvailable(0))
+			{
+				return true; 
+			}
+		}
+	} catch (e){}
+	return false; 
+}
+
+function load_qt(url)
+{
+	if (url.indexOf("http://") == -1)
+	{
+		url = "file://" + url; 
+		url = url.replace(/\\/g, '/'); 
+	}
+
+	var strEmbed = "<embed type='video/quicktime' enablejavascript='true' name='player' controller='false' loop='false' autoplay='false' kioskmode='true'";
+
+	document.body.innerHTML = strEmbed + " src='" + url + "'></EMBED>";
+	var player = document.getElementById("player"); 
+}
+
+function ltv_loadMedia(url){
+	try{
+		load_qt(url);	
+		vLoadedURL = url; 
+		isFinished = false;
+		setTimeout("timer_tick()", 500); //will post MediaLoadComplete notification
+	} catch(e){throw e;}
+}
+
+function ltv_play(){
+
+	var player = document.player;
+	try{
+		player.SetBgColor("#000000");
+		player.SetRate(1);
+		player.Play();
+		//Fix sync
+		player.SetRate(0);
+		player.SetRate(1);
+		
+		isFinished = false;
+		isPaused = false;
+	} catch (e){}
+}
+
+function ltv_pause(){
+	try{
+		var player = document.player;
+		player.SetRate(0);
+	} catch(e){}
+	isPaused = true;
+}
+
+function ltv_setVolume(volume){
+	var player = document.player;
+	try{
+		player.SetVolume(volume);
+	} catch(e){}
+}
+
+function ltv_getVolume()
+{
+	try{
+		return player.GetVolume();
+	} catch(e){}
+}
+
+function ltv_setPosition(position){
+	try{
+		var player = document.player;
+		player.SetRate(0);
+		player.SetTime(position);	
+		if (!isPaused)
+			player.SetRate(1); 
+		isFinished = false;
+	} catch(e){}
+}
+
+
+function ltv_getState(){
+	try{
+		var player = document.player;
+		var rate = player.GetRate() * 1; 
+		if (rate == 0)
+		{
+			if (player.GetTime() == player.GetDuration())
+				return "finished";
+			return "paused";				
+		}
+		return "playing";
+	} catch (e){}
+	return "buffering";
+}
+
+function ltv_getPosition(){
+	try{
+		var player = document.player;
+		return player.GetTime();	
+	} catch(e){}
+	return 0; 
+}
+
+
+function ltv_getDuration(){
+	try{
+		var player = document.player;
+		return player.GetDuration();
+	} catch (e){}
+	return 0; 
+}
+
+function ltv_getAvailDuration(){
+	try{
+		return player.GetMaxTimeLoaded();
+	}
+	catch (e){}
+	return 0; 
+}
+
+function ltv_setSize(w, h)
+{
+	try{
+		var player = document.player;
+		
+		var xh = h; 
+		var xw = w; 
+		var x = 0; 
+		var y = 0;
+		var matrix = "1,0,0 0,1,0 0,0,1"; 
+		
+		if (g_SizeCalls == 0)
+		{
+			var rect = player.GetRectangle().split(","); 
+			if (rect[3] * 1 > 0)
+			{
+				g_Width = rect[2] * 1 - rect[0] * 1; 
+				g_Height = rect[3] * 1 - rect[1] * 1; 
+				g_AspectRatio = g_Width / g_Height; 
+				g_SizeCalls++;
+			} 
+		}
+		
+		if (g_Width > 0 && g_Height > 0)
+		{
+			if (g_AspectRatio > 1.0)
+			{
+				xh = xw / g_AspectRatio;
+				if (xh > h)
+				{
+					xw = h * g_AspectRatio;
+					xh = h;
+				}
+			}
+			else
+			{
+				xw = xh / g_AspectRatio;
+				if (xw > w)
+				{
+					xh = w * g_AspectRatio; 
+					xw = w; 
+				}
+			}
+
+			y = (h - xh) / 2;
+			x = (w - xw) / 2;
+			matrix = (xw / g_Width).toFixed(2) + "," + "0,0 0," + (xh / g_Height).toFixed(2) +",0 " + x.toFixed(2) + "," + y.toFixed(2) + ",1";
+		}
+
+		player.style.width = w + "px";
+		player.style.height = h + "px";
+		//external.OutputDebugString( matrix + "<br>");		
+		player.SetMatrix(matrix); 
+
+	} catch (e){}
+}
+
+function ltv_getDownloadRate()
+{
+	try{
+		var player = document.player; 
+		//hackish method:
+		//time loaded
+	} catch(e){}
+}
+
+function state_tick()
+{
+	try{
+		var player = document.player
+		var state = player.GetPluginStatus();
+
+		if (state.indexOf("-50") != -1)
+		{
+			alert("Problem playing this video. Please check your quicktime configuration.");
+			return false; 
+		}
+		
+		if (state == "Waiting")
+		{
+			external.PostPlayerMessage(LTV_WM_Notify, LTV_PluginMediaBuffering, S_OK); 
+			g_IsBuffering = true; 
+		}
+		else
+		if (state == "Playable")
+		{
+			if (oldState != "Playable")
+			{
+				external.PostPlayerMessage(LTV_WM_Notify, LTV_PluginMediaReady, S_OK); 
+			}
+			else
+			{
+				var curPos = player.GetTime(); 
+				var loaded = player.GetMaxTimeLoaded(); 
+				
+				if (curPos < loaded)
+				{
+					if (g_IsBuffering)
+					{
+						if (loaded - curPos > 5000)
+						{
+							external.PostPlayerMessage(LTV_WM_Notify, LTV_PluginMediaBuffering, S_FALSE); 
+							external.OutputDebugString("setting pos - " + curPos + "<br>"); 
+							ltv_setPosition(curPos); 
+							if (!isPaused)
+							{
+								player.Play(); 
+								player.SetRate(0); 
+								player.SetRate(1); 
+							}
+								
+							g_IsBuffering = false; 
+						}
+					}
+				}
+				else
+				{
+					external.PostPlayerMessage(LTV_WM_Notify, LTV_PluginMediaBuffering, S_OK); 
+					g_IsBuffering = true; 
+				}
+			}
+		}
+		else
+		if (state == "Complete" && oldState != "Complete")
+		{
+			external.PostPlayerMessage(LTV_WM_Notify, LTV_PluginMediaReady, S_OK); 
+		}
+		oldState = state;
+	} 
+	catch (e)
+	{}
+	return true; 
+}
+
+function timer_tick()
+{
+	if (!state_tick())
+	{
+		clearTimeout(timerID); 
+		return false; 
+	}
+	try
+	{
+		var complete = player.GetTime();
+		var duration = player.GetDuration();
+		if (complete >= duration && !isFinished) 
+		{
+			external.PostPlayerMessage(LTV_WM_Notify, LTV_PluginPlaybackFinished, S_OK); 
+			isFinished = true;
+		}
+	} catch (e) {}
+	timerID = setTimeout("timer_tick()", 250);
+}
+
+function scroll_end()
+{
+	ltv_setPosition(ltv_getDuration() - 1000);	
+	ltv_play();
+}
+
+function onWindowResize()
+{
+	var player = document.getElementById("player"); 
+	if (player)
+	{
+		player.style.height = height; 
+		player.style.width = width; 
+	}
+}
+
+function onBodyLoaded()
+{
+	var hr = S_OK; 
+	if (!detectQT())
+	{
+		hr = E_FAIL_SHOW_ERROR; 
+		var noQT = document.getElementById("noQT");
+		if (noQT)
+			noQT.style.display="block";
+		
+		try{
+			external.PostPlayerMessage(LTV_WM_Notify, LTV_PluginDownloadQT, S_OK); 
+		} catch(e){}			
+	}
+
+	try{
+		external.PostPlayerMessage(LTV_WM_Notify, LTV_PluginInitComplete, hr); 
+	} catch(e){}
+}
+
+function onBodyFocus()
+{
+	try{
+		external.SetMainFrameFocus(); 
+	} catch(e){}
+}
+
+function downloadPlugin()
+{
+	window.event.returnValue = false; 
+	try{
+		external.PostPlayerMessage(LTV_WM_Notify, LTV_PluginDownloadQT, S_OK); 
+	} catch(e){}
+	return false; 
+}
+
+
+</script>
+</head>
+
+<body scroll="no" onload="onBodyLoaded()" onfocus="onBodyFocus()" style="">
+<div id="noQT" style="display: none;">
+<img src="images/player/error.jpg">
+<br>
+This video requires Apple QuickTime to be installed on your computer.<br>
+Please intall QuickTime and try again.
+<br>
+<br>
+<br>
+
+Note: LiberTV Player must be restarted after QuickTime is installed.
+</div>
+</body>
+</html>

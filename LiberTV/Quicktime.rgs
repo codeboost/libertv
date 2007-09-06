@@ -1,0 +1,30 @@
+HKCR
+{
+	LiberTVPlayer.Quicktime.1 = s 'Quicktime Class'
+	{
+		CLSID = s '{A24B7B12-787B-43DC-A9B5-44207B58BC4C}'
+	}
+	LiberTVPlayer.Quicktime = s 'Quicktime Class'
+	{
+		CLSID = s '{A24B7B12-787B-43DC-A9B5-44207B58BC4C}'
+		CurVer = s 'LiberTVPlayer.Quicktime.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {A24B7B12-787B-43DC-A9B5-44207B58BC4C} = s 'Quicktime Class'
+		{
+			ProgID = s 'LiberTVPlayer.Quicktime.1'
+			VersionIndependentProgID = s 'LiberTVPlayer.Quicktime'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			ForceRemove 'Control'
+			ForceRemove 'ToolboxBitmap32' = s '%MODULE%, 104'
+			'MiscStatus' = s '0'
+			{
+			    '1' = s '%OLEMISC%'
+			}
+			'TypeLib' = s '{96D08D83-7748-4FF8-8F24-AD4A922548BA}'
+			'Version' = s '1.0'
+		}
+	}
+}

@@ -1,0 +1,93 @@
+<html>
+<head>
+<link rel="stylesheet" href="settings.css" type="text/css" />
+<script language="JavaScript" src="settings.js"></script>
+<script>var lSectionID = 0;</script>
+</head>
+
+<body scroll="no" onLoad="OnLoad(lSectionID)" onUnload="OnUnload(lSectionID)">
+
+	<table cellpadding="0" cellspacing="0" width="592">
+		<tr>
+			<td height="76" align="right" valign="middle" colspan="4"><div style="padding-right:20px;"><img src="../images/settings/id_page.gif"/></div></td>
+		</tr>
+		<tr>
+			<td width="98"><img src="../images/settings/tab_general_1.gif" /></td>
+			<td width="97"><a onFocus="this.blur()" href="network.htm"><img src="../images/settings/tab_network_0.gif" border="0"/></a></td>
+			<td width="97"><a onFocus="this.blur()" href="player.htm"><img src="../images/settings/tab_player_0.gif" border="0" /></a></td>
+			<td width="100%"><a onFocus="this.blur()" href="codecs.htm"><img src="../images/settings/tab_codecs_0.gif" width="141" height="30" border="0" /></a></td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				<table cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<td height="304" class="sett_bg" valign="top">
+						<form name="General">
+								<table id="dataTable">
+								<tr><td colspan="2" class="cat_text">Program</td></tr>
+								<tr><td><span id="checkspan" onClick="check_uncheck('AutoStart')">Automatically start with Windows</span></td><td><input type="checkbox" id="AutoStart" style="background-color:none;"></td></tr>
+								<tr><td><span id="checkspan" onClick="check_uncheck('AutoUpdate')">Install updates automatically</span></td><td><input type="checkbox" id="AutoUpdate" style="background-color:none;"></td></tr>
+								<tr><td colspan=2>&nbsp;</td></tr>
+								<tr><td colspan="2" class="cat_text">Video Storage</td></tr>
+								<tr><td>Warn if download leaves less than</td><td style="padding-bottom:5px;"><input type="text" id="MinimumSpace" size=5>&nbsp;MB free</td></tr>
+								<tr><td><span title="LiberTV places video files in this folder. Hold Shift before starting a download to save to a different folder.">Video download folder</span></td>
+									<td>
+										<span width=100 id="storagePath" title="If you change the folder, old videos will still be available.">Storage</span>&nbsp;&nbsp;
+										<a href="" onClick="ChangeStorage()" title="Click to select a different storage folder." style="cursor:pointer;">(Change)</a>
+									</td>
+								</tr>
+								<tr><td><span id="checkspan" onClick="check_uncheck('JumpCollection')" title="Switches to My Collection when you start a download. If not checked, the downloads start in background.">Switch to Collection when starting download</span></td>
+									<td>
+									<input type="checkbox" id="JumpCollection" style="background-color:none;">
+									</td>
+								</tr>								
+								</table>
+						</form>								
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4" height="40" align="right" valign="middle">
+				<div style="float:right; padding-right:10px;"><input type="image" src="../images/settings/cancel_btn.gif" onClick="OnCancel()" id="CancelBtn" value="Cancel" style="padding:0;"></div>
+				<div style="float:right; padding-right:10px;"><input type="image" src="../images/settings/save_btn.gif" onClick="OnSave()" id="SaveBtn" style="padding:0;" value=" Save "></div>
+			</td>
+		</tr>
+	</table>
+
+</body>
+<script>
+	function SetStoragePath(strPath)
+	{
+		storagePath.innerText=strPath;
+	}
+	
+	function GetStoragePath(dummy)
+	{
+		return storagePath.innerText;
+	}
+
+	function ChangeStorage()
+	{
+		window.event.returnValue=false;
+		try
+		{
+			var aPathCurrent = GetStoragePath(); 
+			aPathNew = external.BrowseForFolder(aPathCurrent);
+			SetStoragePath(aPathNew);
+		}
+		catch(e)
+		{
+		}
+		return false;
+	}
+	
+	function RemoveStorage()
+	{
+		window.event.returnValue = false; 
+		try{external.CleanupStorage();}catch(e){}
+		return false; 
+	}
+</script>
+</html>

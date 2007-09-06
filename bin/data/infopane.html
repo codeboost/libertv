@@ -1,0 +1,215 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2"></meta>
+</head>
+<style>
+	body{
+		margin: 0px 0px 0px 0px;
+		padding: 0px 0px 0px 0px;
+	}
+	#mainTable{
+		width: 100%;
+		background-color: black;
+		height: 100%;
+	}
+	#subtitleDiv{
+		font-family: arial;
+		font-size: 18pt;
+		font-weight: bold;
+		width: 100%;
+		text-align: center;
+		color: white;
+	}
+	#subSelect{
+		font-family: arial;
+		font-size: 9px;
+		border: 0px;
+	}
+	#subText{
+	display: none;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-size: 9px;
+	color: #ff6600
+	}
+</style>
+
+<body scroll="no">
+<table id="mainTable" border=0  style="">
+<tr>
+	<td><div style="width:180px"></div></td>
+	<td width="100%" >
+		<span id="subtitleDiv"></span>
+	</td>
+	<td valign="middle">
+		<div style="width:100px;">
+			<div>
+				<select name="" id="subSelect" disabled onChange="selectSubtitle()">
+				<option value="">None</option>
+				</select>			
+				<div style="float:left; cursor:pointer;"><img onclick="decreaseFontSize(4)" title="Decrease font size" src="images/infopane/bt_decrease.gif" onfocus="blur()"/></div>
+				<div style="float:left; cursor:pointer;"><img onclick="increaseFontSize(4)" title="Increase font size" src="images/infopane/bt_increase.gif" onfocus="blur()"/></div>
+				<div style="float:left; cursor:pointer;"><img onclick="closeThis()" title="Close Infopane" src="images/infopane/bt_close.gif" onfocus="blur()"/></div>
+			</div>
+		</div>
+	</td>
+</tr>
+</table>
+
+<script language="JavaScript">
+
+
+document.onselectstart=new Function ("return false")
+document.ondragstart=new Function("return false");
+document.onmousewheel= onScrollWheel;
+
+var min=18;
+var max=48;
+
+//called by player
+function ltv_setFontSize(size){
+	size = size * 1; //convert to int
+	if (size > min && size < max)
+		subtitleDiv.style.fontSize = size + "pt";
+}
+
+function increaseFontSize(delta) {
+   var pf = subtitleDiv; 
+   var s = min; 
+   if (pf.style.fontSize)
+   		s = parseInt(pf.style.fontSize.replace("pt",""));
+		
+   if (s < max)
+   	s+=delta;
+ 
+   pf.style.fontSize = s+"pt";	
+	try{external.ExecCmd("SaveSubSize", s, 0);} catch(e){}
+}
+function decreaseFontSize(delta) {
+   var pf = subtitleDiv; 
+   var s = min; 
+   if (pf.style.fontSize)
+   		s = parseInt(pf.style.fontSize.replace("pt",""));
+		
+   if (s > min)
+   	s-=delta;
+   pf.style.fontSize = s+"pt";	
+   	try{external.ExecCmd("SaveSubSize", s, 0);} catch(e){}
+}
+
+function onScrollWheel()
+{
+	var move = window.event.wheelDelta / 120;	
+	
+	if (move > 0)
+	{
+		increaseFontSize(move * 4);
+	}
+	else
+	{
+		decreaseFontSize(-4 * move);
+	}
+		
+	window.event.returnValue = false;
+	window.event.cancelBubble = true;
+		
+}
+//called by player
+function ltv_getHeight()
+{
+	return 88;
+}
+
+function setSubtitle(sSub)
+{
+	subtitleDiv.innerText = sSub;
+}
+
+function closeThis()
+{
+	try{
+		external.ToggleSubtitles(0);
+	} catch(e){throw e;}
+}
+
+function showOptions()
+{
+	window.event.returnValue = false; 
+	try{
+		external.ShowVideoOptions(external.GetPlayingVideoID());
+	}
+	catch(e){}
+}
+///--------------------------
+var gVideoID = null; 
+var xmlhttp = null;
+
+function selectSubtitle()
+{
+	try{
+		external.SelectSubtitle(subSelect.value, gVideoID);
+	}
+	catch(e){}
+}
+
+function addSubLanguage(subLang)
+{
+	for (var k = 0; k < subSelect.options.length; k++)
+	{
+		if (subSelect.options[k].value == subLang)
+			return;
+	}
+	subSelect.options.add(new Option(subLang, subLang));
+}
+
+function selectActiveLanguage(subLang)
+{
+	subSelect.value = subLang;
+}
+
+function xmlhttpChange()
+{
+	var bOk = false;
+	if (xmlhttp.readyState==4)
+	{
+		if (xmlhttp.status && xmlhttp.status==200)
+		{
+			var aList = new Array;
+			if (xmlhttp.responseText.length > 0 && xmlhttp.responseText.charAt(0) == '[')
+			{
+				aList = eval(xmlhttp.responseText);
+
+				//remove all current items
+				//for (var i = 0; i <= subSelect.options.length; i++)
+					//subSelect.options.remove(0);
+	
+				if (aList.length > 0)
+				{
+					bOk = true;
+					//subSelect.options.add(new Option('None',''));
+					for (var k = 0; k < aList.length; k++)
+						addSubLanguage(aList[k]);
+				}
+			}
+		}
+
+		if (bOk)
+			subSelect.disabled = false; 		
+	}
+}
+
+function refreshSubtitles(subURL, videoID)
+{
+	gVideoID = videoID; 
+	xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	if(xmlhttp) {
+		url = subURL + "?videoID=" + gVideoID + "&sid=" + Math.random();
+		xmlhttp.onreadystatechange = xmlhttpChange;
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send("");
+	}
+}
+
+</script>
+</body>
+</html>

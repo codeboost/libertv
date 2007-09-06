@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'Liber2Player'
+		'Liber2Player.EXE'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}

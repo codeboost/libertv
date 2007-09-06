@@ -1,0 +1,72 @@
+<script src="mplayer.js"></script>
+<script>
+
+function ltv_onBodyLoaded ()
+{
+	try{
+		external.PostPlayerMessage(LTV_WM_Notify, LTV_PluginInitComplete, S_OK); 
+	}
+	catch(e){}
+}
+
+function ltv_onMediaLoaded(bSuccess)
+{
+	external.PostPlayerMessage(LTV_WM_Notify, LTV_PluginMediaReady, bSuccess ? S_OK : E_FAIL);
+}
+
+function ltv_loadMedia(url){
+	vLoadedURL = url; 
+	contentFrame.location.href=url;
+}
+
+function ltv_play(){
+	
+}
+
+function ltv_pause(){
+}
+
+function ltv_setVolume(volume){
+	volume = Math.min(0,volume);
+	volume = Math.pow(10, volume / 5000 + 2); 
+	volume = Math.max(Math.min(volume, 100), 0); 
+	//Player.settings.volume = volume;
+}
+
+function ltv_getVolume()
+{
+	
+}
+
+function ltv_setPosition(position){
+	//position is in milliseconds. Must convert to seconds
+//	Player.controls.currentPosition = position / 1000; 
+}
+
+
+function ltv_getState(){
+	//return Player.status; 
+	return "playing";
+}
+
+function ltv_getPosition(){
+	//return "" + Math.floor(Player.controls.currentPosition * 1000);
+}
+
+
+function ltv_getDuration(){
+	//return "" + Math.floor(Player.currentMedia.duration * 1000);
+}
+
+function ltv_onClipComplete(){
+	try{
+	external.PostPlayerMessage(LTV_WM_Notify, LTV_PluginPlaybackFinished, S_OK); 
+	} catch(e){}
+}
+</script>
+<frameset rows="100%" onLoad="ltv_onBodyLoaded()" style="margin:0px;">
+    <frame name="contentFrame" src="" marginwidth="100%" marginheight="100%" scrolling="auto" frameborder="0">
+</frameset>
+
+
+

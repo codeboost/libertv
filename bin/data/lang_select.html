@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="ROBOTS" content="INDEX, FOLLOW" />
+<meta name="GOOGLEBOT" content="INDEX, FOLLOW" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>LiberTV - Select Server</title>
+
+<style>
+	.table_border {
+		xborder:1px solid #000;
+	}
+	.td_border {
+		border:10px solid #FFF;
+		background-image:url(images/lang_select/grey_bg.gif);
+		background-repeat:repeat-x;
+		background-position:bottom;
+	}
+	.grey_bg {
+		background-image:url(images/lang_select/grey_bg.gif);
+		background-repeat:repeat-x;
+	}
+	select {
+		width:297px;
+		border:1px solid #b8b8b8;
+		padding:2px;
+	}
+	input {
+		background-image:url(images/lang_select/bt_continue.gif);
+		width:110px;
+		height:25px;
+		border:0;
+	}
+</style>
+
+<script language="JavaScript">
+
+
+function addServer(a, strName, strURL, strSiteURL, strLang)
+{
+	var aServer = new Object; 
+	aServer.SiteURL = strSiteURL; 
+	aServer.ChannelGuideURL = strURL; 
+	aServer.Lang = strLang; 
+	aServer.Name = strName; 
+	a.push(aServer);
+}
+
+var aServers = new Array;
+var g_CurrentServer = "";
+
+addServer(aServers, "LiberTV.RO :: Romania (Bucharest) :: Romanian","http://channelguide.libertv.ro/guide/", "http://www.libertv.ro/", "RO");
+addServer(aServers, "LiberTV.TV :: International :: English", "http://channelguide.libertv.tv/guide/", "http://www.libertv.tv/", "EN");
+addServer(aServers, "Democracy Channelguide :: International :: English", "https://channelguide.participatoryculture.org/", "http://www.libertv.tv/", "EN");
+addServer(aServers, "Vuze", "http://www.vuze.com/content/FeaturedContent.html", "http://www.libertv.ro/", "EN");
+//addServer(aServers, "HD-Bits :: Romania :: Romanian", "http://www.hd-bits.ro/", "http://www.libertv.ro/", "RO");
+//addServer(aServers, "DOCS :: Romania :: Romanian", "http://docs.torrents.ro/", "http://www.libertv.ro/", "RO");
+//addServer(aServers, "TV Torrents :: Romania :: Romanian", "http://tv.torrents.ro/", "http://www.libertv.ro/", "RO");
+
+
+function setServer(srvIndex){
+	try{
+		if (srvIndex < aServers.length)
+		{
+			var srv = aServers[srvIndex];
+			external.SetServer(srv.SiteURL, srv.ChannelGuideURL, srv.Lang, ""); 
+		}
+	} catch(e){
+
+	}
+}
+
+function setCurrentServer(strGuideURL)
+{
+	g_CurrentServer = strGuideURL;
+}
+
+function FillCombo(pCombo)
+{
+	for (var k = 0; k < aServers.length; k++)
+	{
+		pCombo.options.add(new Option(aServers[k].Name, k));
+	}
+	
+	for (var k = 0; k < aServers.length; k++)
+	{
+		if (g_CurrentServer.indexOf(aServers[k].ChannelGuideURL) != -1 || g_CurrentServer == aServers[k].ChannelGuideURL)
+		{
+			server.value = k; 
+			break; 
+		}
+	}
+	
+}
+</script>
+</head>
+<body scroll="no" style="margin: 0 0 0 0;" onload="FillCombo(server)">
+	<table cellpadding="0" cellspacing="0" width="553" class="table_border">
+		<tr>
+			<td width="553" height="277" class="td_border">
+				<table cellpadding="0" cellspacing="0">
+					<tr>
+						<td valign="middle">
+							<div style="float:left;"><img src="images/lang_select/ze_globe.gif" alt="" /></div>
+							<div style="float:left;">
+								<div style="padding-top:40px;"><img src="images/lang_select/ze_text.gif" alt="" /></div>
+								<div><select name="server" style="font-size: 10px;">
+								</select></div>
+								<div style="padding-top:10px;"><input type="submit" value="" onclick="setServer(server.value)"/></div>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

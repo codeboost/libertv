@@ -1,0 +1,98 @@
+<ltv_interface>
+<!--
+LiberTV Interface Defintion File. 
+-->
+<control id="toolbar" left="0" right="1" top="0" height="50">
+		<control type="button" id="btnBack" left="10" top="8" width="31" height="31">
+			<images 
+				normal="data\\interface\\toolbar\\rewind_bt.bmp" 
+				hover="data\\interface\\toolbar\\rewind_bt.bmp" 
+				click="data\\interface\\toolbar\\rewind_bt_p.bmp" 
+				disabled="data\\interface\\toolbar\\rewind_bt.bmp" 
+			/>
+			<img type="normal" src="data\\interface\\toolbar\\rewind_bt.bmp" />
+			<img type="hover"  src="data\\interface\\toolbar\\rewind_bt.bmp" />
+			<img type="click"  src="data\\interface\\toolbar\\rewind_bt_p.bmp" />
+			<img type="disabled" src="data\\interface\\toolbar\\rewind_bt.bmp" />
+		</control>
+	
+		<control type="button" id="btnPlay" left="51" top="8" width="31" height="31">
+			<images 
+				normal="data\\interface\\toolbar\\play_bt.bmp" 
+				hover="data\\interface\\toolbar\\play_bt.bmp" 
+				click="data\\interface\\toolbar\\play_bt_p.bmp" 
+				disabled="data\\interface\\toolbar\\play_bt.bmp" 
+				alt_normal="data\\interface\\toolbar\\play_bt.bmp" 
+				alt_hover="data\\interface\\toolbar\\play_bt.bmp" 
+				alt_click="data\\interface\\toolbar\\play_bt_p.bmp" 
+				alt_disabled="data\\interface\\toolbar\\play_bt.bmp" 
+			/>
+		</control>
+		
+		<control type="button" id="btnFwd" left="92" top="8" width="31" height="31">
+			<images 
+				normal="data\\interface\\toolbar\\forward_bt.bmp" 
+				hover="data\\interface\\toolbar\\forward_bt.bmp" 
+				click="data\\interface\\toolbar\\forward_bt_p.bmp" 
+				disabled="data\\interface\\toolbar\\forward_bt.bmp" 
+			/>
+		</control>
+		
+		<control type="button" id="btnStop" left="133" top="8" width="31" height="31">
+			<images
+				normal="data\\interface\\toolbar\\stop_bt.bmp"
+				hover="data\\interface\\toolbar\\stop_bt.bmp"
+				click="data\\interface\\toolbar\\stop_bt_p.bmp"			
+				disabled="data\\interface\\toolbar\\stop_bt.bmp"			
+			/>
+		</control>
+
+	
+	<control type="button" id="btnPrevClip" left="184" top="18" width="11" height="11" background="transparent">
+		<images
+			normal="data\\interface\\toolbar\\prevclip_bt.gif"
+			click="data\\interface\\toolbar\\prevclip_bt_p.gif"
+			hover="data\\interface\\toolbar\\prevclip_bt.gif"
+			disabled="data\\interface\\toolbar\\prevclip_bt.gif"
+		/>
+	</control>
+
+	<control type="button" id="btnNextClip" left="-210" top="18" width="11" height="11" background="transparent">
+		<images
+			normal="data\\interface\\toolbar\\nextclip_bt.gif"
+			click="data\\interface\\toolbar\\nextclip_bt_p.gif"
+			hover="data\\interface\\toolbar\\nextclip_bt.gif"
+			disabled="data\\interface\\toolbar\\nextclip_bt.gif"
+		/>
+	</control>
+
+	<control type="frame" id="volumeFrame" left="-180" right="10" top="8">
+		<images
+			left="data\\interface\\toolbar\\epnamebox_left1.bmp"
+			fill="data\\interface\\toolbar\\epnamebox_multiply.bmp"
+			right="data\\interface\\toolbar\\epnamebox_right1.bmp"
+		/>
+	</control>
+	
+	<control type="frame" id="nameFrame" left="174" right="190" top="8">
+		<images
+			left="data\\interface\\toolbar\\epnamebox_left1.bmp"
+			fill="data\\interface\\toolbar\\epnamebox_multiply.bmp"
+			right="data\\interface\\toolbar\\epnamebox_right1.bmp"
+		/>
+	</control>
+	
+	<control type="hslider" id="seekBarSlider" top="50" left="0" right="1" height="11">
+		<images
+			background = "data\\interface\\toolbar\\slider_bg_fill.bmp"
+			available  = "data\\interface\\toolbar\\slider_avail_fill.bmp"
+			played = "data\\interface\\toolbar\\slider_played_fill.bmp"
+			thumb = "data\\interface\\toolbar\\slider_thumb.gif"
+		/>
+	</control>
+	
+</control>
+
+
+
+</ltv_interface>

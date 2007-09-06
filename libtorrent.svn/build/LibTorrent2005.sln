@@ -1,0 +1,31 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibTorrent VC 2005", "LibTorrent2005.vcproj", "{68EC7C52-0812-4707-A334-ACE4A09BA5CB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Examples", "..\examples\Examples.vcproj", "{6FAF4444-C2CD-4101-87CB-04C64D5D8E28}"
+	ProjectSection(ProjectDependencies) = postProject
+		{68EC7C52-0812-4707-A334-ACE4A09BA5CB} = {68EC7C52-0812-4707-A334-ACE4A09BA5CB}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{68EC7C52-0812-4707-A334-ACE4A09BA5CB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{68EC7C52-0812-4707-A334-ACE4A09BA5CB}.Debug|Win32.Build.0 = Debug|Win32
+		{68EC7C52-0812-4707-A334-ACE4A09BA5CB}.Release|Win32.ActiveCfg = Release|Win32
+		{68EC7C52-0812-4707-A334-ACE4A09BA5CB}.Release|Win32.Build.0 = Release|Win32
+		{6FAF4444-C2CD-4101-87CB-04C64D5D8E28}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6FAF4444-C2CD-4101-87CB-04C64D5D8E28}.Debug|Win32.Build.0 = Debug|Win32
+		{6FAF4444-C2CD-4101-87CB-04C64D5D8E28}.Release|Win32.ActiveCfg = Release|Win32
+		{6FAF4444-C2CD-4101-87CB-04C64D5D8E28}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
+EndGlobal

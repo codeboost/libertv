@@ -1,0 +1,281 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+<link href="styles/toolbar_css.css" rel="stylesheet" type="text/css" />
+
+<script>
+	var BT_GUIDE = 0;
+	var BT_COLLECTION = 1;
+	var BT_FEEDS = 2;
+	var BT_PLAYER = 3;
+	
+	var STATE_INACTIVE = 0;
+	var STATE_ACTIVE = 1;
+	
+	var bVars = false;
+	var g_Toolbar = new Array();
+	var g_Delims = new Array();
+	
+	function g(id) 
+	{ 
+		return document.getElementById (id); 
+	}
+	
+	function mk(idx, name)
+	{
+		g_Toolbar[idx] = new Array();
+		g_Toolbar[idx][STATE_INACTIVE] = g(name + "_inactive");
+		g_Toolbar[idx][STATE_ACTIVE] = g(name + "_active");
+	}
+	
+	function sel(section)
+	{
+		if (!bVars) vars();
+		
+		for (i = 0; i < g_Toolbar.length; ++i)
+		{
+			g_Toolbar[i][STATE_INACTIVE].style.display = i == section ? "none" : "block";	
+			g_Toolbar[i][STATE_ACTIVE].style.display = i == section ? "block" : "none";						
+		}		
+		for (i = 0; i <= g_Toolbar.length; ++i)
+			g_Delims[i].style.display = (i == section || i-1 == section) ? "none" : "block";
+	}
+	
+	function vars () {
+		mk(BT_GUIDE, "channelguide");
+		mk(BT_COLLECTION, "collection");
+		mk(BT_FEEDS, "subscriptions");
+		mk(BT_PLAYER, "player");		
+		
+		for (i = 0; i <= g_Toolbar.length; ++i) g_Delims[i] = g("del_"+i);
+		bVars = true;
+	}
+	
+	function toggleChannelguide () {
+		sel(BT_GUIDE);		
+	}
+	function toggleCollection () {
+		sel(BT_COLLECTION);		
+	}
+	function toggleSubscriptions () {
+		sel(BT_FEEDS);				
+	}
+	function togglePlayer () {
+		sel(BT_PLAYER);		
+	}
+
+function onSelect()
+{
+	if (window.event.srcElement.id != "searchEdit"){
+		window.event.returnValue = false; 
+	}
+}
+document.onselectstart=onSelect;
+document.ondragstart=new Function("return false");
+
+//Sections
+var sectionGuide = 0; 
+var sectionMyCollection = 1; 
+var sectionPlayer = 2; 
+var sectionSubscriptions = 3;
+
+
+//Toolbar commands
+var cmdBack = 1;
+var cmdForward = 2;
+var cmdHome = 3;
+var cmdRefresh = 4;
+var g_section = sectionGuide;
+var gDownloading = 0; 
+
+var lastSelected = null; 
+
+function ltv_getHeight() //called by host 
+{
+	// button heights are 43
+	return 43;
+}
+
+function toggleActiveSection(playerSection)
+{
+	g_section = playerSection; 
+
+	switch(playerSection)
+	{
+		case sectionGuide:
+			toggleChannelguide();
+			break;
+		case sectionMyCollection:
+			toggleCollection();
+			break;
+		case sectionSubscriptions:
+			toggleSubscriptions();
+			break; 
+		case sectionPlayer:
+			togglePlayer();
+			break; 
+	}
+}
+
+function activate(playerSection)
+{
+	window.event.returnValue = false; 
+	toggleActiveSection(playerSection); 	
+	try{external.MF_SetActiveSection(playerSection);}catch(e){}
+	return false; 
+}
+
+function openGuide()
+{
+	activate(sectionGuide);
+}
+
+function openMyCollection()
+{
+	activate(sectionMyCollection);
+}
+
+function openSubscriptions () {
+	activate(sectionSubscriptions);
+}
+
+function openPlayer()
+{
+	activate(sectionPlayer); 
+}
+
+function restoreWindow()
+{
+	try{external.RestoreFullScreen(); }catch(e){}
+	window.event.returnValue = false;
+}
+function openSettings()
+{
+	try{external.OpenSettings()}catch(e){}
+	window.event.returnValue = false; 
+}
+
+function openSelectServer()
+{
+	try{
+		external.ExecCmd("SelectServer", 0, 0); 
+	}catch(e){}
+}
+
+function go(cmd){
+	window.event.returnValue = false; 
+	external.OnToolbarCommand(0, cmd, 0);//}catch(e){}
+	return false; 
+}
+
+function set_active_section (section) {
+	toggleActiveSection(section * 1); 
+}
+
+function showLoading(bShow)
+{
+	if (bShow == 1)
+	{
+		img_buffering.src = "toolbar/buffering_1.gif";
+	}
+	else
+	{
+		img_buffering.src = "toolbar/buffering_0.gif";
+	}
+}
+	
+function onBodyMouseUp()
+{
+	if (window.event.button == 2)
+	{
+		try{
+			external.ShowContextMenu(10, 0); 
+		}
+		catch(e){
+		}
+	}
+}
+
+function showContextMenu() {
+	try{
+		external.ShowContextMenu(10, 0); 
+	}
+	catch(e){
+	}
+}
+
+function onFocus()
+{
+	try{
+		external.SetMainFrameFocus(); 
+	} catch(e){}
+}
+	
+</script>
+
+
+</head>
+<body scroll="no" onclick="onFocus()" onLoad="vars()">
+	<table width="100%" height="43" border="0" cellpadding="0" cellspacing="0" class="bar_bg" id="toolbarTable" onmouseup="onBodyMouseUp()">
+		<tr>
+			<td height="43">
+				<div style="width:auto; float:left; padding:10px;"><img src="toolbar/buffering_0.gif" id="img_buffering" border="0" alt=""/></div>
+				<div style="width:5px; float:left; display:none;" id="del_0"><img src="toolbar/men_delimiter.gif" border="0" alt=""/></div>
+				<!-- CHANNELGUIDE STATES START -->
+				<div style="width:auto; float:left; display:none;" id="channelguide_inactive"><a onfocus="this.blur()" href="#" onclick="openGuide()"><img src="toolbar/channelguidebt_inactive.gif" border="0" alt=""/></a></div>
+				<div style="width:auto; float:left; " id="channelguide_active">
+					<div style="width:5px; float:left;"><img src="toolbar/left_curve.gif" border="0" alt=""/></div>	
+					<div style="width:19px; float:left;"><a href="#" onClick="go(cmdBack);"><img src="toolbar/back_bt.gif" border="0" alt=""/></a></div>
+					<div style="width:auto; float:left;"><img src="toolbar/channelguidebt_active.gif" border="0" alt=""/></div>
+					<div style="width:19px; float:left;"><a href="#" onClick="go(cmdForward);"><img src="toolbar/forward_bt.gif" border="0" alt=""/></a></div>
+					<div style="width:5px; float:left;"><img src="toolbar/right_curve.gif" border="0" alt=""/></div>
+				</div>
+				<!-- CHANNELGUIDE STATES END -->
+				<div style="width:5px; float:left;display:none;" id="del_1"><img src="toolbar/men_delimiter.gif" border="0" alt=""/></div>	
+				<!-- COLLECTION STATES START -->
+				<div style="width:auto; float:left;" id="collection_inactive"><a onfocus="this.blur()" href="#" onclick="openMyCollection()"><img src="toolbar/collectionbt_inactive.gif" border="0" alt=""/></a></div>
+				<div style="width:auto; float:left; display:none;" id="collection_active">
+					<div style="width:5px; float:left;"><img src="toolbar/left_curve.gif" border="0" alt=""/></div>	
+					<div style="width:19px; float:left;"><img src="toolbar/empty.gif" border="0" alt=""/></div>
+					<div style="width:auto; float:left;"><img src="toolbar/collectionbt_active.gif" border="0" alt=""/></div>
+					<div style="width:19px; float:left;"><img src="toolbar/empty.gif" border="0" alt=""/></div>
+					<div style="width:5px; float:left;"><img src="toolbar/right_curve.gif" border="0" alt=""/></div>
+				</div>
+				<!-- COLLECTION STATES END -->
+				<div style="width:5px; float:left;" id="del_2"><img src="toolbar/men_delimiter.gif" border="0" alt=""/></div>
+				<!-- SUBSCRIPTIONS STATES START -->
+				<div style="width:auto; float:left;" id="subscriptions_inactive"><a onfocus="this.blur()" href="#" onclick="openSubscriptions()"><img src="toolbar/subscriptions_inactive.gif" border="0" alt=""/></a></div>
+				<div style="width:auto; float:left; display:none;" id="subscriptions_active">
+					<div style="width:5px; float:left;"><img src="toolbar/left_curve.gif" border="0" alt=""/></div>	
+					<div style="width:19px; float:left;"><img src="toolbar/empty.gif" border="0" alt=""/></div>
+					<div style="width:auto; float:left;"><img src="toolbar/subscriptions_active.gif" border="0" alt=""/></div>
+					<div style="width:19px; float:left;"><img src="toolbar/empty.gif" border="0" alt=""/></div>
+					<div style="width:5px; float:left;"><img src="toolbar/right_curve.gif" border="0" alt=""/></div>
+				</div>
+				<!-- SUBSCRIPTIONS STATES END -->
+				<div style="width:5px; float:left;" id="del_3"><img src="toolbar/men_delimiter.gif" border="0" alt=""/></div>
+				<!-- PLAYER STATES START -->
+				<div style="width:auto; float:left;" id="player_inactive"><a onfocus="this.blur()" href="#" onclick="openPlayer()"><img src="toolbar/playerbt_inactive.gif" border="0" alt=""/></a></div>
+				<div style="width:auto; float:left; display:none;" id="player_active">
+					<div style="width:5px; float:left;"><img src="toolbar/left_curve.gif" border="0" alt=""/></div>	
+					<div style="width:19px; float:left;"><img src="toolbar/empty.gif" border="0" alt=""/></div>
+					<div style="width:auto; float:left;"><img src="toolbar/playerbt_active.gif" border="0" alt=""/></div>
+					<div style="width:19px; float:left;"><img src="toolbar/empty.gif" border="0" alt=""/></div>
+					<div style="width:5px; float:left;"><img src="toolbar/right_curve.gif" border="0" alt=""/></div>
+				</div>
+				<!-- PLAYER STATES END -->
+				<div style="width:5px; float:left;" id="del_4"><img src="toolbar/men_delimiter.gif" border="0" alt=""/></div>
+				<div style="width:auto; float:right; padding-left:5px; padding-right:10px;"><img src="toolbar/change_server.gif" alt="Change Server" border="0" usemap="#Map3"/></div>
+				<div style="width:auto; float:right; padding-left:5px; padding-right:5px;"><img src="toolbar/togglesettings.gif" alt="Settings" border="0" usemap="#Map2"/></div>
+				<div style="width:auto; float:right; padding-left:5px; padding-right:5px;"><img src="toolbar/togglemenu.gif" alt="Menu" border="0" usemap="#Map"/></div>
+			</td>
+		</tr>
+	</table>
+
+<map name="Map" id="Map"><area shape="circle" coords="9,20,9" href="#" onclick="showContextMenu()" onfocus="blur()" /></map>
+<map name="Map2" id="Map2"><area shape="circle" coords="9,21,9" href="#" onclick="openSettings()" onfocus="blur()" /></map>
+<map name="Map3" id="Map3"><area shape="circle" coords="9,21,9" href="#" onclick="openSelectServer()" onfocus="blur()" /></map>
+</body>
+</html>

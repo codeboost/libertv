@@ -1,0 +1,7 @@
+To update libtorrent, use the following command:
+
+svn co https://libtorrent.svn.sourceforge.net/svnroot/libtorrent/trunk .
+
+After the update, copy the file pch.hpp, located in ./pch to ./include/libtorrent
+
+Rebuild

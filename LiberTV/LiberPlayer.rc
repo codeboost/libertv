@@ -1,0 +1,610 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Russian resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
+#ifdef _WIN32
+LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
+#pragma code_page(1251)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "1 TYPELIB ""Liber2Player.tlb""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Russian resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU 
+BEGIN
+    POPUP "File"
+    BEGIN
+        MENUITEM "&Settings",                   ID_FILE_SETTINGS
+        MENUITEM SEPARATOR
+        MENUITEM "LiberTV Server...",           ID_FILE_SELECTSERVER
+        MENUITEM "Open URL ...",                ID_FILE_OPENSTATION
+        MENUITEM "Change Collection...",        ID_CHANGE_COLLECTION
+        MENUITEM "Share...",                    ID_FILE_SHARE
+        MENUITEM "&Close",                      ID_FILE_CLOSE
+    END
+    POPUP "View"
+    BEGIN
+        MENUITEM "Channel Guide\tF7",           ID_VIEW_CHANNELGUIDE
+        MENUITEM "Collection\tF8",              ID_VIEW_MYCOLLECTION
+        MENUITEM "Subscriptions\tF9",           ID_VIEW_SUBSCRIPTIONS
+        MENUITEM "Player\tF10",                 ID_VIEW_PLAYER
+        MENUITEM SEPARATOR
+        MENUITEM "Full Screen\tF11",            ID_VIEW_FULLSCREEN
+        MENUITEM "Session Status",              ID_VIEW_SESSIONSTATUS
+    END
+    POPUP "Help"
+    BEGIN
+        MENUITEM "Help\tF1",                    ID_HELP_HELP
+        MENUITEM "About",                       ID_HELP_ABOUT
+    END
+END
+
+IDR_RMENU MENU 
+BEGIN
+    POPUP "Video"
+    BEGIN
+        MENUITEM "Open Video File ...",         ID_FILE_OPENVIDEOFILE
+        MENUITEM "Exit",                        40001
+    END
+END
+
+IDR_TRAY MENU 
+BEGIN
+    POPUP "Tray"
+    BEGIN
+        MENUITEM "Open &Player",                ID_TRAY_OPENPLAYER
+        MENUITEM "Pause &Transfers",            ID_TRAY_PAUSEDOWNLOADS
+        MENUITEM "&Settings",                   IDC_SETTINGS
+        MENUITEM "Log Window",                  ID_TRAY_LOGWINDOW
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       IDC_EXIT
+    END
+END
+
+IDR_DOWNLOAD_STATUS MENU 
+BEGIN
+    POPUP "DSL"
+    BEGIN
+        MENUITEM "&Play",                       IDC_PLAY
+        MENUITEM SEPARATOR
+        MENUITEM "Pau&se",                      IDC_PAUSE
+        MENUITEM "Pause all &except",           IDC_PAUSE_EXCEPT
+        MENUITEM SEPARATOR
+        MENUITEM "&Remove",                     IDC_REMOVEDOWNLOAD
+        MENUITEM "Remove and discard files",    IDC_REMOVEANDDISCARD
+    END
+END
+
+IDR_CHANNELGUIDE MENU 
+BEGIN
+    POPUP "Channel Guide"
+    BEGIN
+        MENUITEM "Home",                        ID_CHANNELGUIDE_HOME
+        MENUITEM SEPARATOR
+        MENUITEM "Copy",                        ID_CHANNELGUIDE_COPY
+        MENUITEM "Paste",                       ID_CHANNELGUIDE_PASTE
+    END
+END
+
+IDR_MAINFRAME1 MENU 
+BEGIN
+    POPUP "File"
+    BEGIN
+        MENUITEM "&Settings",                   ID_FILE_SETTINGS
+        MENUITEM SEPARATOR
+        MENUITEM "Open Station...",             ID_FILE_OPENSTATION
+        MENUITEM "&Close",                      ID_FILE_CLOSE
+    END
+    POPUP "View"
+    BEGIN
+        MENUITEM "Channel Guide\tF7",           ID_VIEW_CHANNELGUIDE
+        MENUITEM "My Collection\tF8",           ID_VIEW_MYCOLLECTION
+        MENUITEM "Player\tF9",                  ID_VIEW_PLAYER
+        MENUITEM SEPARATOR
+        MENUITEM "Full Screen\tF11",            ID_VIEW_FULLSCREEN
+    END
+    POPUP "Help"
+    BEGIN
+        MENUITEM "Help\tF1",                    ID_HELP_HELP
+        MENUITEM "About",                       ID_HELP_ABOUT
+    END
+    POPUP "Main"
+    BEGIN
+        POPUP "File"
+        BEGIN
+            MENUITEM "Settings",                    ID_FILE_SETTINGS40099
+        END
+        MENUITEM "View",                        ID_MAIN_VIEW
+        MENUITEM "Help",                        ID_MAIN_HELP
+    END
+END
+
+IDR_MENU2 MENU 
+BEGIN
+    POPUP "Player"
+    BEGIN
+        MENUITEM "Full screen\tF",              ID_PLAYER_FULLSCREEN
+        MENUITEM "Cycle Subtitles\tS",          ID_PLAYER_CHANGESUBTITLE
+        MENUITEM "Cycle Aspect Ratio\tA",       ID_PLAYER_CYCLEASPECTRATIO
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_MAIN                ICON                    "icon1.ico"
+IDI_NOT_CONNECTABLE     ICON                    "icons\\main1.ico"
+IDI_ICON2               ICON                    "not_connectable.ico"
+IDI_COLLECTION          ICON                    "download_folder.ico"
+IDI_TESTICON            ICON                    "icons\\ico00001.ico"
+IDI_ICON_PAUSED         ICON                    "icons\\ico00002.ico"
+IDI_ICON_QUEUED         ICON                    "icons\\icon3.ico"
+IDI_ICON_RSS            ICON                    "icons\\icon4.ico"
+IDI_ICON_RSS_AUTO       ICON                    "icons\\ico00003.ico"
+IDI_ICON_FINISHED       ICON                    "icons\\complete.ico"
+IDI_ICON_IN_PROGRESS    ICON                    "icons\\in_progress.ico"
+IDI_ICON_ERROR          ICON                    "icons\\error.ico"
+IDI_ICON_QUEUED1        ICON                    "icons\\icon_que.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_LIBER2PLAYER        REGISTRY                "Liber2Player.rgs"
+IDR_FHTMLEVENTHANDLER   REGISTRY                "FHtmlEventHandler.rgs"
+IDR_FHTMLEVENTDISPATCHER REGISTRY                "FHtmlEventDispatcher.rgs"
+IDR_FDOCHOSTUIHANDLER   REGISTRY                "FDocHostUIHandler.rgs"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_WAIT DIALOGEX 0, 0, 118, 54
+STYLE DS_SETFONT | DS_SETFOREGROUND | WS_POPUP | WS_BORDER
+EXSTYLE WS_EX_TOPMOST | WS_EX_TOOLWINDOW
+FONT 8, "Tahoma", 400, 0, 0xCC
+BEGIN
+    CTEXT           "Retrieving download info...",IDC_STATIC,7,38,104,8
+    CONTROL         149,IDC_STATIC,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_SUNKEN,7,7,102,31
+END
+
+IDD_OPENMTT DIALOGEX 0, 0, 244, 58
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Open Video"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,134,37,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,187,37,50,14
+    EDITTEXT        IDC_EDIT1,7,20,229,12,ES_AUTOHSCROLL
+    LTEXT           "Enter URL of the Metatorrent (.mtt):",IDC_STATIC,7,6,118,8
+END
+
+IDD_STORAGE_CHANGE DIALOGEX 0, 0, 188, 82
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "LiberTV: Change Storage Folder"
+FONT 8, "Tahoma", 400, 0, 0xCC
+BEGIN
+    CTEXT           "Would you like to delete the files in current storage?\n\nThis will free up the disk space used by current files in storage.",IDC_STATIC,7,7,122,42
+    DEFPUSHBUTTON   "&Leave",IDLEAVE,131,7,50,14
+    PUSHBUTTON      "&Delete",IDDELETE,131,24,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,131,60,50,14
+    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,7,57,174,1
+END
+
+IDD_OPENMTT1 DIALOGEX 0, 0, 244, 102
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Open Video"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Video Name",IDC_STATIC,7,33,38,8
+    EDITTEXT        IDC_EDIT3,7,42,230,12,ES_AUTOHSCROLL
+    LTEXT           "External URL",IDC_STATIC,7,56,42,8
+    EDITTEXT        IDC_EDIT1,7,65,229,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,134,81,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,187,81,50,14
+    CONTROL         149,IDC_STATIC,"Static",SS_BITMAP | SS_CENTERIMAGE | WS_BORDER,135,6,102,31
+END
+
+IDD_LABEL DIALOGEX 0, 0, 212, 58
+STYLE DS_SETFONT | DS_MODALFRAME | DS_SETFOREGROUND | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Add Label"
+FONT 8, "Tahoma", 400, 0, 0x0
+BEGIN
+    LTEXT           "Label:",IDC_STATIC,7,7,73,10
+    EDITTEXT        IDC_LABEL,7,17,198,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,97,37,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,155,37,50,14
+END
+
+IDD_OPEN_STATION DIALOGEX 0, 0, 212, 58
+STYLE DS_SETFONT | DS_MODALFRAME | DS_SETFOREGROUND | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Open Station"
+FONT 8, "Tahoma", 400, 0, 0x0
+BEGIN
+    LTEXT           "Type the station URL:",IDC_STATIC,7,7,73,10
+    EDITTEXT        IDC_STATION_URL,7,17,198,15,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,97,37,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,155,37,50,14
+END
+
+IDD_NEW_VERSION DIALOGEX 0, 0, 244, 66
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "LiberTV - New version available!"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    ICON            IDI_MAIN,IDC_STATIC,7,6,20,20
+    RTEXT           "A new version has been downloaded.\nWould you like to install the update now ?",IDC_STATIC,75,6,162,22
+    DEFPUSHBUTTON   "Install &Now",IDOK,134,45,50,14
+    PUSHBUTTON      "&Later",IDCANCEL,187,45,50,14
+    CONTROL         "Install updates automatically",IDC_AUTO_UPDATE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,49,107,10
+END
+
+IDD_SESSION_STATUS DIALOGEX 0, 0, 252, 234
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+EXSTYLE WS_EX_TOPMOST | WS_EX_TOOLWINDOW
+CAPTION "Session Status"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Close",IDOK,195,213,50,14
+    CONTROL         "",IDC_PEERS,"SysListView32",LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,108,238,98
+    CONTROL         "",IDC_SESSION,"SysListView32",LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,19,238,76
+    CTEXT           "<Select a video in My Collection>",IDC_VIDEO_NAME,7,96,238,9,0,WS_EX_STATICEDGE
+    LTEXT           "Session Status:",IDC_STATIC,7,7,116,12
+END
+
+IDD_SAVE_VIDEO DIALOGEX 0, 0, 260, 109
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Select video folder"
+FONT 8, "Tahoma", 400, 0, 0xCC
+BEGIN
+    LTEXT           "Save downloaded videos in this folder:",IDC_STATIC,8,44,211,8
+    COMBOBOX        IDC_STORAGE_FOLDER,7,55,213,117,CBS_DROPDOWN | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "...",IDC_BROWSE,223,55,16,12
+    RTEXT           "27.32 GB",IDC_FREE_SPACE,7,71,230,8
+    DEFPUSHBUTTON   "OK",IDOK,149,88,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,203,88,50,14
+    LTEXT           "Select a folder with enough free space for LiberTV downloads.\nYou can always change this folder by holding Shift when you start a download or by opening the LiberTV settings dialog.",IDC_STATIC,7,7,246,29
+    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,8,37,245,1
+END
+
+IDD_DOWNLOAD_STARTED DIALOGEX 0, 0, 231, 106
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "LiberTV: Download started"
+FONT 8, "Tahoma", 400, 0, 0x0
+BEGIN
+    ICON            165,IDC_STATIC,7,7,20,20
+    LTEXT           "The download was started in background.\n\nTo see the download status, click the Collection button on the toolbar.",IDC_STATIC,40,7,184,34
+    LTEXT           "You can choose to switch to Collection when you start a download, by checking the 'Switch to collection when starting a download' option in the LiberTV Settings dialog.",IDC_STATIC,40,44,184,29
+    CONTROL         "Do not show this dialog again",IDC_DONT_SHOW_AGAIN,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,40,74,116,10
+    DEFPUSHBUTTON   "Close",IDOK,174,85,50,14
+END
+
+IDD_DIALOG4 DIALOGEX 0, 0, 235, 108
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_WINDOWEDGE
+CAPTION "LiberTV: Chose server"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,123,87,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,178,87,50,14
+    LTEXT           "Please select server:",IDC_STATIC,7,7,187,10
+    LTEXT           "The selected server is used to check for updates, codecs, connectibility, statistics reporting and technical support. It also determines the default language and channel guide for your player.",IDC_STATIC,7,45,221,39
+    COMBOBOX        IDC_COUNTRY,7,19,185,88,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_ADD_FEED DIALOGEX 0, 0, 289, 87
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Add new channel"
+FONT 8, "Tahoma", 400, 0, 0x0
+BEGIN
+    LTEXT           "Channel URL:",IDC_STATIC,7,8,65,8
+    CONTROL         "Automatically determine channel name",IDC_GET_FROM_CHANNEL,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,76,33,139,10
+    LTEXT           "Channel name:",IDC_LABEL_NAME,7,46,59,8
+    EDITTEXT        IDC_FEED_NAME,76,45,206,14,ES_AUTOHSCROLL | WS_DISABLED
+    EDITTEXT        IDC_FEED_ADDRESS,76,7,206,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,177,66,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,232,66,50,14
+    RTEXT           "URL is not valid",IDC_INVALID_URL,194,22,88,10,NOT WS_VISIBLE
+END
+
+IDD_PLUGIN_DOWNLOAD DIALOGEX 0, 0, 262, 90
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Plugin Download"
+FONT 8, "Tahoma", 400, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "Download",IDOK,152,69,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,205,69,50,14
+    GROUPBOX        "Plugin Required",IDC_STATIC,7,7,248,56
+    LTEXT           "LiberTV must download a plugin to play this content. ",IDC_MESSAGE,15,17,233,15
+    CONTROL         "",IDC_PROGRESS1,"msctls_progress32",WS_BORDER,18,38,227,14
+END
+
+IDD_COLLECTION_FOLDER DIALOGEX 0, 0, 294, 66
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "LiberTV Collection Folder"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,183,45,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,237,45,50,14
+    LTEXT           "LiberTV stores the Video Index in this folder:",IDC_STATIC,7,7,224,11
+    EDITTEXT        IDC_FOLDER,7,20,280,12,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "&Change...",ID_CHANGE_FOLDER,7,45,50,14
+END
+
+IDD_REMOVE_VIDEO DIALOGEX 0, 0, 245, 70
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Remove video"
+FONT 8, "Tahoma", 400, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "Cancel",IDCANCEL,188,49,50,14
+    PUSHBUTTON      "Delete",IDOK,133,49,50,14
+    CONTROL         "Don't show this dialog again",IDC_DONT_SHOW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,53,105,10
+    CTEXT           "You are about to delete",IDC_STATIC,7,7,230,13
+    EDITTEXT        IDC_VIDEO_NAME,7,19,230,13,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    CTEXT           "Are you sure ?",IDC_STATIC,7,35,230,10
+END
+
+IDD_SHARE_MOVIE DIALOGEX 0, 0, 302, 225
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Share Video"
+FONT 8, "Tahoma", 400, 0, 0xCC
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,190,204,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,245,204,50,14
+    CONTROL         "",IDC_FILES,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,101,288,72
+    PUSHBUTTON      "Add...",IDC_ADD,7,176,50,14
+    LTEXT           "Files:",IDC_STATIC,7,90,104,10
+    EDITTEXT        IDC_VIDEO_NAME,7,18,288,15,ES_AUTOHSCROLL
+    LTEXT           "Video Name:",IDC_STATIC,7,7,41,8
+    LTEXT           "Description:",IDC_STATIC,7,35,39,8
+    EDITTEXT        IDC_DESCRIPTION,7,47,288,36,ES_MULTILINE | ES_AUTOHSCROLL | ES_WANTRETURN
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_WAIT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 111
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 46
+    END
+
+    IDD_OPENMTT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 237
+        TOPMARGIN, 6
+        BOTTOMMARGIN, 51
+    END
+
+    IDD_STORAGE_CHANGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 181
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 74
+    END
+
+    IDD_OPENMTT1, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 237
+        TOPMARGIN, 6
+        BOTTOMMARGIN, 95
+    END
+
+    IDD_LABEL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 205
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 51
+    END
+
+    IDD_OPEN_STATION, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 205
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 51
+    END
+
+    IDD_NEW_VERSION, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 237
+        TOPMARGIN, 6
+        BOTTOMMARGIN, 59
+    END
+
+    IDD_SESSION_STATUS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 245
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 227
+    END
+
+    IDD_SAVE_VIDEO, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 253
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 102
+    END
+
+    IDD_DOWNLOAD_STARTED, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 224
+        VERTGUIDE, 40
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 99
+    END
+
+    IDD_DIALOG4, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 101
+    END
+
+    IDD_ADD_FEED, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 282
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 80
+    END
+
+    IDD_PLUGIN_DOWNLOAD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 255
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 83
+    END
+
+    IDD_COLLECTION_FOLDER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 287
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 59
+    END
+
+    IDD_REMOVE_VIDEO, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 238
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 63
+    END
+
+    IDD_SHARE_MOVIE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 295
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 218
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_LOGO                BITMAP                  "small_logo.bmp"
+IDB_SAVE                BITMAP                  "download_folder.bmp"
+IDB_UP                  BITMAP                  "icons\\ArrowDown.bmp"
+IDB_DOWN                BITMAP                  "icons\\ArrowUp.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_CONFIRM_REMOVE      "Remove download ?"
+    IDS_WARNING             "Warning"
+    IDS_TRAYWND_ERROR       "Could not create main window."
+    IDS_ERROR               "Error"
+    IDS_FATAL               "Fatal"
+    IDS_ERROR_LOADING_METATORRENT 
+                            "Unable to open file. The format is unrecognized."
+    IDS_ERROR_STARTING_DOWNLOAD "Error starting download."
+    IDS_ERROR_STARTING_PLAYBACK "Error starting playback."
+    IDS_PLAYBACK_ERROR      "Playback error"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+1 TYPELIB "Liber2Player.tlb"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

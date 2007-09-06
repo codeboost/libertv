@@ -1,0 +1,25 @@
+*** LiberTV Player 1.2 ***
+---------------------------
+
+LiberTV este o aplicatie de distributie video pe Internet. TorrentMedia SRL va acorda dreptul de a utiliza gratuit aplicatia pe o perioada
+nedeterminata de timp. Nu se acorda garantie in legatura cu functionalitatea corecta a aplicatiei si eventualele incompatibilitati sau 
+pierderi ce pot rezulta in urma utilizarii aplicatiei. 
+
+LiberTV Player utilizeaza banda de upload pentru a transmite parti din materialele video altor utilizatori ai retelei LiberTV. Instaland aplicatia, declarati
+ca sunteti de acord cu eventuala utilizare a conectiunii si a resurselor hardware ale PC-ului dumneavoastra, chiar daca, in anumite situatii, aceasta
+poate provoca depasiri ale traficului inclus in pachetul dumneavoastra de Internet si tarifare suplimentara din partea ISP (in cazul pachetelor cu contorizare de trafic).
+
+Privacy
+LiberTV va transmite date despre download-uri, vizionari si versiunea instalata catre serverele TorrentMedia pentru scopuri statistice.
+TorrentMedia NU va permite accesul unor persoane terte la datele contului dumneavoastra si nu va face publice aceste date. 
+
+(c) 2006, 2007 LiberTV Media, Bucuresti, Romania.
+
+--------------------
+
+LiberTV is freeware. Absolutely no warranty. 
+
+
+(c) 2006, 2007 LiberTV Media, Bucharest, Romania.
+All Rights Reserved. 
+

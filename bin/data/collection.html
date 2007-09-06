@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+<head>
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/collection.js"></script>
+<link href="css/collection.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<script>
+function onLoad()
+{
+	g_VideoElementTemplate = document.getElementById("videoTemplate");
+	onActivated();		
+	setCurrentLabelStr("all");
+}
+</script>
+
+<body scroll="no" onLoad="onLoad()" >
+	
+<div id="bodyDiv" onmousemove="globalMouseMove()" onmouseup="globalMouseUp()" >
+
+<div id="topMainDiv" class="top_main_div">
+	<table cellpadding="0" cellspacing="0" width="100%">
+		<tr>
+			<td>
+				<div style="width:225px;">
+					<div style="margin:0 0 0 15px;"><img src='images/collection_rev/add_label.gif' style="cursor:pointer;" onmouseup="addLabelMouseUp()" onclick="showAddLabel()" title="Add Label" /></div>
+					<div style="margin:0 0 0 15px;"><img src="images/collection_rev/bt_view_labels.gif" style="cursor:pointer;" onclick="toggleLabels()" id="label_toggle" title="Hide/Show Labels" ></div>
+				</div>
+			</td>
+			<td width="100%">
+				<table cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<td><img src="images/collection_rev/delimiter.gif"/></td>
+						<td width="100%">&nbsp;</td>
+						<td><img id="imgPauseAll" src="images/collection_rev/controls/pause_all_0.gif" onmouseup="PauseResumeAll()" title="Pause/Resume all downloads" style="cursor: pointer; padding-left:10px;"></td>
+						<td><img id="imgShowQueued" src="images/collection_rev/controls/view_queued_0.gif" onmouseup="toggleQueued()" alt="" title="Hide/Show Queued" style="cursor: pointer; padding-left:10px;" /></td>
+						<td><img style="cursor: pointer; padding-left:10px;" id="imgShowInProgress" src="images/collection_rev/controls/filter_inprogress_0.gif" onmouseup="toggleInProgress()" title="Hide/Show In Progress" alt="" /></td>
+						<td style="padding:0 10px 0 10px;">
+							<div class="sbox_main">
+								<div class="sbox_left bg_left">
+									<div class="sbox_right bg_right"><input type="text" onselectstart="onSearchSelect()" onmousedown="onSearchMouseDown()" onkeyup="searchStringChange()" id="search_box" title="Type the name of the video you wish to find."/></div>
+								</div>
+							</div>
+						</td>
+						<td style="padding-right: 10px">
+							<img title="Switch to thumbnail view" src="images/collection_rev/controls/list_view.gif" onclick="changeView()" style="cursor: pointer" id="btnChangeView">
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>
+
+	<div id="selection_box"></div>
+	<div id="labels_div">
+		<table cellpadding="0" cellspacing="0" width="100%" id="labelTable">							
+			<tr id="noskin">
+				<td width="21" height="31" id="lblLeft"></td>
+				<td id="lbl">&nbsp;</td>
+				<td id="ctrls" style="border-bottom: 1px solid #5D4020;"></td>
+				<td width="13" style="background-repeat: no-repeat" id="lblRight"></td>
+			</tr>
+			<tr idType="fixed_labelRow" id="lblAll" onclick="setCurrentLabel(this)" label="all">
+				<td width="21" height="31" id="lblLeft" ></td>
+				<td valign="top" id="lbl" class="label_sticky" style="color: #719715" ><img id="img" src="images/collection_rev/label_arrow.gif" align="absmiddle"><span id="labelTitle">ALL</span></td>
+				<td class="label_nosel" id="ctrls" width="10"></td>
+				<td width="13" style="background-repeat: no-repeat" id="lblRight"></td>
+			</tr>
+			<tr idType="fixed_labelRow" id="lblNew" onclick="setCurrentLabel(this)" label="new">
+				<td width="21" height="31" id="lblLeft"></td>
+				<td valign="top" id="lbl" class="label_sticky"><img id="img" src="images/collection_rev/label_arrow.gif" align="absmiddle"><span id="labelTitle">NEW</span></td>
+				<td class="label_nosel" id="ctrls"></td>
+				<td width="13" style="background-repeat: no-repeat" id="lblRight"></td>
+			</tr>					
+			<tr idType="fixed_labelRow" id="lblQueued" onclick="setCurrentLabel(this)" label="queued">
+				<td width="21" height="31" id="lblLeft"></td>
+				<td valign="top" id="lbl" class="label_sticky"><img id="img" src="images/collection_rev/label_arrow.gif" align="absmiddle"><span id="labelTitle">QUEUED</span></td>
+				<td class="label_nosel" id="ctrls"></td>
+				<td width="13" style="background-repeat: no-repeat" id="lblRight"></td>
+			</tr>
+			<tr idType="fixed_labelRow" id="lblDownloading" onclick="setCurrentLabel(this)" label="downloading">
+				<td width="21" height="31" id="lblLeft"></td>
+				<td valign="top" id="lbl" class="label_sticky"><img id="img" src="images/collection_rev/label_arrow.gif" align="absmiddle"><span id="labelTitle">IN PROGRESS</span></td>
+				<td class="label_nosel" id="ctrls"></td>
+				<td width="13" style="background-repeat: no-repeat" id="lblRight"></td>
+			</tr>
+			<tr idType="fixed_labelRow" id="lblSubscribed" onclick="setCurrentLabel(this)" label="subscribed">
+				<td width="21" height="31" id="lblLeft"></td>
+				<td valign="top" id="lbl" class="label_sticky"><img id="img" src="images/collection_rev/label_arrow.gif" align="absmiddle"><span id="labelTitle">SUBSCRIBED</span></td>
+				<td class="label_nosel" id="ctrls"></td>
+				<td width="13" style="background-repeat: no-repeat" id="lblRight"></td>
+			</tr>					
+			<tr idType="fixed_labelRow" onclick="setCurrentLabel(this)" label="unlabeled">
+				<td width="21" height="31" id="lblLeft"></td>
+				<td valign="top" id="lbl" class="label_sticky"><img id="img" src="images/collection_rev/label_arrow.gif" align="absmiddle"><span id="labelTitle">UNLABELED</span></td>
+				<td class="label_nosel" id="ctrls"></td>
+				<td width="13" style="background-repeat: no-repeat" id="lblRight"></td>
+			</tr>
+			<tr idType="noskin">
+				<td id="lblLeft"></td>
+				<td id="lbl"></td>
+				<td id="ctrls" style="border: none">&nbsp;</td>
+				<td style="background-repeat: no-repeat" id="lblRight"></td>
+			</tr>
+			<tr id="tpl_labelRow" onclick="setCurrentLabel(this)" onmouseup="labelMouseUp(this)" onmouseout="labelHideFeedback(this)" onmousemove="labelFeedBack(this)" style="display: none"  label="">
+				<td width="21" height="31" id="lblLeft"></td>
+				<td valign="top" id="lbl" onmousedown="beginLabelDrag(this.parentNode)" class="label_nosel">
+					<table cellspacing="0" cellpadding="0">
+						<tr>
+							<td><img id="img" src="images/collection_rev/label_arrow.gif" align="absmiddle"></td>
+							<td><div style="overflow: hidden; height: 16px" id="labelTitle"></div></td>
+						</tr>
+					</table>									
+				</td>
+				<td id="ctrls" class="label_nosel"><img src="images/collection_rev/bt_delete_lbl.gif" style='cursor: pointer; display: none' id="del" onclick='deleteLabel(this)'></td>
+				<td width="13" style="background-repeat: no-repeat" id="lblRight"></td>
+			</tr>
+		</table>
+	</div><!-- labels div-->
+	<div id="collection_div" class="collectionDiv" onmousedown="collectionMouseDown()" >				
+ 		<div id="collectionHeader">
+			<div style="width:100%; padding-bottom:10px;" >
+				<div style="float:right;" id="page_selection" style="display: none">
+					<div style="float:left; padding-right:10px;"><img title="Go to previous page" id="prevPageBtn" src="rssfeeds/previous_page.gif" id="btnPrevPage" onmousedown="prevPageDown()" onmouseleave="genericButtonMouseLeave(this); " onmouseenter="genericButtonMouseEnter(this);" onmouseup="prevPage()" alt=""></div> 
+					<div style="float:left;"><select onChange="refresh(); document.documentElement.focus();" onmousedown="window.event.cancelBubble=true;" id="page" class="cgpageselect"></select></div>
+					<div style="float:left; padding-left:10px;" ><img title="Go to next page" id="nextPageBtn" src="rssfeeds/next_page.gif" id="btnNextPage" alt="" onmousedown="nextPageDown()" onmouseleave="genericButtonMouseLeave(this); " onmouseenter="genericButtonMouseEnter(this);"  onmouseup="nextPage()"></div>
+				</div>
+				<table cellpadding="0" cellspacing="0">
+					<tr>
+						<td><img src="images/collection_rev/sort_by.gif" alt=""/></td>
+						<td><img title="Sort by name" style="cursor: pointer" id="btnSortName" onmousedown="window.event.cancelBubble=true" onmouseup="setSortBy('name')" src="images/collection_rev/sb_name_0.gif"/></td>
+						<td style="padding:0 0 0 10px; cursor: pointer;"><img title="Sort by date" onmousedown="window.event.cancelBubble=true" onmouseup="setSortBy('date')" id="btnSortDate" src="images/collection_rev/sb_date_1_down.gif" alt=""/></td>
+						<td style="padding:0 0 0 10px; cursor: pointer"><img title="Sort by size" onmousedown="window.event.cancelBubble=true" onmouseup="setSortBy('status')" id="btnSortSize" src="images/collection_rev/sb_size_0.gif" alt=""/></td>
+					</tr>
+				</table>
+			</div>
+
+			<div id="infoNoItems">There are no items in this view</div>
+			
+		<div id="videoList">
+			<div class="eptem_main" style="display: none" id="videoTemplate"  onmousedown="showContextMenu(this)" onmouseup="videoMouseUp(this)">
+				<div class="eptem_left">
+					<div class="eptem_right">
+						<div class="eptem_content">
+							<table cellpadding="0" cellspacing="0">
+								<tr>
+									<td width="111" style="padding:7px 0 7px 7px;">
+										<div class="eptem_photo_border" id="imageBackground">
+											<div>
+												<img title="Video thumbnail. Doubleclick to play" src="images/collection_rev/episode_image.gif" ondblclick="playVideo(this.videoID)" onerror="videoImageError(this)" id="videoImage" width="100" height="75" alt="" class="rev_ep_photo" >
+												<img src="rssfeeds/new_star.gif" id="itemNewIcon" style="margin-left: 73px; margin-top: -35px; display: none">
+											</div>
+										</div>
+									</td>
+									<td valign="top" width="100%">
+										<div style="padding:7px 7px 0 7px;">
+											<div class="eptem_details">
+												<div class="eptem_title" title="Doubleclick to see details">
+													<div onmousedown="beginDrag(this.videoElement)" ondblclick="goToVideo(this)" id="videoTitle" class="video_title">&nbsp;</div>
+													<div id="videoLabels" class="videoLabels">{<span id="videoLabelList"></span>}</div>													
+													<div id="itemChannelLink" style="float:left; color:#a7a495; height:15px; overflow:hidden;" class="newsItemChannel" onClick="goToChannelById(this.channelID)"></div>									
+													<div style="padding-left:10px; float:right" onmousedown="removeVideo(this.videoElement)" id="videoDelete"><img title="Delete video from collection" src="images/collection_rev/ep_delete.gif" ></div>
+												</div>
+												<div class="eptem_description" id="videoDescription"></div>
+											</div>
+											<div class="eptem_secdetails">
+												<table cellpadding="0" cellspacing="0" class="rev_info_box">
+													<tr>
+														<td nowrap><div class="ep_sec_details" id="videoDate" 			title="Date added"></div></td>
+														<td nowrap><div class="ep_delimit_dot"><img src="rssfeeds/delimiter_dot.gif" alt=""></div></td>
+														<td nowrap><div class="ep_sec_details" id="videoSize" 			title="Download size"></div></td>
+														<td nowrap><div class="ep_delimit_dot"><img src="rssfeeds/delimiter_dot.gif" alt=""></div></td>
+														<td nowrap><div class="ep_sec_details" id="videoStatus" 		title="Download status"></div></td>									
+														<td nowrap><div class="ep_delimit_dot"><img src="images/collection_rev/rss_icon.gif" title="Click to go to source RSS Channel/Feed" id="btnRSS" style="cursor: pointer" onmousedown="gotoRSS(this)"></div></td>
+														<td nowrap><div class="ep_sec_details" id="videoRSSChannel"></div></td>																			
+														<td nowrap><div class="ep_delimit_dot"><img id="dldSpeedDelimiter" src="rssfeeds/delimiter_dot.gif" alt=""></div></td>
+														<td nowrap><div class="ep_sec_details" id="videoDownloadSpeed" 	title="Download Speed"></div></td>
+														<td nowrap><div class="ep_delimit_dot"><img id="upSpeedDelimiter"  src="rssfeeds/delimiter_dot.gif" alt=""></div></td>
+														<td nowrap><div class="ep_sec_details" id="videoUploadSpeed" 	title="Upload Speed"></div></td>
+														
+														<td width="100%">&nbsp;</td>
+														<td width="100" style="padding-top: 13px">
+															<div class="dwn_progress_0" style="margin-left: 10px;" id="videoProgressBar" onmousedown="pauseVideo(this)"><div class="dwn_progress_1" id="videoProgressComplete"></div></div></div>
+														</td>
+														<td width="100" style="padding-top: 13px">
+															<img style="cursor: pointer; margin-left: 10px;" title="Click to play" src="images/collection_rev/play_bt.gif" title="Download" id="btPlay" onmousedown="genericButtonMouseDown(this)" onmouseleave="genericButtonMouseLeave(this); " onmouseenter="genericButtonMouseEnter(this);"  onmouseup="this.releaseCapture(); if (this.mouseInside) playVideo(this.videoID)">
+														</td>
+													</tr>
+												</table>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		</div>
+	</div> <!-- collection div-->
+	
+	<div id="dragvideo">
+		<div class="img_container">
+			<img id="videoImage" width="100" height="75" src="images/collection_rev/episode_image.gif" alt="" style="border:1px solid #000;" /><div id="videoControls" class="videoControls"><img class="videoControlBtn" src="images/collection_rev/play_bt.gif" id="videoPlayBtn" title="Play"><img class="videoControlBtn" src="images/collection_rev/info_bt.gif" id="videoInfoBtn" title="Video Info"> </div>
+		</div>
+		<div class="episode_title" id="videoTitle"  ondblclick="playVideo(this.videoID)">Lorem ipsum dolor sit amet consecuentur</div>
+	</div>
+	
+	<div style="cursor: default; white-space: nowrap; color: #888; font-family:Arial; font-size:11px; font-weight:bold; position: absolute; z-index: 10; display: none; overflow: hidden" id="draglabel"></div>
+
+</div>
+	
+</body>
+
+</html>
+

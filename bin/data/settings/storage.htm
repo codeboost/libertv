@@ -1,0 +1,63 @@
+<html>
+
+<head>
+<link rel="stylesheet" href="settings.css" type="text/css" />
+<script language="JavaScript" src="settings.js"></script>
+<script>
+function OnSaveStorage()
+{
+	try{external.Conf_OnSaveStorage();}	
+	catch(e){}
+}
+function OnLoadStorage()
+{
+	try{external.Conf_OnLoadStorage();}
+	catch(e){}
+}
+
+function ChangeStorage()
+{
+	function ChangeStorage()
+	{
+		window.event.returnValue=false;
+		try
+		{
+			var aPathCurrent = GetStoragePath(); 
+			aPathNew = external.BrowseForFolder(aPathCurrent);
+			SetStoragePath(aPathNew);
+		}
+		catch(e)
+		{
+		}
+		return false;
+	}
+}
+</script>
+</head>
+
+<body scroll="no" onload="OnLoadStorage(0);">
+<img src="../images/small_logo.jpg" style="float:right;">
+<br>
+<h3 style="font-family: arial">LiberTV: Select Storage</h3>
+<div style="width: 100%; border-bottom: 1px solid grey"></div>
+<br>
+<br>
+Please choose a folder which LiberTV Player will use to store temporary files. It must be on a partition with plenty of free
+space. <br>
+If unsure, leave the default value. You can change the storage folder later in the LiberTV Settings dialog.
+<br><br>
+<br>
+
+<table style="font-size: x-small">
+<tr>
+	<td>Video storage folder: </td>
+	<td>
+	<span width=100 id="storagePath">Storage</span>&nbsp;&nbsp;
+	<a href="" onclick="ChangeStorage()" title="Click to select a different storage folder" style="cursor:pointer;">(change)</a>
+	</td>
+</tr>
+</table>
+<span class=buttons>
+<input type="Submit" onclick="OnSaveStorage()" id="SaveBtn" value=" Save ">
+</span>
+</body>

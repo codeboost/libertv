@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LTVUtil.dll", "LTVUtil.dll.vcproj", "{5EAF3213-F132-40C0-9D19-6265419E772D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LTVUtil.Test", "..\LTVUtil.Test\LTVUtil.Test.vcproj", "{715AA6FE-C544-4FCF-8F0B-5090118E5C44}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5EAF3213-F132-40C0-9D19-6265419E772D} = {5EAF3213-F132-40C0-9D19-6265419E772D}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5EAF3213-F132-40C0-9D19-6265419E772D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5EAF3213-F132-40C0-9D19-6265419E772D}.Debug|Win32.Build.0 = Debug|Win32
+		{5EAF3213-F132-40C0-9D19-6265419E772D}.Release|Win32.ActiveCfg = Release|Win32
+		{5EAF3213-F132-40C0-9D19-6265419E772D}.Release|Win32.Build.0 = Release|Win32
+		{715AA6FE-C544-4FCF-8F0B-5090118E5C44}.Debug|Win32.ActiveCfg = Debug|Win32
+		{715AA6FE-C544-4FCF-8F0B-5090118E5C44}.Debug|Win32.Build.0 = Debug|Win32
+		{715AA6FE-C544-4FCF-8F0B-5090118E5C44}.Release|Win32.ActiveCfg = Release|Win32
+		{715AA6FE-C544-4FCF-8F0B-5090118E5C44}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

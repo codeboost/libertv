@@ -1,0 +1,27 @@
+LiberTV 1.2
+
+General
+This program is freeware. You are granted an unlimited license for its use. You may copy, give it away to friends (which we strongly recommend), reverse engineer and do whatever you like with it, as long as you don't harm yourself and others in the process :).
+
+Copyright Information
+
+LiberTV does not host the content which is available in it's channel guide. Rather, it aggregates content from various sources, and in some cases, you may encounter material that requires a special license to download or view. Although our philosophy is that all information in the world should be free and available to anyone, it is your responsibility to choose not to download or view material that may infringe copyright or is illegal under your jurisdiction.
+
+Resource Usage
+LiberTV may use your hardware resources and bandwidth to transfer chunks of the videos that you have downloaded to other users. It may do that while you are not actively using it. This is called peer-to-peer data transfer and is the technology that makes high definition digital video possible on the Internet.
+Some Internet Service provider plans charge additional amounts based upon the amount of data that is transmitted ("Metered Data Plan"). Video downloads are extremely large data files and so downloading them under a Metered Data Plan may result in very large additional usage charges. If you have such a plan, you, and not LiberTV, are responsible for all additional usage charges by your ISP.
+
+
+Privacy policy
+LiberTV logs your IP address when you download a file, when you start or exit the application and when you are navigating through the channel guide. 
+We keep these logs for statistical and security considerations (to prevent abuse to our servers). We WILL NOT disclose any information about our users to anyone and we do hate spam and spyware as much as you do.
+
+Limitation of Liability
+Although we have spent a lot of time debugging and testing our application, we are not perfect and it is possible that somewhere in the source code, there may still lurk a dark bug, which has your hard disk serial number tattooed on its forehead (what ??). You do realize that we've got nothing to gain from you losing your information or somehow damaging your computer or yourself, but if such an event occurs (which is HIGHLY unlikely), you may not hold LiberTV Media responsible for it. 
+
+Credits
+This software uses the LibTorrent library (www.rasterbar.com) and the VLC Media Player plug-in (www.videolan.org). 
+
+(c) 2006, 2007 LiberTV Media
+All Rights Reserved. 
+

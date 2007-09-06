@@ -1,0 +1,293 @@
+<html>
+<head>
+<script language="JavaScript" src="settings.js"></script>
+<script>
+var lSectionID = 1;
+
+function getProxy(dummy)
+{
+	var addr = document.getElementById("HttpProxy").value;
+	var port = document.getElementById("ProxyPort").value;
+	if (addr && addr != "" && port && port != "") return addr + ":" + port;
+	return "";
+}
+
+function getProxyAuth(dummy)
+{
+	var user = document.getElementById("ProxyUser").value;
+	var pass = document.getElementById("ProxyPass").value;
+	if (user != "" && pass != "") return user + ":" + port;
+	return "";
+}
+
+function setProxy(string)
+{
+	var idx = string.lastIndexOf(':');
+	if (idx >= 0)
+	{
+		document.getElementById("HttpProxy").value = string.substring(0, idx);
+		document.getElementById("ProxyPort").value = string.substring(idx+1);
+	}
+}
+
+function setProxyAuth(string)
+{
+	var idx = string.lastIndexOf(':');
+	if (idx >= 0)
+	{
+		document.getElementById("ProxyUser").value = string.substring(0, idx);
+		document.getElementById("ProxyPass").value = string.substring(idx+1);	
+	}
+}
+
+function validateUpSpeed()
+{
+	var elem = document.getElementById("MaxKBUp");
+	var val = elem.value;	
+		
+	var info = document.getElementById("MaxKBUp-info");
+	if (validateSpeed(val) == false)
+	{
+		errorElement(elem);
+		info.innerHTML = "Valid values are from 0 to 102400";
+		return false;
+	}
+			
+	info.innerHTML = "0 - Unlimited";
+	okElement(elem);	
+	return true;	
+}
+
+function validateDownSpeed()
+{
+	var elem = document.getElementById("MaxKBDown");
+	var val = elem.value;	
+
+	var info = document.getElementById("MaxKBDown-info");
+	if (validateSpeed(val) == false)
+	{
+		errorElement(elem);
+		info.innerHTML = "Valid values are from 0 to 102400";
+		return false;
+	}
+			
+	info.innerHTML = "0 - Unlimited";
+	okElement(elem);	
+	return true;	
+}
+
+function validateDownloads()
+{
+	var elem = document.getElementById("MaxDownloads");
+	var val = elem.value;	
+
+	var info = document.getElementById("MaxDownloads-info");
+	if (validateNumber(val, 1, 8) == false)
+	{
+		errorElement(elem);
+		info.innerHTML = "Valid values are from 1 to 8";
+		return false;
+	}
+			
+	info.innerHTML = "";
+	okElement(elem);	
+	return true;	
+}
+
+function validateConnections()
+{
+	var elem = document.getElementById("MaxConnections");
+	var val = elem.value;	
+	
+	var info = document.getElementById("MaxConnections-info");
+	if (validateNumber(val, 1, 200) == false)
+	{
+		errorElement(elem);
+		info.innerHTML = "Valid values are from 1 to 200";
+		return false;
+	}
+			
+	info.innerHTML = "";
+	okElement(elem);	
+	return true;	
+}
+
+function validatePorts()
+{
+	var elem1 = document.getElementById("ListenPortMin");
+	var val1 = elem1.value;	
+	var info = document.getElementById("ListenPort-info");
+	
+	if (validateNumber(val1, 1, 65536) == false)
+	{
+		errorElement(elem1);
+		info.innerHTML = "Valid values are from 1 to 65536";
+		return false;
+	}
+	okElement(elem1);
+	info.innerHTML = "";	
+	return true;	
+}
+
+function validateProxyPort()
+{
+	var elem = document.getElementById("ProxyPort");
+	var val = elem.value;	
+	var info = document.getElementById("HttpProxy-info");
+	
+	if (validateNumber(val*1, 1, 65536) == false)
+	{
+		errorElement(elem);
+		info.innerHTML = "Wrong port";
+		return false;
+	}
+
+	okElement(elem);
+	info.innerHTML = "";
+	return true;	
+}
+
+
+function doProxy()
+{
+	var addr = document.getElementById("HttpProxy").value;
+	var port = document.getElementById("ProxyPort").value;
+	var portOK = validateProxyPort();
+		
+	if (addr != "" && portOK)
+	{
+		document.getElementById("ProxyUser").disabled = false;
+		document.getElementById("ProxyPass").disabled = false;
+		document.getElementById("ProxyUser").style.background = "#FFF";
+		document.getElementById("ProxyPass").style.background = "#FFF";
+	}
+	else
+	{
+		document.getElementById("ProxyUser").disabled = true;
+		document.getElementById("ProxyPass").disabled = true;
+		document.getElementById("ProxyUser").style.background = "#CCC";
+		document.getElementById("ProxyPass").style.background = "#CCC";
+	}
+}
+
+function checkForm()
+{
+	var a = validateConnections();
+	var b = validatePorts();
+	var d = validateDownSpeed();
+	var e = validateUpSpeed();
+	var f = validateDownloads();
+	
+	if (a && b && d && e && f)
+	{
+		document.getElementById("SaveBtn").disabled = false;
+	}
+	else
+	{
+		document.getElementById("SaveBtn").disabled = true;				
+	}
+}
+
+function testPort()
+{
+	var portvalue = document.getElementById("ListenPortMin").value; 
+	window.open("http://storage1.libertv.ro/connectable.php?port=" + portvalue);
+}
+
+</script>
+<link rel="stylesheet" href="settings.css" type="text/css" />
+</head>
+
+<body scroll="no" onload="OnLoad(lSectionID)" onunload="OnUnload(lSectionID)">
+	<table cellpadding="0" cellspacing="0" width="592">
+		<tr>
+			<td height="76" align="right" valign="middle" colspan="4"><div style="padding-right:20px;"><img src="../images/settings/id_page.gif"/></div></td>
+		</tr>
+		<tr>
+			<td width="98"><a onfocus="this.blur()" href="settings.htm"><img src="../images/settings/tab_general_0.gif" width="98" height="30" border="0" /></a></td>
+			<td width="97"><img src="../images/settings/tab_network_1.gif" width="97" height="30" border="0"/></td>
+			<td width="97"><a onfocus="this.blur()" href="player.htm"><img src="../images/settings/tab_player_0_1.gif" border="0" /></a></td>
+			<td width="100%"><a onfocus="this.blur()" href="codecs.htm"><img src="../images/settings/tab_codecs_0.gif" width="141" height="30" border="0" /></a></td>
+		</tr>
+		<tr>
+			<td colspan="4" valign="top">
+				<table cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<td height="304" class="sett_bg" colspan="3" valign="top">
+							<form name="Network">
+								<table cellpadding="0" cellspacing="0">
+								<tr><td colspan="2" class="cat_text">Network</td></tr>
+									<tr>
+										<td class="temp_text">Maximum Upload Speed</td>
+										<td style="padding-bottom:5px;"><input onBlur="blurMe(this, '0');" id="MaxKBUp" onKeyDown="checkForm()" onKeyUp="checkForm()" align=right type="text" size="5" />&nbsp;KB/s&nbsp;&nbsp;&nbsp;
+										<span id="MaxKBUp-info" class="temp_text">0 - Unlimited</span>
+										</td>
+									</tr>
+								
+								<tr>
+									<td class="temp_text">Maximum Download Speed</td>
+										<td style="padding-bottom:5px;"><input onBlur="blurMe(this, '0');" id="MaxKBDown" onKeyDown="checkForm()" onKeyUp="checkForm()" align=right type="text" size="5" />&nbsp;KB/s&nbsp;&nbsp;&nbsp;
+								<span id="MaxKBDown-info" class="temp_text">0 - Unlimited</span>
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="temp_text">Max concurrent downloads</td>
+										<td style="padding-bottom:5px;"><input onBlur="blurMe(this, '1');" onKeyDown="checkForm()" onKeyUp="checkForm()" id="MaxDownloads" type="text" size="5">&nbsp;&nbsp;&nbsp;
+								<span id="MaxDownloads-info"></span>
+									</td>
+								</tr>
+									
+								<tr>
+									<td class="temp_text">Maximum Connections</td>
+										<td style="padding-bottom:5px;"><input onBlur="blurMe(this, '1');" id="MaxConnections" onKeyDown="checkForm()" onKeyUp="checkForm()" type="text" size="5">&nbsp;&nbsp;&nbsp;
+								<span id="MaxConnections-info" class="temp_text"></span>
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="temp_text">Incoming connections port: </td>
+									<td style="padding-bottom:5px;"><input onBlur="blurMe(this, 3000 + Math.ceil(Math.random() * 62000)); checkForm();" onKeyDown="checkForm()" onKeyUp="checkForm()" id="ListenPortMin" type="text" size="5"> 
+									<input type="Checkbox" id="RandomPort"><span class="temp_text" title="Randomize listen port on each player start">Random port</span>
+										<span id="ListenPort-info" class="temp_text"></span>
+										<input type="button" style="font-size: 10px;" onclick="testPort()" value="Test port">
+									</td>
+								</tr>
+								<tr><td colspan="2" class="cat_text">Proxy</td></tr>
+								<tr>
+								<td class="temp_text">Proxy address</td>
+								<td class="temp_text" style="padding-bottom:5px;"><input onBlur="doProxy()" id="HttpProxy" type="text" size="20">&nbsp;&nbsp;Port: <input type="text" onBlur="doProxy()"  onKeyDown="checkForm()" onKeyUp="checkForm()"  id="ProxyPort" size="5" />
+								<span id="HttpProxy-info"></span>
+								</td>
+								</tr>
+								
+								<tr>
+								<td class="temp_text">Proxy: username</td>
+								<td style="padding-bottom:5px;"><input id="ProxyUser" type="text" size="20">
+								<span id="HttpProxy-info"></span>
+								</td>
+								</tr>
+								
+								<tr>
+								<td class="temp_text">Proxy: password</td>
+								<td><input id="ProxyPass" type="password" size="20">
+								</td>
+								</tr>
+								
+								</table>
+</form>
+
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4" height="40">
+				<div style="float:right; padding-right:10px;"><input type="image" src="../images/settings/cancel_btn.gif" onClick="OnCancel()" id="CancelBtn" value="Cancel" style="padding:0;"></div>
+				<div style="float:right; padding-right:10px;"><input type="image" src="../images/settings/save_btn.gif" onClick="OnSave()" id="SaveBtn" value=" Save " style="padding:0;"></div>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

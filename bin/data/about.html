@@ -1,0 +1,76 @@
+<style>
+body{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#333333;
+	margin: 0;
+	padding: 0;
+}
+#mainDiv{
+	width:320px;
+	height:320px;
+}
+a {
+	text-decoration:none;
+}
+a:hover {
+	color:#333333;
+	text-decoration:underlined;
+}
+</style>
+<script language="JavaScript">
+
+var clipTop = 0;
+
+function timerTick()
+{	
+	var oldOffset = developers.style.top.replace('px', '')*1;
+	if (oldOffset < -developers.offsetHeight)
+		oldOffset = scroller.offsetHeight;
+	oldOffset -= 1;
+		
+	developers.style.top = oldOffset + "px";
+	setTimeout("timerTick()", 70);
+}
+
+function	setPlayerVersion(Version)
+{
+	playerVersion.innerText=Version; 
+}
+
+setTimeout("timerTick()", 70);
+
+</script>
+<html>
+<body scroll="no">
+<div align=center id="mainDiv">
+	<div>
+		<div style="padding-top:10px; padding-bottom:10px;"><img src="images/about/logo.gif" align="top" border="0"/></div>
+		<strong>LiberTV Player</strong> <br>
+		Version <span id="playerVersion">1.2</span>
+	</div>
+	<br>
+	<div id="scroller" style="width: 100%; height: 120px; overflow: hidden;">
+		<div id="developers" style="position: absolute; top: 0px; left: 0px; width: 100%">
+			Team:<br>
+			Florin Braghis<br>
+			Andrei Stoian<br>Octavian Arnaut<br>
+			Elena Brigalda<br>
+			Diana Braghis<br>
+			Remus Munteanu<br>
+			<br>
+			LiberTV uses the LibTorrent <br>technology from Rasterbar Software<br>
+			<a target="_new" href="http://www.rasterbar.com/">http://www.rasterbar.com/</a><br>
+			<br>
+			LiberTV uses technology from the<br> VideoLAN team (VLC Media Player)<br>
+			<a target="_new" href="http://www.videolan.org/">http://www.videolan.org/</a><br>
+		</div>
+	</div>
+	<div style="padding-top: 7px">
+		<a href="http://www.libertv.ro/" target="_newWindow">http://www.libertv.ro/</a>
+	</div>
+(c) 2006 TorrentMedia SRL
+</div>
+
+</body>
+</html>

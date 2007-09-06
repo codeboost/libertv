@@ -1,0 +1,24 @@
+HKCR
+{
+	Liber2Player.FDocHostUIHandler.1 = s 'FDocHostUIHandler Class'
+	{
+		CLSID = s '{6082A7C5-EC78-44FC-961C-2DABA9F85A9E}'
+	}
+	Liber2Player.FDocHostUIHandler = s 'FDocHostUIHandler Class'
+	{
+		CLSID = s '{6082A7C5-EC78-44FC-961C-2DABA9F85A9E}'
+		CurVer = s 'Liber2Player.FDocHostUIHandler.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {6082A7C5-EC78-44FC-961C-2DABA9F85A9E} = s 'FDocHostUIHandler Class'
+		{
+			ProgID = s 'Liber2Player.FDocHostUIHandler.1'
+			VersionIndependentProgID = s 'Liber2Player.FDocHostUIHandler'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{96D08D83-7748-4FF8-8F24-AD4A922548BA}'
+		}
+	}
+}

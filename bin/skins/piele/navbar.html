@@ -1,0 +1,113 @@
+<html>
+<head>
+<link href="styles/controlbar_css.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript" type="text/JavaScript" src="js/config.js"></script>
+<script language="JavaScript" type="text/JavaScript" src="js/navbar.js"></script>
+
+<script>
+function ltv_getHeight(){
+	return 66; 
+}
+
+function onBodyLoad(){
+	var PluginNavbarLoaded = 100; 
+	SeekBar_SetPos(0);
+	try{
+		external.PostPlayerMessage(0, PluginNavbarLoaded, 0); 
+	} catch(e){
+	}
+}
+
+var g_LastPrevNext = 0; 
+function showNextPrev(sShow)
+{
+	var bShow = sShow * 1; 
+	if (g_LastPrevNext != bShow)
+	{
+		btn_prev.style.display = bShow?"inline":"none";
+		btn_next.style.display = bShow?"inline":"none";
+	}
+	g_LastPrevNext = bShow; 
+}
+</script>
+</head>
+<body scroll="no" onclick="onBodyClick()" onmousemove="motion(event)" onmouseup="onBodyMouseUp()" onLoad="onBodyLoad()" onmouseleave="moving=false; scrollVideo(event)" >
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="fnd_bara">
+	<tr>
+		<td><img src="player/spacer.gif" alt="" width="10"/></td>
+		<td height="65" valign="middle"><img src="player/bt_rewind_0.gif" onclick="rewindVideo()" onMouseOver="this.src='player/bt_rewind_hover.gif'" onMouseOut="this.src='player/bt_rewind_0.gif'"  onMouseUp="this.src='player/bt_rewind_hover.gif'" onMouseDown="this.src='player/bt_rewind_pressed.gif'" alt=""/></td>
+		<td><img src="player/spacer.gif" alt="" width="5"/></td>
+		<td valign="middle"><img id="button" src="player/bt_play.gif" onMouseDown="buttonMouseDown()" onMouseOver="buttonOnOver()" onMouseOut="buttonOnOut()" onMouseUp="buttonClick();" alt=""/></td>
+		<td><img src="player/spacer.gif" alt="" width="5"/></td>
+		<td valign="middle" width="100%" nowrap="nowrap">
+			<table cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<td width="7"><img src="player/container_left_margin.gif" alt=""/></td>
+					<td width="13" style="padding-right:8px; display:none;" class="controls_container" id="btn_prev"><img src="player/prev_clip.gif" alt="" title="Previous clip" onClick="playPrev()"/></td>
+					<td width="100%" class="controls_container" style="float:none;">
+						<div>
+							<table width="100%"><tr>
+								<td><div class="movie_title" id="lbl_status">No movie loaded</div></td>
+								<td align="right"><div class="movie_time" id="lbl_timer"></div></td>
+							</table>
+						</div>
+						<div class="progress_bar" id="scroll-bar">
+							<div id="divTotal"></div>
+							<div id="divPlayed" onMouseDown="scrollStart(event)"></div>
+							<div id="divAvail" onMouseDown="scrollStart(event)"></div>							
+						</div>
+					</td>
+					<td class="controls_container" style="float:none; padding:0 10px 0 10px;"><img src="player/buffering_0.gif" alt="" id="img_buffering" /></td>
+					<td width="13" id="btn_next" style="display:none;"><img src="player/next_clip.gif" alt="" title="Next clip" onClick="playNext()"/></td>
+					<td width="7"><img src="player/container_right_margin.gif" alt=""/></td>
+				</tr>
+			</table>
+		</td>
+		<td><img src="player/spacer.gif" alt="" width="5"/></td>
+		<td valign="middle" width="154" nowrap="nowrap">
+			<div>
+				<div class="container_margin"><img src="player/container_left_margin.gif" alt=""/></div>
+				<div class="controls_container" style="width:140px;">
+					<div id="volume-text" style="padding-top:3px;">Volume 50%</div>
+					<div class="progress_bar" onMouseDown="startMove(event); move(event);" onmouseup="endMove();" style="padding-top:10px;">
+			        	<div id="volume-black"></div>
+						<div id="volume-white"></div>
+					</div>
+				</div> 
+				<div class="container_margin"><img src="player/container_right_margin.gif" alt=""/></div>
+			</div>
+		</td>
+		<td><img src="player/spacer.gif" alt="" width="5"/></td>
+		<td valign="middle" width="154" nowrap="nowrap">
+			<table cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<td width="7"><img src="player/container_left_margin.gif" alt=""/></td>
+					<td class="controls_container" style="float:none;" width="100%">
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td valign="middle" align="center">
+									<div id="next_prev" style="display:none; padding-top:4px;"><img title="Previous clip" onClick="playPrev()" src="controlbar/previous_clip.gif"/>&nbsp;&nbsp;<img title="Next clip" onClick="playNext()" src="controlbar/next_clip.gif"/></div>								
+									<img onclick="addComment()" style="cursor: pointer" src="player/add_controls/comment_0.gif" onMouseOver="this.src='player/add_controls/comment_1.gif'" onMouseOut="this.src='player/add_controls/comment_0.gif'" alt="Comment" align="absmiddle"/>
+									<img onclick="toggleFullscreen()" style="cursor: pointer" src="player/add_controls/fullscreen_0.gif" alt="Toggle Fullscreen" onMouseOver="this.src='player/add_controls/fullscreen_1.gif'" onMouseOut="this.src='player/add_controls/fullscreen_0.gif'" align="absmiddle"/>
+									<img onclick="videoInfo()" style="cursor: pointer" src="player/add_controls/info_0.gif" alt="Video info" onMouseOver="this.src='player/add_controls/info_1.gif'" onMouseOut="this.src='player/add_controls/info_0.gif'" align="absmiddle"/>
+									<img onclick="toggleSubs()" style="cursor: pointer" src="player/add_controls/subtitles_0.gif" onMouseOver="this.src='player/add_controls/subtitles_1.gif'" onMouseOut="this.src='player/add_controls/subtitles_0.gif'" id="subImage" alt="Toggle Subtitles" align="absmiddle"/>
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td width="7"><img src="player/container_right_margin.gif" alt=""/></td>
+				</tr>
+			</table>
+		</td>
+		<td><img src="player/spacer.gif" alt="" width="10"/></td>
+	</tr>
+</table>
+
+<map name="image7Map" id="image7Map">
+<area shape="circle" coords="16,40,8" href="#" onFocus="this.blur()" onClick="external.ToggleInfoBar()"/>
+</map>
+
+</body>
+</html>
+

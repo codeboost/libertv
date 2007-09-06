@@ -1,0 +1,65 @@
+body {
+	font-family:Arial, Helvetica, sans-serif;
+	background-color:#402100;
+	margin:0 0 0 0;
+	cursor: arrow;	
+}
+
+#float_left {
+	float:left;
+}
+/* XXXXXXXXXXXXXXXXXXXXXXXXXXX QUICK BAR XXXXXXXXXXXXXXXXXXXXXXXXXXXX */
+.qb_main_bg {
+	background-color:#593206;
+}
+.qb_show {
+	padding:10px 0 10px 5px;
+	color:#ecdfd0;
+	background-color:#422504;
+	vertical-align:middle;
+	font-size:13px;
+	font-weight:bold;
+	width:100%;
+	cursor: pointer;
+}
+
+.qb_episode {
+	width:100%;
+	font-size:11px;
+	color:#c1ad95;
+	float:left;
+	padding:10px 0 10px 0;
+	border-bottom:solid 1px;
+	border-color:#6b471f;
+	cursor: pointer;
+}
+
+.qb_episode_hover {
+	width:100%;
+	font-size:11px;
+	color:#333333;
+	background-color:#FFFFFF;
+	float:left;
+	padding:10px 0 10px 0;
+	border-bottom:solid 1px;
+	border-color:#6b471f;
+	cursor: pointer;
+}
+.qb_top {
+	height:23px;
+	text-align:right;
+	vertical-align:top;
+	background-image:url(../images/quickbar/drag_bar_bg.gif);
+	background-repeat:repeat-x;
+	border-bottom:solid 1px #353535;
+}
+.qb_tools {
+	width:100%;
+	background-color:#000000;
+	padding:8px 0 8px 5px;
+}
+.qb_top_bt {
+	float:right; 
+	margin-top:-1px; 
+	padding-right:5px;
+}

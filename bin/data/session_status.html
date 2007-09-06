@@ -1,0 +1,248 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+<link href="css/quickbar.css" rel="stylesheet" type="text/css">
+<style>
+.infdiv{
+	display: inline;
+}
+#peerTable{
+	font-family: Tahoma;
+	font-size: 9px;
+}
+
+</style>
+<script src="js/utils.js"></script>
+
+</head>
+
+<body class="qb_main_bg" scroll="no" onload="onLoad()">
+	<table border="0" class="qb_episode" width="100%">
+	<tr>
+		<td>Torrents: </td><td id="num_torrents">1</td>
+		<td>Num peers</td><td id="num_peers">3</td>
+	</tr>
+	<tr>		
+	</tr>
+	<tr>		
+		<td>Upload rate:</td><td id="upload_rate"></td>
+		<td>Download rate:</td><td id="download_rate"></td>
+	</tr>
+	<tr>		
+		<td>Total upload:</td><td id="total_upload"></td>
+		<td>Total download:</td><td id="total_download"></td>
+	</tr>
+	<tr>
+		<td>Payload download rate:</td><td id="payload_download_rate"></td>
+		<td>Payload upload rate:</td><td id="payload_upload_rate"></td>
+	</tr>
+	<tr>
+		<td>Total payload download:</td><td id="total_payload_download"></td>
+		<td>Total payload upload:</td><td id="total_payload_upload"></td>
+	</tr>
+	
+	</table>
+	<br>
+	<br>
+	<br>
+	
+<div id="currentVideo" style="overflow: scroll; overflow-x: hidden; ">
+	<table border="0" width="100%" class="qb_episode">
+		<tr>
+			<td  id="videoName" style="font-weight: bold"></td>
+			<td  id="videoID"></td>
+			<td  id="numClips"></td>
+		</tr>
+	</table>
+	<div id="videoClips">
+		<div id="sourceClip" class="qb_episode">
+			<div id="clipID" style="display: inline">ClipID: 12</div>; &nbsp;<div id="numPeers" style="display: inline">Peers: 1</div>
+			<table id="peerTable" border="0" width="100%">
+			<tr>
+				<td>ip</td>
+				<td>status</td>
+				<td title="I - Interested; C - Chocked; i - remote interested; c - remote chocked; e - supports extension; l/r - local/remote connection">
+				flags</td>
+				<td>down-speed</td>
+				<td>up-speed</td>
+				<td>total-down</td>
+				<td>total-up</td>
+				<td>client</td>
+			</tr>
+			<tr id="sourcePeer" style="display: none">
+				<td><div class="infdiv" id="peer_ip">1</div></td>
+				<td><div class="infdiv" id="peer_status">2</div></td>
+				<td><div class="infdiv" id="flags">3</div></td>
+				<td><div class="infdiv" id="download_speed">4</div></td>
+				<td><div class="infdiv" id="upload_speed">5</div></td>
+				<td><div class="infdiv" id="total_down">6</div></td>
+				<td><div class="infdiv" id="total_up">7</div></td>
+				<td><div class="infdiv" id="client">8</div></td>
+			</tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
+<script>
+var g_sourceClip = null; 
+var g_sourcePeer = null; 
+window.onresize = onSize;
+function onLoad()
+{
+	g_sourceClip = document.getElementById("sourceClip").cloneNode(true);
+	g_sourcePeer = document.getElementById("peerTable").tBodies[0].rows["sourcePeer"].cloneNode(true);
+	refresh();
+}
+
+function onSize()
+{
+	var newHeight = getWindowHeight() - currentVideo.offsetTop; 
+	if (newHeight < 0)
+		newHeight = 0; 
+	currentVideo.style.height = newHeight + "px"; 
+}
+
+function addPeers(aClip, aPeers)
+{
+	for (var i = 0; i < aPeers.length; i++)
+	{
+		var newPeer = g_sourcePeer.cloneNode(true);
+		newPeer.style.display="block";
+		
+		var peer = aPeers[i];
+		newPeer.all.peer_ip.innerText = peer.ip;
+		newPeer.all.peer_ip.title = peer.country; 
+		newPeer.all.peer_status.innerText = peer.netStatus;
+		newPeer.all.flags.innerText = peer.statusStr;
+		
+		newPeer.all.download_speed.innerText = formatSpeed(peer.downSpeed);
+		newPeer.all.upload_speed.innerText = formatSpeed(peer.upSpeed);
+		newPeer.all.total_down.innerText = formatSize(peer.totalDownload);
+		newPeer.all.total_up.innerText = formatSize(peer.totalUpload);
+		newPeer.all.client.innerText = peer.client; 
+		aClip.all.peerTable.tBodies[0].insertBefore(newPeer);
+	}
+}
+
+function processTorrent(aTorrent)
+{
+	var videoClips = document.getElementById("videoClips");
+	
+	
+	var newClip = g_sourceClip.cloneNode(true); 
+	newClip.all.clipID.innerText = "ClipID: " + aTorrent.clipId;
+	newClip.all.numPeers.innerText = "Peers: " + aTorrent.numPeers;
+	if (aTorrent.m_peers.length > 0)
+		addPeers(newClip, aTorrent.m_peers);
+	
+	videoClips.appendChild(newClip);
+}
+
+function getCloseBtnWidth()
+{
+	return 14; 
+}
+
+function getCaptionHeight()
+{
+	return 23; 	//magic
+}
+
+/*
+       bool has_incoming_connections;
+
+        float upload_rate;
+        float download_rate;
+
+        float payload_upload_rate;
+        float payload_download_rate;
+
+        size_type total_download;
+        size_type total_upload;
+
+        size_type total_payload_download;
+        size_type total_payload_upload;
+
+        int num_peers;
+
+        int dht_nodes;
+        int dht_cache_nodes;
+        int dht_torrents;
+*/
+
+
+function refresh()
+{
+	//processPeers();
+//	return; 
+	//try
+	{
+		//element 0 = global session status
+		//element 1 = currently selected video info
+
+		/*
+			torrent_id, info-hash, peers | peer1 info1, info2, info3 | 	peer2 info1, info2, info3 | peer3, info3, info4;
+			torrent_id, info-hash, peers | peer1 info1, info2, info3 |  peer2 info1, info2, info3;
+			a. split by ; -> a1
+			b. split each a1 by | -> a2
+			c. split each a2 by ,
+		*/
+		var aStatus = new Array; 
+		external.GetSessionStatus(aStatus);
+		
+		var aInfo = new Object; //temporary
+
+		//document.all.has_incomming_connections.innerText = aStatus[0];
+		document.all.num_peers.innerText = aStatus.numPeers;
+		document.all.upload_rate.innerText = formatSpeed(aStatus.uploadRate);
+		document.all.download_rate.innerText = formatSpeed(aStatus.downloadRate);
+		document.all.total_download.innerText = formatSize(aStatus.totalDownload);
+		document.all.total_upload.innerText = formatSize(aStatus.totalUpload);
+		document.all.payload_download_rate.innerText = formatSpeed(aStatus.payloadDownloadRate);
+		document.all.payload_upload_rate.innerText = formatSpeed(aStatus.payloadUploadRate);
+		document.all.total_payload_download.innerText = formatSize(aStatus.payloadDownload);
+		document.all.total_payload_upload.innerText = formatSize(aStatus.payloadUpload);
+		document.all.num_torrents.innerText = aStatus.numTorrents;
+
+		
+		if (aStatus.videoID != null)
+		{
+
+			//video info
+			var videoInfo = document.getElementById("currentVideo");
+			
+			videoInfo.all.videoID.innerText = aStatus.videoID;
+			videoInfo.all.videoName.innerText = aStatus.videoName;
+			videoInfo.all.numClips.innerText = aStatus.numClips;
+			document.getElementById("videoClips").innerHTML = "";
+			processPeers(aStatus.videoID);
+		}
+		
+		setTimeout("refresh()", 1000); 
+	}
+	
+//	catch(e){
+	//	throw e;
+//	}
+}
+
+function processPeers(videoID)
+{
+
+	var aClips = new Array; 
+	external.GetPeerInfo(videoID, this, aClips);
+	for (var i = 0; i < aClips.length; i++)
+	{
+		processTorrent(aClips[i]);
+	}
+	
+}
+
+
+
+</script>
+

@@ -1,0 +1,24 @@
+HKCR
+{
+	Liber2Player.FHtmlEventDispatcher.1 = s 'FHtmlEventDispatcher Class'
+	{
+		CLSID = s '{1F2ECC0C-55B7-4CD0-833F-FB85855F0C7F}'
+	}
+	Liber2Player.FHtmlEventDispatcher = s 'FHtmlEventDispatcher Class'
+	{
+		CLSID = s '{1F2ECC0C-55B7-4CD0-833F-FB85855F0C7F}'
+		CurVer = s 'Liber2Player.FHtmlEventDispatcher.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {1F2ECC0C-55B7-4CD0-833F-FB85855F0C7F} = s 'FHtmlEventDispatcher Class'
+		{
+			ProgID = s 'Liber2Player.FHtmlEventDispatcher.1'
+			VersionIndependentProgID = s 'Liber2Player.FHtmlEventDispatcher'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{96D08D83-7748-4FF8-8F24-AD4A922548BA}'
+		}
+	}
+}
