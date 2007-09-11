@@ -1,4 +1,5 @@
 #summary How to build LiberTV
+#labels Featured
 
 = Building =
 This document describes the steps required to build LiberTV player on your machine. 
@@ -76,5 +77,4 @@ Open the solution LiberTV\LiberTV2005.sln and hit F7 to build it. If everything 
 *6. Hooraaaay ! You've made it !*
 
 You can now go ahead and run the app, by hitting F5.
-
 
