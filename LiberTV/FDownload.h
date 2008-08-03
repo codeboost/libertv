@@ -150,6 +150,7 @@ struct FMediaPlaylist
 {
 	std::vector<FMediaFile> m_Files; 
 	duration_type			m_TotalDurationMS; 
+	FString					m_VideoName; 
 	FMediaPlaylist()
 	{
 		m_TotalDurationMS = 0; 
@@ -162,6 +163,7 @@ struct FMediaPlaylist
 	}
 
 	BOOL GetTimeIndex(duration_type rtIndex, size_t& nIndex, duration_type& rtOffset); 
+	BOOL SavePlaylist(const char* pszFileName);
 };
 
 

@@ -686,8 +686,8 @@ void FDownloadMgr::Notify(FDownloadAlert& alert)
 			if (g_AppSettings.bDeveloperMode)
 			{
 				FString StrMsg; 
-				StrMsg.Format("LiberTV could not listen on port %d. Check settings and specify a different listen port range.", g_AppSettings.m_ListenPort);
-				g_pAppManager->ShowBalloon("LiberTV: Listen Failed", StrMsg, 2000, NIIF_ERROR);
+				StrMsg.Format(LTV_APP_NAME" could not listen on port %d. Check settings and specify a different listen port range.", g_AppSettings.m_ListenPort);
+				g_pAppManager->ShowBalloon(LTV_APP_NAME": Listen Failed", StrMsg, 2000, NIIF_ERROR);
 			}
 		}
 		break; 
@@ -705,7 +705,7 @@ void FDownloadMgr::Notify(FDownloadAlert& alert)
 				StrMsg.Format("Error accessing file: %s. Check storage disk.\n", StrVideoName); 
 			else
 				StrMsg = "Error accessing file. Check the storage disk for errors.";
-			g_pAppManager->ShowBalloon("LiberTV: File Error", StrMsg, 5000, NIIF_ERROR);
+			g_pAppManager->ShowBalloon(LTV_APP_NAME": File Error", StrMsg, 5000, NIIF_ERROR);
 		}
 	default:
 		break; 
@@ -1016,7 +1016,7 @@ void FDownloadMgr::OnDownloadComplete(FDownload* pDownload)
 		pDownload->m_Detail.m_TimeCompleted = time(NULL); 
 		FString StrMsg; 
 		StrMsg.Format("%s has been downloaded.", pDownload->m_Detail.m_VideoName);
-		g_pAppManager->ShowBalloon("LiberTV: Download Complete", StrMsg, 5000, NIIF_INFO); 
+		g_pAppManager->ShowBalloon(LTV_APP_NAME": Download Complete", StrMsg, 5000, NIIF_INFO); 
 	}
 	SaveDownload(pDownload);
 	if (bIncomplete && !pDownload->IsStream())

@@ -64,7 +64,7 @@ HRESULT FDownloadIndex::ConvertIndex( FArray<FDownloadEx*> &pDownloads, const ch
 	if (SUCCEEDED(hr))
 	{
 		CComPtr<IXMLDOMElement> pEle; 
-		hr = m_pDoc->createElement(L"LiberTV", &pEle);
+		hr = m_pDoc->createElement(L LTV_APP_NAME, &pEle);
 		if (pEle)
 		{
 			hr = m_pDoc->appendChild(pEle, NULL);

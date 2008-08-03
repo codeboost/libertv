@@ -111,6 +111,7 @@ struct AppSettings : IAppSettings
 	void		ProcessAutoStart(); 
 	bool		LoadGuides(const tchar* pszGuidesFileName, BOOL bAddToList);
 
+
 	//////////////////////////////////////////////////////////////////////////
 	dword		m_NumVideosInArchive; 
 	dword		m_MaxStorageDays;
@@ -164,6 +165,8 @@ public:
 	}
 
 	void		FillConf(FClipDownloadConfig& aConf); 
+
+	FString		AppName(FString& appendString);
 };
 
 extern AppSettings g_AppSettings; 

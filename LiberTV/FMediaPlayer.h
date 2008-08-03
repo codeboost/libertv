@@ -174,7 +174,6 @@ public:
 	int		GetCurrentClipId(){return m_curClipIndex;}
 	BOOL	PlayClip(int nClipId);
     void    OnMediaFinished(); 
-	void	UpdateTotalDuration(); 
 	void	UpdateLayout(); 
 	void	UpdateMediaTypes();
 	

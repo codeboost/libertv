@@ -91,9 +91,6 @@ BOOL FClipDownloaderEx::LoadConfig()
 	m_TorrentSession->set_max_uploads(m_Config.m_MaxUploads); 
 
 	//HTTP Settings
-//	FString UserAgent ;
-	//UserAgent.Format("LiberTV/%s", m_Config.m_AppVersion); 
-//	UserAgent.Format("µTorrent/1701");
 	session_settings sset;
 	sset.stop_tracker_timeout = 10; 
 	sset.tracker_completion_timeout  = 60; 
@@ -501,7 +498,7 @@ BOOL FClipDownloaderEx::AddTorrent(FDownloadPair* pPair)
 			}
 			//int blockSize = pPair->m_pInfo.m_UrlSeed1.GetLength() > 0 ? 512 * 1024 : 32 * 1024; 
 			boost::filesystem::path StorageDir = pPair->m_pInfo.m_StorageFolder; 
-			tHandle = m_TorrentSession->add_torrent(t, StorageDir, resume_data, true); 
+			tHandle = m_TorrentSession->add_torrent(t, StorageDir, resume_data); 
 
 			tHandle.set_max_uploads(-1);
 			tHandle.set_ratio(1.1);
@@ -1168,7 +1165,7 @@ BOOL FClipDownloaderEx::HashFileEx(FHashFile& pHashFile)
 		
 
 		t.add_file(filePath.leaf(), file_size(filePath));
-		const char* creatorStr = "LiberTV.AutoHasher";
+		const char* creatorStr = LTV_APP_NAME".AutoHasher";
 		int piece_size = 256 * 1024; 
 		t.set_piece_size(piece_size); 
 

@@ -55,7 +55,7 @@ HRESULT FMediaPlayerVLC_C::Init(HWND hWndParent, IMediaPlayerNotify* pNotify)
 		int   ppsz_argc = 1;
 		char *ppsz_argv[32] = { "vlc" };
 
-		FString Pathname = g_AppSettings.AppDir("libertv.exe"); //
+		FString Pathname = g_AppSettings.AppDir(LTV_APP_NAME".exe"); //
 		FString PlugPath = g_AppSettings.AppDir("vlc\\plugins");//
 
 		ppsz_argv[0] = Pathname.GetBuffer();

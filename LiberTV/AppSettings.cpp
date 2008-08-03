@@ -138,7 +138,7 @@ bool AppSettings::LoadSettings()
 
 		if (m_IndexPath.GetLength() == 0 || !PathIsDirectory(m_IndexPath))
 		{
-			m_IndexPath = GetWinUserDirectory("LiberTV Data");
+			m_IndexPath = GetWinUserDirectory(LTV_APP_NAME" Data");
 			if (!EnsureDirExists(m_IndexPath))
 			{
 				if (SelectIndexPath() == -1)
@@ -156,7 +156,7 @@ bool AppSettings::LoadSettings()
 		m_DownloadsFolder =  _RegStr("LastSelectedFolder", LTV_REG_KEY); 
 
 	m_LastGuideURL		 =  _RegStr("LastChannelGuide", LTV_REG_KEY); 
-	m_LogFile = _PathCombine(m_IndexPath, "libertv.log");
+	m_LogFile = _PathCombine(m_IndexPath, LTV_APP_NAME".log");
 
 	
 	//Player
@@ -222,7 +222,7 @@ bool AppSettings::LoadSettings()
 
 	//Register handler and icon for .mtt files
 	FString RegVal = m_ExePath + " \"%1\"";
-    FString KeyName = "LiberTV.Metafile";
+    FString KeyName = LTV_APP_NAME".Metafile";
     SHSetValue(HKEY_CLASSES_ROOT, ".mtt", "", REG_SZ, KeyName.GetBuffer(), KeyName.GetLength()); 
     SHSetValue(HKEY_CLASSES_ROOT, ".vi", "", REG_SZ, KeyName.GetBuffer(), KeyName.GetLength()); 
 	SHSetValue(HKEY_CLASSES_ROOT, ".mtti", "", REG_SZ, KeyName.GetBuffer(), KeyName.GetLength()); 
@@ -234,7 +234,7 @@ bool AppSettings::LoadSettings()
 	if (m_LogEnabled)
 	{
 		g_LogSettings.m_LogEnabled = TRUE; 
-		g_LogSettings.m_LogFileName = StorageDir("libertv.log");
+		g_LogSettings.m_LogFileName = StorageDir(LTV_APP_NAME".log");
 	}
 	return true; 
 }
@@ -261,11 +261,11 @@ void AppSettings::ProcessAutoStart()
 	   FString ExeName = m_ExePath; 
 	   ExeName = ExeName + " /silent";
 
-	   SHSetValue(LTV_REG_ROOT, "Software\\Microsoft\\Windows\\CurrentVersion\\Run", "LiberTV", REG_SZ, ExeName, ExeName.GetLength());  
+	   SHSetValue(LTV_REG_ROOT, "Software\\Microsoft\\Windows\\CurrentVersion\\Run", LTV_APP_NAME, REG_SZ, ExeName, ExeName.GetLength());  
    }
    else
    {
-	   SHDeleteValue(LTV_REG_ROOT, "Software\\Microsoft\\Windows\\CurrentVersion\\Run", "LiberTV"); 
+	   SHDeleteValue(LTV_REG_ROOT, "Software\\Microsoft\\Windows\\CurrentVersion\\Run", LTV_APP_NAME); 
    }
 }
 
@@ -474,4 +474,10 @@ BOOL AppSettings::QueryUserProxy(FString& aProxy, FString& aUser, FString& aPass
 
 
 	return FALSE; 
+}
+
+
+FString AppSettings::AppName(FString& appendString)
+{
+	return FString(LTV_APP_NAME) + appendString;
 }

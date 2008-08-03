@@ -51,7 +51,7 @@ LRESULT FDlgAddFeed::OnOk(WORD wNotifyCode, WORD wID, HWND hWndCtrl, BOOL& bHand
 	GetDlgItemText(IDC_FEED_ADDRESS, StrAddr); 
 	if (!PathIsURL(StrAddr))
 	{
-		MessageBox("Channel URL is not valid. Please check your input", "LiberTV: Invalid URL", MB_OK | MB_ICONWARNING); 
+		MessageBox("Channel URL is not valid. Please check your input", LTV_APP_NAME": Invalid URL", MB_OK | MB_ICONWARNING); 
 		bHandled = TRUE; 
 		return 1; 
 	}
