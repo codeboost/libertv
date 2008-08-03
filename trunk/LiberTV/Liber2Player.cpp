@@ -6,23 +6,18 @@
 #include "Utils.h"
 #include "GlobalObjects.h"		//Metatorrent handler
 #include "FTrayWnd.h"
-#include "FMTStatusString.h"
 #include "FWaitDlg.h"
 #include "vfw.h"
 #include "FIniFile.h"
 #include "FDownloadMgr.h"
 #include "FDocHostUIHandler.h"
-#include "FLabels.h"
-#include "FFirewall.h"
-#include "FClipDownloaderEx.h"
 //////////////////////////////////////////////////////////////////////////
 #include "FHtmlEventDispatcher.h"
 #include "Liber2Player.h"
 #include "TestWindow.h"
-#include "FRSSManager.h"
 #include "AppCheck.h"
-#include "FQuickHttp.h"
 #include "FDownloadIndex.h"
+#include "FFirewall.h"
 
 HINSTANCE g_Instance;
 
@@ -52,7 +47,7 @@ IAppManager*				g_pAppManager = NULL;
 static HANDLE AppRunning = NULL; 
 static HANDLE AppMutex = NULL; 
 BOOL bRestarting = FALSE; 
-#define LTV_MUTEX "LiberTV_Mutex"
+#define LTV_MUTEX LTV_APP_NAME"_Mutex"
 
 
 HWND FindInstance()
@@ -274,8 +269,8 @@ int WINAPI RunWinMain(LPSTR lpCmdLine, int nCmdShow)
 	if (FAILED(iehr) || dwMajor < 6)
 	{
 		FString StrMsg; 
-		StrMsg.Format("LiberTV requires Internet Explorer 6 or later to be installed on your computer.\n\nVersion currently installed: %d.%d.%d", dwMajor, dwMinor, dwBuild); 
-		MessageBox(NULL, StrMsg, "LiberTV: Wrong Internet Explorer version", MB_OK | MB_ICONERROR); 
+		StrMsg.Format(LTV_APP_NAME" requires Internet Explorer 6 or later to be installed on your computer.\n\nVersion currently installed: %d.%d.%d", dwMajor, dwMinor, dwBuild); 
+		MessageBox(NULL, StrMsg, LTV_APP_NAME": Wrong Internet Explorer version", MB_OK | MB_ICONERROR); 
 		return 0; 
 	}
 
@@ -312,16 +307,16 @@ int WINAPI RunWinMain(LPSTR lpCmdLine, int nCmdShow)
 			FDownload_Storage aStorage; 
 			if (aStorage.DeleteStorage(TRUE))
 			{
-				MessageBox(NULL, "Storage removed", "LiberTV", MB_OK | MB_ICONINFORMATION);
+				MessageBox(NULL, "Storage removed", LTV_APP_NAME, MB_OK | MB_ICONINFORMATION);
 			}
 			else
 			{
-				MessageBox(NULL, "Could not remove storage. Please remove all files manually", "LiberTV", MB_OK | MB_ICONWARNING);
+				MessageBox(NULL, "Could not remove storage. Please remove all files manually", LTV_APP_NAME, MB_OK | MB_ICONWARNING);
 				ShellExecute(NULL, "open", g_AppSettings.m_IndexPath, "", "", SW_SHOW); 
 			}
 		}
 		else
-			MessageBox(NULL, "Couldn't determine storage path due to misconfiguration. LiberTV storage was not removed.", "LiberTV", MB_OK | MB_ICONERROR); 
+			MessageBox(NULL, "Couldn't determine storage path due to misconfiguration. "LTV_APP_NAME" storage was not removed.", LTV_APP_NAME, MB_OK | MB_ICONERROR); 
 
 		return -1; 
 	}
@@ -398,7 +393,7 @@ int WINAPI RunWinMain(LPSTR lpCmdLine, int nCmdShow)
 
 	_DBGAlert("*$* Starting Instance. Commandline =  %s\n", lpCmdLine); 
 	
-	HRESULT hr = FFirewall::AddAppToWindowsFirewall(g_AppSettings.m_CmdLine.GetAt(0), "LiberTV Player");
+	HRESULT hr = FFirewall::AddAppToWindowsFirewall(g_AppSettings.m_CmdLine.GetAt(0), LTV_APP_NAME);
 	if (FAILED(hr))
 	{
 		_DBGAlert("*$* Could not add app to windows firewall exceptions list: 0x%8x", hr);
@@ -441,7 +436,7 @@ int WINAPI RunWinMain(LPSTR lpCmdLine, int nCmdShow)
 	}
 	else
 	{
-		MessageBox(NULL, "LiberTV could not initialize. Please reinstall", "Fatal error", MB_OK | MB_ICONERROR);
+		MessageBox(NULL, LTV_APP_NAME" could not initialize. Please reinstall", "Fatal error", MB_OK | MB_ICONERROR);
 	}
 	g_TrayWindow.DestroyWindow(); 
 	_Module.RemoveMessageLoop();

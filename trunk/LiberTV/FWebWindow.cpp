@@ -41,7 +41,7 @@ HRESULT FIEWindow::Navigate(const tchar* pszPath, const tchar* pTargetFrameName,
     m_lMax = m_lCur = 0; 
 	const int c_headerLength = 32; 
 	char VersionHeader[c_headerLength];
-	StringCbPrintf(VersionHeader, c_headerLength, "LiberTV: %s", g_AppSettings.m_AppVersion); 
+	StringCbPrintf(VersionHeader, c_headerLength, LTV_APP_NAME": %s", g_AppSettings.m_AppVersion); 
     return m_pBrowser.Navigate(pszPath, VersionHeader, dwNavFlags); 
 	//SetTimer(1, 1000);
 }

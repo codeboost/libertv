@@ -1,3 +1,35 @@
+/*
+
+Copyright (c) 2007, Florin Braghis (florin@libertv.ro)
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+* Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+* Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in
+the documentation and/or other materials provided with the distribution.
+* Neither the name of the author nor the names of its
+contributors may be used to endorse or promote products derived
+from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+*/
+
 #include "stdafx.h"
 #include "FMediaPlayer.h"
 #include "GlobalObjects.h"
@@ -65,7 +97,7 @@ BOOL IsQuickTime(FString& MediaType)
 		   MediaType.Find("mp4") != -1;
 }
 
-typedef FMediaPlayerVLC_C FPlayerVLC;
+typedef FMediaPlayerVLC_Ex FPlayerVLC;
 
 IFMediaPlayer* FMediaPlayerPool::CreatePlayer(const tchar* pszMediaType, BOOL bForceVLC)
 {
@@ -172,7 +204,7 @@ LRESULT FMediaPlayer::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bH
 	m_pControlBar = g_ControlBar; 
 	m_curClipIndex = -1; 
 	m_PlayCount = 0; 
-	SetWindowText("LiberTV Media Player");
+	SetWindowText(LTV_APP_NAME" Media Player");
 	ATLASSERT(m_pControlBar != NULL); 
 
 	m_LastState = vssMediaEnded;
@@ -409,18 +441,14 @@ void FMediaPlayer::UpdateControlBar()
 		return; 
 	MEDIA_TIME rtCur = GetPosition(); 
 
-	MEDIA_TIME rtTotal = (MEDIA_TIME)m_pVideo.m_Detail.m_TotalDurationMS * DURATION_MULT; 
-	MEDIA_TIME	rtAvail = (MEDIA_TIME)m_MediaFiles.m_TotalDurationMS * DURATION_MULT;
+
+	MEDIA_TIME rtTotal = m_pPlayer->GetDuration(); 
+	MEDIA_TIME rtAvail = rtTotal; 
 
 	if (IsStreaming())
 	{
-		rtTotal = m_pPlayer->GetDuration(); 
 		rtAvail = m_pPlayer->GetAvailDuration();
 	}
-
-	if (rtTotal == 0)
-		rtTotal = m_pPlayer->GetDuration();
-
 
 	if (rtTotal == 0)
 	{
@@ -479,9 +507,6 @@ LRESULT FMediaPlayer::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHa
 			Play(); 
 		}
 	}
-
-	if (m_pVideo.m_Detail.m_TotalDurationMS == 0 && m_MediaFiles.m_TotalDurationMS > 0)
-		m_pVideo.m_Detail.m_TotalDurationMS = m_MediaFiles.m_TotalDurationMS; 
 
 	VideoState aState = m_pPlayer->GetVideoState(); 
 	if (aState == vssPlaying)
@@ -683,10 +708,6 @@ LRESULT FMediaPlayer::OnPluginNotify(UINT uMsg, WPARAM wParam, LPARAM lParam, BO
 				SetVolume(g_AppSettings.m_Volume); 
 				m_bBuffering = FALSE; 
 				m_bDisableUpdate = FALSE; 
-				if (m_pVideo.m_Detail.m_TotalDurationMS == 0)
-				{
-					UpdateTotalDuration();
-				}
 
 				if (!m_bPaused) 
 					Play(); 
@@ -730,7 +751,7 @@ LRESULT FMediaPlayer::OnPluginNotify(UINT uMsg, WPARAM wParam, LPARAM lParam, BO
 		break; 
 	case PluginDownloadQT:
 		{
-			if (MessageBox("This video requires QuickTime or QuickTime alternative to be installed. Would you like to download and install it now ? ", "LiberTV: Quicktime required", MB_YESNO | MB_ICONQUESTION) == IDYES)
+			if (MessageBox("This video requires QuickTime or QuickTime alternative to be installed. Would you like to download and install it now ? ", LTV_APP_NAME": Quicktime required", MB_YESNO | MB_ICONQUESTION) == IDYES)
 			{
 				FString CodecInfo = g_AppSettings.CombineURL(_RegStr("SiteURL"), "codecs.php");
 				ShellExecute(NULL, "open", CodecInfo, "", "", SW_SHOW); 
@@ -792,59 +813,19 @@ HRESULT FMediaPlayer::Stop()
 
 MEDIA_TIME FMediaPlayer::GetDuration()
 {
-	if (m_pVideo.m_Detail.m_TotalDurationMS < 1000)	//less then 1 second looks strange; server may send invalid duration?
-	{
-		UpdateTotalDuration(); 
-	}
-	return m_pVideo.m_Detail.m_TotalDurationMS;; 
+	if (m_curClipIndex == -1)
+		return 0; 
+
+	return m_pPlayer->GetDuration(); 
 }
 
 MEDIA_TIME FMediaPlayer::GetPosition()
 {
 	if (m_curClipIndex == -1)
 		return 0; 
-
-	MEDIA_TIME rtCur = m_pPlayer->GetPosition(); 
-
-	//if video doesn't contain a total duration value, we consider that we have
-	//a group of separate clips and return the duration for current clip only.
-	if (m_pVideo.m_Detail.m_TotalDurationMS > 0)
-	{
-		for (int k = 0; k < m_curClipIndex; k++)
-			rtCur+=m_MediaFiles.m_Files[(size_t)k].m_DurationMS * DURATION_MULT; 					
-	}
-
-	return rtCur; 
+	return m_pPlayer->GetPosition(); 
 }
 
-void FMediaPlayer::UpdateTotalDuration()
-{
-	if (m_curClipIndex >= 0)
-	{
-		if (m_MediaFiles.m_Files[m_curClipIndex].m_DurationMS == 0)
-			m_MediaFiles.m_Files[m_curClipIndex].m_DurationMS = m_pPlayer->GetDuration() / DURATION_MULT; 
-	}
-
-	m_MediaFiles.m_TotalDurationMS = 0; 
-
-	for (size_t k =0; k < m_MediaFiles.m_Files.size(); k++)
-	{
-		m_MediaFiles.m_TotalDurationMS+=m_MediaFiles.m_Files[k].m_DurationMS; 
-	}
-	m_pVideo.m_Detail.m_TotalDurationMS = m_MediaFiles.m_TotalDurationMS; 
-}
-
-//Sets the bool to TRUE in constructor and resets it (FALSE) in destructor
-//Kind of like an auto critical section lock
-class CDisableUpdate
-{
-public:
-	BOOL& m_bVal; 
-	CDisableUpdate(BOOL &bVal): m_bVal(bVal){
-		m_bVal = TRUE; 
-	}
-	~CDisableUpdate(){m_bVal = FALSE;}
-};
 
 HRESULT FMediaPlayer::LoadMedia(size_t nIndex, MEDIA_TIME rtOffset)
 {
@@ -1019,16 +1000,13 @@ HRESULT FMediaPlayer::PlayMT(vidtype videoID, BOOL bStartPaused)
 	{
 		UpdateMediaTypes();
 
-		if (m_pVideo.m_Detail.m_TotalDurationMS == 0)
-		{
-			m_pVideo.m_Detail.m_TotalDurationMS = m_MediaFiles.m_TotalDurationMS; 
-		}
-
 
 		MEDIA_TIME rtPos = 0;
+
 		if (g_AppSettings.m_Flags & PFLAG_RESUME_VIDEOS )
 		{
-			rtPos = m_pVideo.m_Detail.m_PlaybackPosMS * DURATION_MULT; 
+			//rtPos = m_pVideo.m_Detail.m_PlaybackPosMS * DURATION_MULT; 
+			rtPos = 0; 
 		}
 
 		hr = SeekPosition(rtPos);
@@ -1311,11 +1289,6 @@ void FMediaPlayer::UpdateMediaTypes()
 		}
 	}
 
-	m_MediaFiles.m_TotalDurationMS = 0; 
-	for (size_t k = 0; k < m_MediaFiles.m_Files.size(); k++)
-	{
-		m_MediaFiles.m_TotalDurationMS+=m_MediaFiles.m_Files[k].m_DurationMS; 
-	}
 
 	if (bMustSave)
 		g_Objects._DownloadManager.SaveDownload(m_pVideo.m_Detail.m_VideoID); 
@@ -1338,9 +1311,9 @@ void FMediaPlayer::OnCannotPlayContent()
 	if (FileName.GetLength() && IsSafeFile(FileName) && PathFileExists(FileName))
 	{
 		FString Msg;
-		Msg.Format("LiberTV cannot play this media file.\nWould you like to open it with the default application ?\n"\
+		Msg.Format(LTV_APP_NAME" cannot play this media file.\nWould you like to open it with the default application ?\n"\
 			"File name: %s", FileName);
-		int res = MessageBox(Msg, "LiberTV: Cannot play media", MB_YESNO | MB_ICONQUESTION); 
+		int res = MessageBox(Msg, LTV_APP_NAME": Cannot play media", MB_YESNO | MB_ICONQUESTION); 
 		if (res == IDYES)
 		{
 
@@ -1357,7 +1330,8 @@ void FMediaPlayer::OnCannotPlayContent()
 
 BOOL FMediaPlayer::IsPlaylist()
 {
-	return 0 != (m_pVideo.m_Detail.m_VideoFlags & VIDEO_FLAG_IS_PLAYLIST);
+	//return	(m_pVideo.m_Detail.m_VideoFlags & VIDEO_FLAG_IS_PLAYLIST) ||
+	return m_MediaFiles.m_Files.size() > 1; 
 }
 
 BOOL FMediaPlayer::IsStreaming()

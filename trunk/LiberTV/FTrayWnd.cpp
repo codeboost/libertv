@@ -21,7 +21,7 @@ LRESULT FTrayWindow::OnCreate(UINT, WPARAM, LPARAM, BOOL&)
 	m_bTrayIconInstalled = FALSE; 
 	WM_TASKBARCREATED = ::RegisterWindowMessage(_T("TaskbarCreated"));
 
-	SetTrayIcon(IconNormal, "LiberTV Player"); 
+	SetTrayIcon(IconNormal, LTV_APP_NAME); 
 
 	BOOL bOpenMainFrame = TRUE; 
 
@@ -57,7 +57,7 @@ LRESULT FTrayWindow::OnCreate(UINT, WPARAM, LPARAM, BOOL&)
 LRESULT FTrayWindow::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
 	
-	SetTrayIcon(IconShuttingDown, "LiberTV is stopping..."); 
+	SetTrayIcon(IconShuttingDown, LTV_APP_NAME" is stopping..."); 
 	m_bShuttingDown = TRUE; //prevents tray icon/tooltip change
 	if (g_MainFrame.IsObjectAndWindow())
 		g_MainFrame->DestroyWindow(); 
@@ -236,7 +236,7 @@ BOOL FTrayWindow::OpenSettings(HWND hWndParent)
     }
 
 	FRect rc = ScreenCenteredRect(640, 400); 
-	return NULL != m_pConfDialog.Create(hWndParent, rc, "LiberTV: Settings", 
+	return NULL != m_pConfDialog.Create(hWndParent, rc, LTV_APP_NAME": Settings", 
 		WS_DLGFRAME | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_SYSMENU, 
 		WS_EX_STATICEDGE);
 }
@@ -257,7 +257,7 @@ BOOL FTrayWindow::OpenAbout(HWND hWndParent /* = NULL */)
 	if (NULL == hWndParent)
 		hWndParent = m_hWnd; 
 	FRect rc = ScreenCenteredRect(320, 200); 
-	return NULL != m_pAboutDlg.Create(hWndParent, rc, "LiberTV: About", WS_DLGFRAME | WS_SYSMENU | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, WS_EX_STATICEDGE);
+	return NULL != m_pAboutDlg.Create(hWndParent, rc, LTV_APP_NAME": About", WS_DLGFRAME | WS_SYSMENU | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, WS_EX_STATICEDGE);
 }
 
 LRESULT FTrayWindow::OnEndSession(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
@@ -277,14 +277,12 @@ LRESULT FTrayWindow::OnConnectable(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL
 	if (wParam == 1)
 	{
 		m_Connectable = FALSE; 
-	//	SetTrayIcon(IconNotConnectable, "LiberTV - You are not connectible!"); 
 		if (g_MainFrame.IsObjectAndWindow())
 			g_MainFrame->ShowUnconnectableWarning(); 
 	}
 	else
 	{
 		m_Connectable = TRUE; 
-		//SetTrayIcon(IconNormal, "LiberTV Player"); 
 	}
 
 	return 0; 
@@ -364,7 +362,7 @@ LRESULT FTrayWindow::OnTimer(UINT, WPARAM nTimer, LPARAM, BOOL&)
 			m_MsgSync.Lock(); 
 			FString WarningMsg = m_StrMsgWarning; 
 			m_MsgSync.Unlock(); 
-			ShowBalloon("LiberTV: Low disk space", WarningMsg, 2000, NIIF_ERROR);
+			ShowBalloon(LTV_APP_NAME": Low disk space", WarningMsg, 2000, NIIF_ERROR);
 		}
 		break; 
 	case FEED_UPDATE_TIMER:
@@ -378,7 +376,7 @@ LRESULT FTrayWindow::OnTimer(UINT, WPARAM nTimer, LPARAM, BOOL&)
 		if (m_CurrentIcon == IconNormal)
 		{
 
-			FString ToolTipText = "LiberTV Player";
+			FString ToolTipText = LTV_APP_NAME;
 			FString DownloadSpeed; 
 			FString StrCpu; 
 			CCpuUsage usage;
@@ -425,7 +423,7 @@ LRESULT FTrayWindow::OnTrayTest(WORD, WORD, HWND, BOOL&)
 LRESULT FTrayWindow::OnLogWindow(WORD, WORD, HWND, BOOL&)
 {
 	FRect rc = ScreenCenteredRect(500, 480); 
-	m_pLogWnd.Create(m_hWnd, rc, "LiberTV: LogWindow", 
+	m_pLogWnd.Create(m_hWnd, rc, LTV_APP_NAME": LogWindow", 
 		WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, 
 		WS_EX_STATICEDGE | WS_EX_TOOLWINDOW | WS_EX_TOPMOST);
 	return 0; 
@@ -548,7 +546,7 @@ bool FTrayWindow::OpenMainFrame()
 		
 		dword dwStyles = WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN ;
 
-		g_MainFrame.Create(NULL, &rc, "LiberTV Player", 
+		g_MainFrame.Create(NULL, &rc, LTV_APP_NAME, 
 			dwStyles ,   WS_EX_CONTROLPARENT);
 	}
 

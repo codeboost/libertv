@@ -100,20 +100,6 @@ FString FindSubFile(const char* pVideoFileName)
 	return "";
 }
 
-/*
-FString SubPath = FindSubFile(pFileName); 
-
-if (SubPath.GetLength() == 0)
-SubPath = pOptions->m_SubPath;
-
-if (SubPath.GetLength() > 0)
-{
-Options.Append(";:sub-file: ");
-Options.Append(SubPath); 
-
-}
-*/
-
 HRESULT FMediaPlayerVLC_Ex::AddPlaylistItem(const tchar* pFileName, IMediaOptions* pOptions)
 {
 	
@@ -125,7 +111,17 @@ HRESULT FMediaPlayerVLC_Ex::AddPlaylistItem(const tchar* pFileName, IMediaOption
 	LPSAFEARRAY pSA = SafeArrayCreateVector(VT_VARIANT, 0, 1); 
 
 
-	FString Options = ":vout:direct3d;";
+	if (pOptions->m_Vout == "")
+	{
+		//If GetWindowsVersion() == WindowsVista => "direct3d" 
+		//else "directx";
+		pOptions->m_Vout = "direct3d";
+	}
+
+	FString StrVout; 
+	StrVout.Format(":vout=%s;", pOptions->m_Vout); 
+
+	FString Options = StrVout;
 	
 	m_bHasSubs = TRUE; 
 	if (pOptions->m_SubPath.GetLength() > 0)

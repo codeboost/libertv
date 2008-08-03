@@ -210,7 +210,7 @@ void FConfigDialog2::OnSave()
 	 int nRes = g_pAppManager->OnSettingsChanged(&m_AppSettings); 
 	 if (nRes == 1)
      {
-         MessageBox("LiberTV will now restart to apply the new settings.", "LiberTV Settings", MB_OK | MB_ICONINFORMATION);
+         MessageBox(LTV_APP_NAME" will now restart to apply the new settings.", "LiberTV Settings", MB_OK | MB_ICONINFORMATION);
 		 bRestartApp = TRUE; 
      }
 

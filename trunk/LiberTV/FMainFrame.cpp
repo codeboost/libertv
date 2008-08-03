@@ -138,8 +138,8 @@ void FMainFrame::CheckProxyServer()
 		if (g_AppSettings.QueryUserProxy(aProxy, aUser, aPass, aBypass))
 		{
 			FString StrMsg; 
-			StrMsg.Format("LiberTV has determined that you use a proxy to access the Internet:\n%s\nWould you like to use this proxy for LiberTV downloads?\nNote: You can change the proxy later in the LiberTV settings dialog.", aProxy);
-			int nReply = MessageBox(StrMsg, "LiberTV: Proxy Detected", MB_YESNO | MB_ICONQUESTION);
+			StrMsg.Format(LTV_APP_NAME" has determined that you use a proxy to access the Internet:\n%s\nWould you like to use this proxy for "LTV_APP_NAME" downloads?\nNote: You can change the proxy later in the settings dialog.", aProxy);
+			int nReply = MessageBox(StrMsg, LTV_APP_NAME": Proxy Detected", MB_YESNO | MB_ICONQUESTION);
 			if (nReply == IDNO)
 			{
 				_RegSetDword("IgnoreGlobalProxy", 1);
@@ -242,8 +242,12 @@ LRESULT FMainFrame::OnDestroy(UINT, WPARAM, LPARAM, BOOL&)
 	if (!IsWindow())
 		return 0; 
 
+	_DBGAlert("OnDestroy()\n"); 
 	g_Objects._DownloadManager.SetStatus(NULL); 
+	_DBGAlert("HideActiveView()\n"); 
 	m_Container->HideActiveView();
+
+	_DBGAlert("RemoveMessageFilter()\n"); 
 	_Module.GetMessageLoop()->RemoveMessageFilter(this); 
 
 	_SaveWindowPosition(m_hWnd, "MainFrame"); 
@@ -253,13 +257,16 @@ LRESULT FMainFrame::OnDestroy(UINT, WPARAM, LPARAM, BOOL&)
 
 	g_AppSettings.m_LastSection = m_Container->m_CurrentView;
 
-	
+	_DBGAlert("Container->DestroyWindow()\n"); 
 	m_Container->DestroyWindow(); 
+	_DBGAlert("Toolbar->DestroyWindow()\n"); 
 	m_TopBar->DestroyWindow();
 
-	delete m_Container;
-	delete m_TopBar;
+	//delete m_Container;
+	//delete m_TopBar;
 
+	_DBGAlert("Deleted\n"); 
+	_DBGAlert("SetProcessWorkingSetSize...\n"); 
 	SetProcessWorkingSetSize(GetCurrentProcess(), -1, -1); 
 
 	if (m_hConnectable != NULL)
@@ -267,9 +274,13 @@ LRESULT FMainFrame::OnDestroy(UINT, WPARAM, LPARAM, BOOL&)
 	if (m_hNotConnectable)
 		DestroyIcon(m_hNotConnectable); 
 
+	_DBGAlert("RSSManager::ClearChannels()\n"); 
 	g_Objects._RSSManager->ClearChannels();
+	_DBGAlert("AppSettings::SaveSettings()\n");
 	g_AppSettings.SaveSettings(); 
+	_DBGAlert("Post Message\n"); 
 	g_pAppManager->PostMsg(WM_MAINFRAME_CLOSED, WM_DESTROY, 0xabcdef);
+	_DBGAlert("FMainFrame::Destroy() done\n");
 	return 0; 
 }
 
@@ -614,6 +625,39 @@ void FMainFrame::UpdateQuickbarVisibility()
 	}
 }
 
+BOOL SavePlaylist(FArray<FMediaPlaylist>& aVideos, const char* pszFileName)
+{
+	FILE* f = fopen(pszFileName, "w"); 
+
+	if (f == NULL)
+		return FALSE; 
+
+	fputs("#EXTM3U\n", f); 
+	fputs("# Playlist created by LiberTV 1.x\n", f); 
+
+	for (size_t i = 0; i < aVideos.GetCount(); i++)
+	{
+		FMediaPlaylist& aVid = aVideos[i];
+
+		for(size_t k = 0; k < aVid.m_Files.size(); k++)
+		{
+			fprintf(f, "#EXTINF:0,%s (%d)\n", aVid.m_VideoName, k);
+			fputs(aVid.m_Files[k].m_FileName, f); 
+			fputs("\n", f);
+		}
+	}
+	fclose(f); 
+	return TRUE; 
+}
+
+
+BOOL SavePlaylist(FMediaPlaylist& aPlaylist, const char* pszFileName)
+{
+	FArray<FMediaPlaylist> aArray;
+	aArray.Add(aPlaylist); 
+	return SavePlaylist(aArray, pszFileName);
+}
+
 bool FMainFrame::PlayMediaFile(vidtype videoID)
 {
 
@@ -629,12 +673,30 @@ bool FMainFrame::PlayMediaFile(vidtype videoID)
 		}
 	}
 
-	if (m_Container->m_CurrentView != VIEW_PLAYER)
-		m_Container->SwitchActiveView(VIEW_PLAYER, TRUE); 
-
-	if (m_Container->m_pMediaPlayer.IsObjectAndWindow())
+	if (0)
 	{
-		m_Container->m_pMediaPlayer->PlayMT(videoID, FALSE);
+		FMediaPlaylist MPlaylist; 
+		FDownload MediaFile = g_Objects._DownloadManager.GetDownloadInfo(videoID); 
+		if (MediaFile.IsValid())
+		{
+			MediaFile.GetAvailMedia(MPlaylist); 
+
+			FString PlaylistFile = g_AppSettings.StorageDir("temp.m3u");
+			SavePlaylist(MPlaylist, PlaylistFile); 
+			FString Param; 
+			Param.Format("\"%s\"", PlaylistFile); 
+			ShellExecute(NULL, "open", g_AppSettings.AppDir("SMPlayer\\LiberTV Player.exe"), Param, "", SW_SHOW); 
+		}
+	}
+	else
+	{
+		if (m_Container->m_CurrentView != VIEW_PLAYER)
+			m_Container->SwitchActiveView(VIEW_PLAYER, TRUE); 
+
+		if (m_Container->m_pMediaPlayer.IsObjectAndWindow())
+		{
+			m_Container->m_pMediaPlayer->PlayMT(videoID, FALSE);
+		}
 	}
     return true;
 }
@@ -1112,7 +1174,7 @@ BOOL FMainFrame::OpenVideoOptions()
 {
 	FRect r = ScreenCenteredRect(320, 200); 
 	if (!m_pVideoOptions.IsObjectAndWindow())
-		m_pVideoOptions.Create(m_hWnd, r, "LiberTV: Video Options", WS_DLGFRAME | WS_SYSMENU | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_DLGFRAME, 
+		m_pVideoOptions.Create(m_hWnd, r, LTV_APP_NAME": Video Options", WS_DLGFRAME | WS_SYSMENU | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_DLGFRAME, 
 		WS_EX_STATICEDGE | WS_EX_TOPMOST);
 	return TRUE;
 }
@@ -1173,18 +1235,10 @@ LRESULT FMainFrame::OnFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHand
 
 void FMainFrame::ShowUnconnectableWarning()
 {
-	//MessageBox("YOU ARE NOT CONNECTABLE!", "LIBERTV", MB_OK | MB_ICONERROR); 
 	if (m_Container->m_pBrowser.IsObjectAndWindow())
 	{
 		m_Container->m_pBrowser->ShowConnectibleWarning(TRUE);
 	}
-
-/*
-	FClipDownloadConfig aConf; 
-	g_AppSettings.FillConf(aConf);
-	//aConf.m_MaxKBDown = 200; 
-	g_Objects._ClipDownloader->UpdateConfig(aConf); 
-*/
 }
 
 void FMainFrame::ShowMissingCodecDialog(const tchar* pszPath)
@@ -1211,7 +1265,7 @@ LRESULT FMainFrame::OnDownloadLoaded(UINT uMsg, WPARAM wParam, LPARAM lParam, BO
 
 	if (videoID == 0)
 	{
-		MessageBox("LiberTV was unable to download requested file. The format is not recognized.", "LiberTV: Download error", MB_OK | MB_ICONERROR); 
+		MessageBox(LTV_APP_NAME" was unable to download requested file. The format is not recognized.", "LiberTV: Download error", MB_OK | MB_ICONERROR); 
 	}
 	else
 	{
@@ -1268,11 +1322,11 @@ LRESULT FMainFrame::OnMTTDownload(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL&
 		{
 			FString MsgInfo; 
 			if (hr == E_NOINTERFACE)
-				MsgInfo.Format("LiberTV was unable to download requested file. The format is not recognized.");
+				MsgInfo.Format(LTV_APP_NAME" was unable to download requested file. The format is not recognized.");
 			else
-				MsgInfo.Format("LiberTV was unable to download requested file. Error code = 0x%x", hr);
+				MsgInfo.Format(LTV_APP_NAME" was unable to download requested file. Error code = 0x%x", hr);
 
-			MessageBox(MsgInfo, "LiberTV: Download error", MB_OK | MB_ICONERROR);
+			MessageBox(MsgInfo, LTV_APP_NAME": Download error", MB_OK | MB_ICONERROR);
 		}
 		else
 		{
@@ -1361,7 +1415,7 @@ void FMainFrame::GoToRSS(vidtype videoID)
 		{
 			FString Message;
 			Message.Format("You are no longer subscribed to this channel:\n%s\nWould you like to subscribe to it now?", pDown.m_RSSInfo.m_RSSName);
-			if (IDYES == MessageBox(Message, "LiberTV: No channel", MB_YESNO | MB_ICONQUESTION))
+			if (IDYES == MessageBox(Message, LTV_APP_NAME": No channel", MB_YESNO | MB_ICONQUESTION))
 			{
 				DWORD dwChannelId = AddFeedDialog(pDown.m_RSSInfo.m_RSSURL, pDown.m_RSSInfo.m_RSSName);
 				g_AppSettings.m_dwLastChannelId = dwChannelId; 

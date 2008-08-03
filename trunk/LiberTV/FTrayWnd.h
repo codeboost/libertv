@@ -31,7 +31,7 @@ extern CMyServerAppModule _Module;
 
 #define UPDATE_CHECK_TIMEOUT 30 * 1000 * 60		//30 minutes
 
-#define LTV_CLASSNAME "LiberTV_Class"
+#define LTV_CLASSNAME LTV_APP_NAME"_Class"
 
 
 

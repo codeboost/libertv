@@ -34,7 +34,7 @@ LRESULT FDlgSaveVideo::OnOk(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHan
 		if (ERROR_SUCCESS != IsPathWriteable(aSaveFolderOrg))
 		{
 			::SetFocus(GetDlgItem(IDC_STORAGE_FOLDER)); 
-			MessageBox("Cannot write to selected path. Path is read-only or does not exist. Please choose a different folder.", "LiberTV: Invalid path", MB_OK | MB_ICONERROR);
+			MessageBox("Cannot write to selected path. Path is read-only or does not exist. Please choose a different folder.", LTV_APP_NAME": Invalid path", MB_OK | MB_ICONERROR);
 			bHandled = TRUE; 
 			return 1; 
 		}
@@ -61,7 +61,7 @@ LRESULT FDlgSaveVideo::OnOk(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHan
 	else
 	{
 		::SetFocus(GetDlgItem(IDC_STORAGE_FOLDER)); 
-		MessageBox("The entered path is invalid. Please choose a valid folder.", "LiberTV: Invalid input", MB_OK | MB_ICONWARNING);
+		MessageBox("The entered path is invalid. Please choose a valid folder.", LTV_APP_NAME": Invalid input", MB_OK | MB_ICONWARNING);
 		bHandled = TRUE; 
 		return 1; 
 	}
@@ -122,7 +122,7 @@ LRESULT FDlgSaveVideo::OnInitDialog(UINT uMsg, WPARAM wParam, LPARAM lParam, BOO
 	}
 
 	if (g_AppSettings.m_DownloadsFolder.GetLength() == 0)
-		m_StorageFolder.SetWindowText(GetWinUserDirectory("LiberTV Downloads"));
+		m_StorageFolder.SetWindowText(GetWinUserDirectory(LTV_APP_NAME" Downloads"));
 	else
 		m_StorageFolder.SetWindowText(g_AppSettings.m_DownloadsFolder); 
 
@@ -180,7 +180,7 @@ LRESULT FDlgSelectIndexFolder::OnButtonClick( WORD wNotifyCode, WORD wID, HWND h
 			FString NewFolder;
 			if (GetDlgItemText(IDC_FOLDER, NewFolder) && g_AppSettings.m_IndexPath != NewFolder)
 			{
-				MessageBox("LiberTV must be restarted for the changes to take effect.");
+				MessageBox(LTV_APP_NAME" must be restarted for the changes to take effect.");
 				g_AppSettings.m_IndexPath = NewFolder; 
 				g_AppSettings.SaveSettings();
 				OnCloseCmd(wNotifyCode, wID, hWndCtl, bHandled);

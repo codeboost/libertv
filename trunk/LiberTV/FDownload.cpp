@@ -171,14 +171,14 @@ size_t FDownloadItem::GetMediaFiles(std::vector<FMediaFile>& MediaFiles)
 	{
 		try
 		{
-			torrent_info ti; 
+			
 			std::ifstream in_t(m_TorrentFile, std::ios_base::binary);
 			if (in_t.is_open())
 			{
 				in_t.unsetf(std::ios_base::skipws);
 				entry e = bdecode(std::istream_iterator<char>(in_t), std::istream_iterator<char>()); 
 				in_t.close();
-				ti = e;
+				torrent_info ti (e);
 				for (size_t k = 0; k < (size_t)ti.num_files(); k++)
 				{
 					FMediaFile aMediaFile; 
@@ -476,6 +476,7 @@ size_t FDownload::GetAvailMedia(FMediaPlaylist &PlayList)
 {
 	size_t numAdded = 0; 
 	PlayList.Clear(); 
+	PlayList.m_VideoName = m_Detail.m_VideoName;
 
 	for (size_t k = 0; k < m_Clips.GetCount(); k++)
 	{

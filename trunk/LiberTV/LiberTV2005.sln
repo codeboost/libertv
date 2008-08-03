@@ -9,19 +9,26 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
+		LupanarTV|Win32 = LupanarTV|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{399BC882-39BB-439E-8B3B-66DC3002042F}.Debug|Win32.ActiveCfg = Debug|Win32
 		{399BC882-39BB-439E-8B3B-66DC3002042F}.Debug|Win32.Build.0 = Debug|Win32
+		{399BC882-39BB-439E-8B3B-66DC3002042F}.LupanarTV|Win32.ActiveCfg = LupanarTV|Win32
+		{399BC882-39BB-439E-8B3B-66DC3002042F}.LupanarTV|Win32.Build.0 = LupanarTV|Win32
 		{399BC882-39BB-439E-8B3B-66DC3002042F}.Release|Win32.ActiveCfg = Release|Win32
 		{399BC882-39BB-439E-8B3B-66DC3002042F}.Release|Win32.Build.0 = Release|Win32
 		{68EC7C52-0812-4707-A334-ACE4A09BA5CB}.Debug|Win32.ActiveCfg = Debug|Win32
 		{68EC7C52-0812-4707-A334-ACE4A09BA5CB}.Debug|Win32.Build.0 = Debug|Win32
+		{68EC7C52-0812-4707-A334-ACE4A09BA5CB}.LupanarTV|Win32.ActiveCfg = LupanarTV|Win32
+		{68EC7C52-0812-4707-A334-ACE4A09BA5CB}.LupanarTV|Win32.Build.0 = LupanarTV|Win32
 		{68EC7C52-0812-4707-A334-ACE4A09BA5CB}.Release|Win32.ActiveCfg = Release|Win32
 		{68EC7C52-0812-4707-A334-ACE4A09BA5CB}.Release|Win32.Build.0 = Release|Win32
 		{5EAF3213-F132-40C0-9D19-6265419E772D}.Debug|Win32.ActiveCfg = Debug|Win32
 		{5EAF3213-F132-40C0-9D19-6265419E772D}.Debug|Win32.Build.0 = Debug|Win32
+		{5EAF3213-F132-40C0-9D19-6265419E772D}.LupanarTV|Win32.ActiveCfg = LupanarTV|Win32
+		{5EAF3213-F132-40C0-9D19-6265419E772D}.LupanarTV|Win32.Build.0 = LupanarTV|Win32
 		{5EAF3213-F132-40C0-9D19-6265419E772D}.Release|Win32.ActiveCfg = Release|Win32
 		{5EAF3213-F132-40C0-9D19-6265419E772D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection

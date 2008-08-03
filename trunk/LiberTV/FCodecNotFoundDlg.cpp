@@ -12,7 +12,7 @@ void FCodecNotFoundDlg::OnCreated()
 	FString Str;
 	GetWindowText(Str);
 
-	SetWindowText("LiberTV: Codec not found"); 
+	SetWindowText(LTV_APP_NAME": Codec not found"); 
 
 	if (FAILED(m_pW.Navigate(g_AppSettings.AppDir(Str))))
 	{

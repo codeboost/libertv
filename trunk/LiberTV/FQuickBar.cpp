@@ -17,7 +17,7 @@ void FQuickBar::OnCreated()
 	//These are detected by calling getCloseBtnWidth() and getCaptionHeight()
 	m_CaptionHeight = 23; 
 	m_CloseBtnWidth = 14; 
-	SetWindowText("LiberTV Quickbar");
+	SetWindowText(LTV_APP_NAME" Quickbar");
 }
 
 void FQuickBar::OnLoadComplete()

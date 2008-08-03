@@ -30,7 +30,7 @@ int FCommentDialog::Open(HWND hWndParent, const char* pszURL)
 	else
 	{
 		FRect rc = ScreenCenteredRect(640, 480); 
-		Create(hWndParent, rc, "LiberTV: Comments", 
+		Create(hWndParent, rc, LTV_APP_NAME": Comments", 
 			WS_OVERLAPPED | WS_SYSMENU  | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_SIZEBOX);
 	}
 	return TRUE; 

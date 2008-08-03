@@ -142,7 +142,7 @@ BOOL FDownload_Storage::DeleteStorage(BOOL bDeleteStorage)
 
 	if (bDeleteStorage)
 	{
-		DeleteFile(g_AppSettings.StorageDir("libertv.log"));
+		DeleteFile(g_AppSettings.StorageDir(LTV_APP_NAME".log"));
 		DeleteFile(g_AppSettings.StorageDir("mediamgr.log"));
 		DeleteFile(g_AppSettings.StorageDir("labels.ini"));
 		DeleteFile(g_AppSettings.StorageDir("rss.ini"));

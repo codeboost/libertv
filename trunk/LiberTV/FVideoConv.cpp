@@ -12,6 +12,8 @@ BOOL TI2FClip(TorrentInfo& ti, FDownloadItem* pItem)
 
 BOOL FVideoConv::MTT2Video(const tchar* pszMttFileName, FDownloadEx* pVideo)
 {
+
+#if 0
 	Metatorrent mtFile; 
 
 	ATLASSERT(!pVideo->IsValid()); 
@@ -71,6 +73,7 @@ BOOL FVideoConv::MTT2Video(const tchar* pszMttFileName, FDownloadEx* pVideo)
 		}
 		return TRUE;
 	}
+#endif
 	return FALSE; 
 }
 
